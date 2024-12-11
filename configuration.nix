@@ -167,6 +167,8 @@
     };
   };
 
+  programs.nix-ld.enable = true;
+
   programs.fish.enable = true;
 
   programs.firefox.enable = true;
