@@ -25,6 +25,9 @@
 
   swapDevices = [ { device = "/swap/swapfile"; } ];
 
+  nix.settings.auto-optimise-store = true;
+  nix.optimise.automatic = true;
+
   networking.hostName = "dbpbnnb"; # Define your hostname.
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
