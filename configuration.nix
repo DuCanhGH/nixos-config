@@ -27,6 +27,7 @@
 
   nix.settings.auto-optimise-store = true;
   nix.optimise.automatic = true;
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   networking.hostName = "dbpbnnb"; # Define your hostname.
   # Pick only one of the below networking options.
@@ -47,6 +48,25 @@
   #   keyMap = "us";
   #   useXkbConfig = true; # use xkb.options in tty.
   # };
+
+  i18n.inputMethod = {
+    enable = true;
+    type = "fcitx5";
+    fcitx5 = {
+      addons = [ pkgs.fcitx5-bamboo ];
+      waylandFrontend = true;
+
+      settings.inputMethod = {
+        "Groups/0" = {
+          "Name" = "Default";
+          "Default Layout" = "us-altgr-intl";
+          "DefaultIM" = "keyboard-us-altgr-intl";
+        };
+        "Groups/0/Items/0" = { "Name" = "keyboard-us-altgr-intl"; };
+        "Groups/0/Items/1" = { "Name" = "bamboo"; };
+      };
+    };
+  };
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
@@ -103,6 +123,12 @@
     home.stateVersion = "24.11";
 
     programs.fish.enable = true;
+
+    programs.direnv = {
+      enable = true;
+      nix-direnv.enable = true;
+      silent = true;
+    };
     
     programs.git = {
       enable = true;
@@ -154,6 +180,9 @@
     vscode
     gh
     fastfetch
+    nodejs_22
+    corepack_22
+    gnomeExtensions.kimpanel
   ];
 
   environment.gnome.excludePackages = with pkgs; [
@@ -183,6 +212,15 @@
   programs.gnupg.agent = {
     enable = true;
     enableSSHSupport = true;
+  };
+
+  services.postgresql = {
+    enable = true;
+    ensureDatabases = [ "blisk" ];
+    authentication = pkgs.lib.mkOverride 10 ''
+      #type database  DBuser  auth-method
+      local all       all     trust
+    '';
   };
 
   # List services that you want to enable:
