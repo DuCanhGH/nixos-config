@@ -15,16 +15,17 @@
   boot = {
     # Use the systemd-boot EFI boot loader.
     loader.systemd-boot.enable = true;
+    loader.systemd-boot.consoleMode = "max";
     loader.efi.canTouchEfiVariables = true;
     kernelPackages = pkgs.linuxPackages_latest;
 
     plymouth = {
       enable = true;
-      theme = "rings";
+      theme = "bgrt";
       themePackages = with pkgs; [
         # By default we would install all themes
         (adi1090x-plymouth-themes.override {
-          selected_themes = [ "rings" ];
+          selected_themes = [];
         })
       ];
     };
