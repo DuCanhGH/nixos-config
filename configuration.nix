@@ -3,21 +3,31 @@
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
 { config, lib, pkgs, ... }:
-
+let
+  lanzaboote = import <lanzaboote>;
+in
 {
   imports =
     [
       <home-manager/nixos>
+      lanzaboote.nixosModules.lanzaboote
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
 
   boot = {
     # Use the systemd-boot EFI boot loader.
-    loader.systemd-boot.enable = true;
+    loader.systemd-boot.enable = lib.mkForce false;
     loader.systemd-boot.consoleMode = "max";
+    loader.systemd-boot.xbootldrMountPoint = "/boot";
     loader.efi.canTouchEfiVariables = true;
+    loader.efi.efiSysMountPoint = "/efi";
     kernelPackages = pkgs.linuxPackages_latest;
+
+    lanzaboote = {
+      enable = true;
+      pkiBundle = "/etc/secureboot";
+    };
 
     plymouth = {
       enable = true;
@@ -46,10 +56,15 @@
     "/".options = [ "compress=zstd" ];
     "/home".options = [ "compress=zstd" ];
     "/nix".options = [ "compress=zstd" "noatime" ];
-    "/swap".options = [ "noatime" ];
+    "/efi/EFI/Linux" = {
+      device = "/boot/EFI/Linux";
+      options = ["bind"];
+    };
+    "/efi/EFI/nixos" = {
+      device = "/boot/EFI/nixos";
+      options = ["bind"];
+    };
   };
-
-  swapDevices = [ { device = "/swap/swapfile"; } ];
 
   nix.settings.auto-optimise-store = true;
   nix.optimise.automatic = true;
@@ -94,6 +109,11 @@
     };
   };
 
+  services.asusd = {
+    enable = true;
+    enableUserService = true;
+  };
+
   # Enable the X11 windowing system.
   services.xserver.enable = true;
   services.xserver.videoDrivers = [ "nvidia" ];
@@ -128,10 +148,23 @@
 
   hardware.nvidia = {
     modesetting.enable = true;
-    powerManagement.enable = false;
+    powerManagement.enable = true;
+    powerManagement.finegrained = true;
     open = false;
     nvidiaSettings = true;
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
+      version = "575.51.02";
+      sha256_64bit = "sha256-XZ0N8ISmoAC8p28DrGHk/YN1rJsInJ2dZNL8O+Tuaa0=";
+      openSha256 = "sha256-NQg+QDm9Gt+5bapbUO96UFsPnz1hG1dtEwT/g/vKHkw=";
+      settingsSha256 = "sha256-6n9mVkEL39wJj5FB1HBml7TTJhNAhS/j5hqpNGFQE4w=";
+      usePersistenced = false;
+    };
+    prime = {
+      offload.enable = true;
+      offload.enableOffloadCmd = true;
+      amdgpuBusId = "PCI:0@65:00:0";
+      nvidiaBusId = "PCI:0@01:0:0";
+    };
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -161,7 +194,7 @@
       userEmail = "ngoducanh2912@gmail.com";
       userName = "DuCanhGH";
       
-      signing.key = "96A86117534CA6B8";
+      signing.key = "F2C058932165560A";
       signing.signByDefault = true;
 
 
@@ -212,6 +245,7 @@
     gnomeExtensions.kimpanel
     prismlauncher
     discord
+    sbctl
   ];
 
   environment.gnome.excludePackages = with pkgs; [
