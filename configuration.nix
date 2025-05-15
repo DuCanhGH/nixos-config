@@ -16,6 +16,13 @@
     # Use the systemd-boot EFI boot loader.
     loader.systemd-boot.enable = true;
     loader.systemd-boot.consoleMode = "max";
+    loader.systemd-boot.edk2-uefi-shell.enable = true;
+    loader.systemd-boot.windows = {
+      "11" = {
+        title = "Windows 11";
+        efiDeviceHandle = "HD2e65535a4";
+      };
+    };
     loader.efi.canTouchEfiVariables = true;
     kernelPackages = pkgs.linuxPackages_latest;
 
