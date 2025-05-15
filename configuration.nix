@@ -13,16 +13,12 @@
     ];
 
   boot = {
-    # Use the systemd-boot EFI boot loader.
-    loader.systemd-boot.enable = true;
-    loader.systemd-boot.consoleMode = "max";
-    loader.systemd-boot.edk2-uefi-shell.enable = true;
-    loader.systemd-boot.windows = {
-      "11" = {
-        title = "Windows 11";
-        efiDeviceHandle = "HD2e65535a4";
-      };
-    };
+    loader.systemd-boot.enable = false;
+    # Use the grub EFI boot loader.
+    loader.grub.enable = true;
+    loader.grub.useOSProber = true;
+    loader.grub.device = "nodev";
+    loader.grub.efiSupport = true;
     loader.efi.canTouchEfiVariables = true;
     kernelPackages = pkgs.linuxPackages_latest;
 
