@@ -14,6 +14,7 @@
     loader.grub.useOSProber = true;
     loader.grub.device = "nodev";
     loader.grub.efiSupport = true;
+    loader.grub.splashImage = null;
     loader.grub.theme = pkgs.stdenv.mkDerivation {
       pname = "HyperFluent";
       version = "1.0.1";
