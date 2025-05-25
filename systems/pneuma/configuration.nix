@@ -37,6 +37,8 @@
     enableUserService = true;
   };
 
+  services.supergfxd.enable = true;
+
   hardware.nvidia = {
     powerManagement.enable = true;
     powerManagement.finegrained = true;
