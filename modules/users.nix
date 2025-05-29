@@ -11,7 +11,6 @@
     };
   };
   home-manager = {
-    useGlobalPkgs = true;
     useUserPackages = true;
     users = {
       ducanh = import ../home/ducanh.nix;

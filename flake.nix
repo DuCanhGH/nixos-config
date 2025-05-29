@@ -1,12 +1,12 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     # The `follows` keyword in inputs is used for inheritance.
-    # Here, `inputs.nixpkgs` of home-manager is kept consistent with
-    # the `inputs.nixpkgs` of the current flake,
+    # Here, `inputs.nixpkgs` of is kept consistent with the
+    # `inputs.nixpkgs` of the current flake,
     # to avoid problems caused by different versions of nixpkgs.
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.11";
+      url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     lanzaboote = {

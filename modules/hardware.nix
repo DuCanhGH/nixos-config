@@ -1,6 +1,6 @@
 { pkgs, ... }: {
   boot = {
-    kernelPackages = pkgs.linuxPackages_latest;
+    kernelPackages = pkgs.linuxPackages_6_14;
 
     plymouth = {
       enable = true;
