@@ -8,7 +8,7 @@
   ];
 
   boot = {
-    loader.systemd-boot.enable = false;
+    loader.systemd-boot.enable = lib.mkForce false;
     # Use the grub EFI boot loader.
     loader.grub.enable = true;
     loader.grub.useOSProber = true;
