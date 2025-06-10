@@ -35,6 +35,15 @@
     gnome-system-monitor gnome-weather gnome-disk-utility gnome-connections gnome-tour
   ];
 
+  programs.obs-studio = {
+    enable = true;
+    plugins = with pkgs.obs-studio-plugins; [
+      wlrobs
+      obs-backgroundremoval
+      obs-pipewire-audio-capture
+    ];
+  };
+
   programs.nix-ld.enable = true;
 
   programs.fish.enable = true;
