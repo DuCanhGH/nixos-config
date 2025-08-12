@@ -10,25 +10,15 @@
   boot = {
     loader.systemd-boot.enable = lib.mkForce false;
     loader.systemd-boot.consoleMode = "max";
-    loader.systemd-boot.xbootldrMountPoint = "/boot";
     loader.efi.canTouchEfiVariables = true;
-    loader.efi.efiSysMountPoint = "/efi";
+    loader.efi.efiSysMountPoint = "/boot";
     lanzaboote = {
       enable = true;
-      pkiBundle = "/etc/secureboot";
+      pkiBundle = "/var/lib/sbctl";
     };
   };
 
-  fileSystems = {
-    "/efi/EFI/Linux" = {
-      device = "/boot/EFI/Linux";
-      options = ["bind"];
-    };
-    "/efi/EFI/nixos" = {
-      device = "/boot/EFI/nixos";
-      options = ["bind"];
-    };
-  };
+  swapDevices = [ { device = "/swap/swapfile"; } ];
 
   networking.hostName = "pneuma"; # Define your hostname.
 
@@ -53,7 +43,7 @@
 
   home-manager.users.ducanh = {
     programs.git = {
-      signing.key = "F2C058932165560A";
+      signing.key = "607B0B2E637FFFFF";
     };
   };
 }

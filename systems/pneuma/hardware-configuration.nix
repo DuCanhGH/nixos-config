@@ -8,50 +8,49 @@
     [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-  boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "thunderbolt" "usb_storage" "usbhid" "sd_mod" "rtsx_pci_sdmmc" ];
+  boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "thunderbolt" "usbhid" "rtsx_pci_sdmmc" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/9d000552-dc0e-4315-8e9f-bebdbc3e8eea";
+    { device = "/dev/disk/by-uuid/56f86a16-57df-4a29-918d-364e0d9bede3";
       fsType = "btrfs";
       options = [ "subvol=root" ];
     };
 
-  fileSystems."/home" =
-    { device = "/dev/disk/by-uuid/9d000552-dc0e-4315-8e9f-bebdbc3e8eea";
-      fsType = "btrfs";
-      options = [ "subvol=home" ];
-    };
-
   fileSystems."/nix" =
-    { device = "/dev/disk/by-uuid/9d000552-dc0e-4315-8e9f-bebdbc3e8eea";
+    { device = "/dev/disk/by-uuid/56f86a16-57df-4a29-918d-364e0d9bede3";
       fsType = "btrfs";
       options = [ "subvol=nix" ];
     };
 
-  fileSystems."/efi" =
-    { device = "/dev/disk/by-uuid/2665-CDBE";
-      fsType = "vfat";
-      options = [ "fmask=0022" "dmask=0022" ];
+  fileSystems."/home" =
+    { device = "/dev/disk/by-uuid/56f86a16-57df-4a29-918d-364e0d9bede3";
+      fsType = "btrfs";
+      options = [ "subvol=home" ];
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/652D-F1AF";
+    { device = "/dev/disk/by-uuid/4584-3025";
       fsType = "vfat";
       options = [ "fmask=0022" "dmask=0022" ];
     };
 
-  swapDevices =
-    [ { device = "/dev/disk/by-uuid/998d2990-7691-4e57-bb65-be6dcf822e6e"; }
-    ];
+  fileSystems."/swap" =
+    { device = "/dev/disk/by-uuid/56f86a16-57df-4a29-918d-364e0d9bede3";
+      fsType = "btrfs";
+      options = [ "subvol=swap" ];
+    };
+
+  swapDevices = [ ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
   # still possible to use this option, but it's recommended to use it in conjunction
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
   networking.useDHCP = lib.mkDefault true;
+  # networking.interfaces.docker0.useDHCP = lib.mkDefault true;
   # networking.interfaces.wlp3s0.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
