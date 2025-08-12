@@ -29,6 +29,7 @@
     "/".options = [ "compress=zstd" ];
     "/home".options = [ "compress=zstd" ];
     "/nix".options = [ "compress=zstd" "noatime" ];
+    "/swap".options = [ "noatime" ];
   };
 
   hardware.graphics.enable = true;
