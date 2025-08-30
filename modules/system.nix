@@ -14,6 +14,7 @@
     prismlauncher
     discord
     sbctl
+    clang-tools
   ];
 
   environment.gnome.excludePackages = with pkgs; [
