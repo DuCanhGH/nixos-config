@@ -7,6 +7,8 @@
     ./hardware-configuration.nix
   ];
 
+  time.timeZone = "America/Indianapolis";
+
   boot = {
     loader.systemd-boot.enable = lib.mkForce false;
     loader.systemd-boot.consoleMode = "max";
