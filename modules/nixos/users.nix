@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ inputs, pkgs, ... }: {
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users = {
     ducanh = {
@@ -11,9 +11,15 @@
     };
   };
   home-manager = {
+    useGlobalPkgs = true;
     useUserPackages = true;
     users = {
-      ducanh = import ../home/ducanh.nix;
+      ducanh = {
+        imports = [ ../../home/ducanh.nix ];
+        home = {
+          homeDirectory = "/home/ducanh";
+        };
+      };
     };
   };
 }

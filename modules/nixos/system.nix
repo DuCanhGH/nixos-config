@@ -1,21 +1,13 @@
-{ pkgs, ... }: {
+{ pkgs, inputs, ... }: {
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    vim
-    wget
-    chromium
-    vscode
-    gh
-    fastfetch
-    nodejs_22
-    corepack_22
-    gnomeExtensions.kimpanel
-    prismlauncher
-    discord
-    sbctl
-    clang-tools
-  ];
+  environment.systemPackages =
+    (import ../shared/packages.nix { inherit pkgs; }) ++ (with pkgs; [
+      chromium
+      sbctl
+      gnomeExtensions.kimpanel
+      inputs.agenix.packages.x86_64-linux.default
+    ]);
 
   environment.gnome.excludePackages = with pkgs; [
     cheese      # photo booth
@@ -61,13 +53,15 @@
 
   nixpkgs.config.allowUnfree = true;
 
-  nix.settings.auto-optimise-store = true;
-  nix.optimise.automatic = true;
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  nix.gc = {
-    automatic = true;
-    dates = "weekly";
-    options = "--delete-older-than 1w";
+  nix = {
+    settings.auto-optimise-store = true;
+    optimise.automatic = true;
+    settings.experimental-features = [ "nix-command" "flakes" ];
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 1w";
+    };
   };
 
   # This option defines the first version of NixOS you have installed on this particular machine,
