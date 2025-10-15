@@ -1,13 +1,17 @@
 { inputs, pkgs, lib, ... }: {
   # Define a user account.
-  users.users = {
-    ducanh = {
-      name = "ducanh";
-      home = "/Users/ducanh";
-      shell = pkgs.fish;
-      packages = with pkgs; [
-        tree
-      ];
+  users = {
+    knownUsers = [ "ducanh" ];
+    users = {
+      ducanh = {
+        name = "ducanh";
+        home = "/Users/ducanh";
+        uid = 501;
+        shell = pkgs.fish;
+        packages = with pkgs; [
+          tree
+        ];
+      };
     };
   };
   home-manager = {

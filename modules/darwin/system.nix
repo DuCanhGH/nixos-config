@@ -5,6 +5,8 @@
       gnupg
       inputs.agenix.packages.aarch64-darwin.default
     ]);
+
+  environment.shells = [ pkgs.fish ];
   
   programs.fish.enable = true;
 
