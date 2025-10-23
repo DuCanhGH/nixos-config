@@ -1,5 +1,6 @@
 { inputs, config, pkgs, ... }:
 let
+  agenixPublicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDX9GXpxfnALHa8pO7G/FPJp+rHACXzaG6HQ11lOk+2/ ngoducanh2912@gmail.com";
   sshPublicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID5fRr8pqUXd9sVUgz4PBaiZN5h9tRHW0862zNYz1OiT 75556609+DuCanhGH@users.noreply.github.com";
 in {
   imports = [
@@ -8,6 +9,9 @@ in {
   home = {
     username = "ducanh";
     file = {
+      ".ssh/agenix.pub" = {
+        text = agenixPublicKey;
+      };
       ".ssh/id_ed25519.pub" = {
         text = sshPublicKey;
       };
@@ -15,10 +19,8 @@ in {
     stateVersion = "24.11";
   };
   age = {
-    identityPaths = [ "${config.home.homeDirectory}/.ssh/id_ed25519" ];
+    identityPaths = [ "${config.home.homeDirectory}/.ssh/agenix" ];
     secrets = {
-      # Somewhat meaningless, but we encrypt the SSH key used
-      # to decrypt the `.age` files anyway...
       ssh_ed25519 = {
         symlink = true;
         path = "${config.home.homeDirectory}/.ssh/id_ed25519";
