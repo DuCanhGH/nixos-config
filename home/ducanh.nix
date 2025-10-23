@@ -22,14 +22,12 @@ in {
     identityPaths = [ "${config.home.homeDirectory}/.ssh/agenix" ];
     secrets = {
       ssh_ed25519 = {
-        symlink = true;
-        path = "${config.home.homeDirectory}/.ssh/id_ed25519";
         file =  "${inputs.secrets}/ssh_ed25519.age";
+        path = "${config.home.homeDirectory}/.ssh/id_ed25519";
       };
       gpg_17143A = {
-        symlink = true;
-        path = "${config.home.homeDirectory}/.gnupg/17143A062925B84B.key";
         file =  "${inputs.secrets}/gpg_17143A.age";
+        path = "${config.home.homeDirectory}/.gnupg/17143A062925B84B.key";
       };
     };
   };
@@ -41,11 +39,13 @@ in {
   };
   programs.git = {
     enable = true;
-    userEmail = "75556609+DuCanhGH@users.noreply.github.com";
-    userName = "DuCanhGH";
     signing.signByDefault = true;
     signing.key = "17143A062925B84B";
-    extraConfig = {
+    settings = {
+      user = {
+        name = "DuCanhGH";
+        email = "75556609+DuCanhGH@users.noreply.github.com";
+      };
       credential."https://github.com" = {
         helper = "!${pkgs.gh}/bin/gh auth git-credential";
       };

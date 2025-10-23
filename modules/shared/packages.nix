@@ -11,4 +11,5 @@ with pkgs; [
   prismlauncher
   discord
   clang-tools
+  jdk
 ]

@@ -51,6 +51,10 @@
     enableSSHSupport = true;
   };
 
+  security.sudo.extraConfig = ''
+    Defaults    env_keep+=SSH_AUTH_SOCK
+  '';
+
   nixpkgs.config.allowUnfree = true;
 
   nix = {

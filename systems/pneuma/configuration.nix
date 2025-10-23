@@ -42,10 +42,4 @@
       nvidiaBusId = "PCI:0@01:0:0";
     };
   };
-
-  home-manager.users.ducanh = {
-    programs.git = {
-      signing.key = "607B0B2E637FFFFF";
-    };
-  };
 }

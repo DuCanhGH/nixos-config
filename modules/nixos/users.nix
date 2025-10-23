@@ -13,6 +13,7 @@
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
+    backupFileExtension = "backup";
     users = {
       ducanh = {
         imports = [ ../../home/ducanh.nix ];

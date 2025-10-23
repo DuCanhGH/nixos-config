@@ -1,6 +1,6 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     # The `follows` keyword in inputs is used for inheritance.
     # Here, `inputs.nixpkgs` of is kept consistent with the
     # `inputs.nixpkgs` of the current flake,
