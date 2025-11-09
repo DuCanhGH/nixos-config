@@ -12,4 +12,5 @@ with pkgs; [
   discord
   clang-tools
   jdk
+  typst
 ]
