@@ -33,4 +33,7 @@
 
   system.stateVersion = 6;
   system.primaryUser = "ducanh";
+  system.activationScripts.extraActivation.text = ''
+    ln -sf "${pkgs.jdk21}/Library/Java/JavaVirtualMachines/zulu-21.jdk" "/Library/Java/JavaVirtualMachines/"
+  '';
 }
