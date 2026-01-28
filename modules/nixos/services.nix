@@ -6,8 +6,16 @@
   services.xserver.videoDrivers = [ "nvidia" ];
 
   # Enable the GNOME Desktop Environment.
-  services.displayManager.gdm.enable = true;
-  services.desktopManager.gnome.enable = true;
+  # services.displayManager.gdm.enable = true;
+  # services.desktopManager.gnome.enable = true;
+
+  # Enable the KDE Desktop Environment.
+  services.displayManager.sddm = {
+    enable = true;
+    settings.General.DisplayServer = "x11-user";
+  };
+  services.desktopManager.plasma6.enable = true;
+  services.aero.enable = true;
 
   # Configure keymap in X11
   # services.xserver.xkb.layout = "us";

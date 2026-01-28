@@ -1,5 +1,6 @@
 {
   imports = [
+    ./aero3.nix
     ./hardware.nix
     ./i18n.nix
     ./network.nix
