@@ -5,19 +5,18 @@
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
-  services.xserver.videoDrivers = [ "nvidia" ];
+  services.xserver.videoDrivers = [ "amdgpu" "nvidia" ];
 
   # Enable the GNOME Desktop Environment.
   # services.displayManager.gdm.enable = true;
   # services.desktopManager.gnome.enable = true;
 
-  services.displayManager.defaultSession = "plasma";
+  services.displayManager.defaultSession = "plasmax11";
 
   # Enable the KDE Desktop Environment.
   services.displayManager.sddm = {
     enable = true;
-    wayland.enable = true;
-    settings.General.DisplayServer = "wayland";
+    wayland.enable = false;
   };
   services.desktopManager.plasma6.enable = true;
   services.aero.enable = true;

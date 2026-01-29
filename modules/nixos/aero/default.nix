@@ -10,14 +10,15 @@ let
   commonCmakeFlags = [
     "-DCMAKE_BUILD_TYPE=Release"
     "-DBUILD_KF6=ON"
-    "-DKWIN_BUILD_WAYLAND=ON"
+    # If using Wayland
+    # "-DKWIN_BUILD_WAYLAND=ON"
     "-DCMAKE_INSTALL_PREFIX=$out"
     "-DKDE_INSTALL_PLUGINDIR=lib/qt-6/plugins"
     "-DKDE_INSTALL_QMLDIR=lib/qt-6/qml"
-    "-DKWIN_INCLUDE=${pkgs.kdePackages.kwin.dev}/include/kwin"
+    "-DKWIN_INCLUDE=${pkgs.kdePackages.kwin-x11.dev}/include/kwin"
     "-DKPLUGINFACTORY_INCLUDE=${pkgs.kdePackages.kcoreaddons.dev}/include/KF6/KCoreAddons"
-    ''-DCMAKE_CXX_FLAGS="-I${pkgs.kdePackages.kwin.dev}/include/kwin -I${pkgs.kdePackages.kcoreaddons.dev}/include/KF6/KCoreAddons -I${pkgs.kdePackages.libplasma.dev}/include/Plasma -I${pkgs.kdePackages.libplasma.dev}/include/PlasmaQuick"''
-    "-DKWin_DIR=${pkgs.kdePackages.kwin.dev}/lib/cmake/KWin"
+    ''-DCMAKE_CXX_FLAGS="-I${pkgs.kdePackages.kwin-x11.dev}/include/kwin -I${pkgs.kdePackages.kcoreaddons.dev}/include/KF6/KCoreAddons -I${pkgs.kdePackages.libplasma.dev}/include/Plasma -I${pkgs.kdePackages.libplasma.dev}/include/PlasmaQuick"''
+    "-DKWin_DIR=${pkgs.kdePackages.kwin-x11.dev}/lib/cmake/KWin"
   ];
   mkAeroDerivation = lib.extendMkDerivation {
     constructDrv = stdenv.mkDerivation;
@@ -57,16 +58,16 @@ let
         kdePackages.kdecoration
         kdePackages.kconfigwidgets
         kdePackages.kcolorscheme
-        kdePackages.kwayland
-        kdePackages.kwin
+        # kdePackages.kwayland
+        # kdePackages.kwin
+        kdePackages.kwin-x11
         kdePackages.ksvg
-        kdePackages.plasma5support
-        kdePackages.plasma-wayland-protocols
-        kdePackages.plasma5support
+        # kdePackages.plasma-wayland-protocols
         kdePackages.kguiaddons
         kdePackages.ki18n
         kdePackages.kiconthemes
         kdePackages.kirigami
+        kdePackages.libplasma
       ];
     in
       args
@@ -107,16 +108,13 @@ in  {
   aerothemeplasma = pkgs.callPackage ./aerothemeplasma.nix {
     inherit repo;
   };
-  corebindingsplugin = pkgs.callPackage ./corebindingsplugin.nix  {
-    inherit mkAeroDerivation repo;
-  };
   desktopcontainment = pkgs.callPackage ./desktopcontainment.nix  {
     inherit mkAeroDerivation repo commonCmakeFlags;
   };
   kcmloader = pkgs.callPackage ./kcmloader.nix  {
     inherit mkAeroDerivation repo;
   };
-  libplasma = pkgs.callPackage ./libplasma.nix  {
+  notifications = pkgs.callPackage ./notifications.nix  {
     inherit mkAeroDerivation repo;
   };
   sevenstart = pkgs.callPackage ./sevenstart.nix  {

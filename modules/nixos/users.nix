@@ -23,17 +23,23 @@ in {
         home = {
           homeDirectory = "/home/ducanh";
           file = {
-            ".local/share/plasma/desktoptheme".source = "${aero.aerothemeplasma}/plasma/desktoptheme";
-            ".local/share/plasma/look-and-feel".source = "${aero.aerothemeplasma}/plasma/look-and-feel";
-            ".local/share/plasma/plasmoids".source = "${aero.aerothemeplasma}/plasma/plasmoids";
-            ".local/share/plasma/layout-templates".source = "${aero.aerothemeplasma}/plasma/layout-templates";
-            ".local/share/plasma/shells".source = "${aero.aerothemeplasma}/plasma/shells";
-            ".local/share/kwin/effects".source = "${aero.aerothemeplasma}/kwin/effects";
-            ".local/share/kwin/tabbox".source = "${aero.aerothemeplasma}/kwin/tabbox";
-            ".local/share/kwin/outline".source = "${aero.aerothemeplasma}/kwin/outline";
-            ".config/fontconfig/fonts.conf".source = "${aero.aerothemeplasma}/misc/fontconfig/fonts.conf";
-            ".local/share/smod".source = "${aero.aerothemeplasma}/plasma/smod";
-            ".local/share/sddm/themes/sddm-theme-mod".source = "${aero.aerothemeplasma}/plasma/sddm/sddm-theme-mod";
+            ".local/share/plasma/desktoptheme".source = "${aero.aerothemeplasma}/share/plasma/desktoptheme";
+            ".local/share/plasma/look-and-feel".source = "${aero.aerothemeplasma}/share/plasma/look-and-feel";
+            ".local/share/plasma/plasmoids".source = "${aero.aerothemeplasma}/share/plasma/plasmoids";
+            ".local/share/plasma/layout-templates".source = "${aero.aerothemeplasma}/share/plasma/layout-templates";
+            ".local/share/plasma/shells".source = "${aero.aerothemeplasma}/share/plasma/shells";
+            ".local/share/kwin/effects".source = "${aero.aerothemeplasma}/share/kwin/effects";
+            ".local/share/kwin/outline".source = "${aero.aerothemeplasma}/share/kwin/outline";
+            ".local/share/kwin/tabbox".source = "${aero.aerothemeplasma}/share/kwin/tabbox";
+            ".local/share/kwin-x11/effects".source = "${aero.aerothemeplasma}/share/kwin/effects";
+            ".local/share/kwin-x11/outline".source = "${aero.aerothemeplasma}/share/kwin/outline";
+            ".local/share/kwin-x11/tabbox".source = "${aero.aerothemeplasma}/share/kwin/tabbox";
+            ".local/share/kwin-wayland/effects".source = "${aero.aerothemeplasma}/share/kwin/effects";
+            ".local/share/kwin-wayland/outline".source = "${aero.aerothemeplasma}/share/kwin/outline";
+            ".local/share/kwin-wayland/tabbox".source = "${aero.aerothemeplasma}/share/kwin/tabbox";
+            ".local/share/smod".source = "${aero.aerothemeplasma}/share/smod";
+            ".config/fontconfig/fonts.conf".source = "${aero.aerothemeplasma}/share/fontconfig/fonts.conf";
+            ".local/share/sddm/themes/sddm-theme-mod".source = "${aero.aerothemeplasma}/share/sddm/themes/sddm-theme-mod";
           };
         };
         programs.plasma = {

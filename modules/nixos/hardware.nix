@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ config, pkgs, ... }: {
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
 
@@ -16,8 +16,7 @@
     # Enable "Silent boot"
     consoleLogLevel = 3;
     initrd.verbose = false;
-
-    kernelModules = [ "nvidia" "nvidia_drm" ];
+    initrd.kernelModules = [ "nvidia" ];
 
     kernelParams = [
       "quiet"
@@ -25,12 +24,9 @@
       "boot.shell_on_fail"
       "udev.log_priority=3"
       "rd.systemd.show_status=auto"
-      "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
-      "nvidia.NVreg_TemporaryFilePath=/var/tmp"
-      "nvidia.NVreg_EnableGpuFirmware=0"
-      "nvidia_drm.modeset=1"
-      "nvidia_drm.fbdev=1"
     ];
+
+    extraModulePackages = [ config.boot.kernelPackages.nvidia_x11 ];
   };
 
   fileSystems = {
@@ -44,7 +40,7 @@
 
   hardware.nvidia = {
     modesetting.enable = true;
-    open = false;
+    open = true;
     nvidiaSettings = true;
   };
 }

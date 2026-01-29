@@ -19,9 +19,10 @@ in
       aeroglassblur
       aeroglide
       aerothemeplasma
-      corebindingsplugin
       decoration
       desktopcontainment
+      kcmloader
+      notifications
       sevenstart
       seventasks
       smodglow
@@ -30,18 +31,16 @@ in
       systemtray
     ]) ++ (with pkgs; [
       kdePackages.qtbase
-      kdePackages.qtwayland
+      # kdePackages.qtwayland
       kdePackages.qtdeclarative
       kdePackages.qtvirtualkeyboard
       kdePackages.qtmultimedia
       kdePackages.qt5compat
       kdePackages.qtstyleplugin-kvantum
-      kdePackages.kwayland
+      # kdePackages.kwayland
       kdePackages.kitemmodels
-      kdePackages.libplasma
       kdePackages.plasma5support
-      kdePackages.plasma-wayland-protocols
-      kdePackages.plasma5support
+      # kdePackages.plasma-wayland-protocols
     ]);
 
     nixpkgs.overlays = [
