@@ -6,11 +6,6 @@ in
 {
   options.services.aero = {
     enable = lib.mkEnableOption "Enable Aero";
-    enableApplyService = lib.mkOption {
-      type = lib.types.bool;
-      default = true;
-      description = "Enable oneshot service that runs the packaged 'apply' helper to apply libplasma patches.";
-    };
   };
 
   config = lib.mkIf config.services.aero.enable {
@@ -32,6 +27,7 @@ in
       smodglow
       smodsnap
       startupfeedback
+      systemtray
     ]) ++ (with pkgs; [
       kdePackages.qtbase
       kdePackages.qtwayland
@@ -41,10 +37,17 @@ in
       kdePackages.qt5compat
       kdePackages.qtstyleplugin-kvantum
       kdePackages.kwayland
+      kdePackages.kitemmodels
+      kdePackages.libplasma
       kdePackages.plasma5support
       kdePackages.plasma-wayland-protocols
       kdePackages.plasma5support
     ]);
+
+    nixpkgs.overlays = [
+      (import ../overlays/aero.nix)
+      (import ../overlays/libplasma.nix)
+    ];
 
     services.displayManager.sddm = {
       theme = "sddm-theme-mod";

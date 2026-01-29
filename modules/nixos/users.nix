@@ -23,17 +23,17 @@ in {
         home = {
           homeDirectory = "/home/ducanh";
           file = {
-            ".local/share/plasma/desktoptheme".source = "${aero.repo}/plasma/desktoptheme";
-            ".local/share/plasma/look-and-feel".source = "${aero.repo}/plasma/look-and-feel";
-            ".local/share/plasma/plasmoids".source = "${aero.repo}/plasma/plasmoids";
-            ".local/share/plasma/layout-templates".source = "${aero.repo}/plasma/layout-templates";
-            ".local/share/plasma/shells".source = "${aero.repo}/plasma/shells";
-            ".local/share/kwin/effects".source = "${aero.repo}/kwin/effects";
-            ".local/share/kwin/tabbox".source = "${aero.repo}/kwin/tabbox";
-            ".local/share/kwin/outline".source = "${aero.repo}/kwin/outline";
-            ".config/fontconfig/fonts.conf".source = "${aero.repo}/misc/fontconfig/fonts.conf";
-            ".local/share/smod".source = "${aero.repo}/plasma/smod";
-            ".local/share/sddm/themes/sddm-theme-mod".source = "${aero.repo}/plasma/sddm/sddm-theme-mod";
+            ".local/share/plasma/desktoptheme".source = "${aero.aerothemeplasma}/plasma/desktoptheme";
+            ".local/share/plasma/look-and-feel".source = "${aero.aerothemeplasma}/plasma/look-and-feel";
+            ".local/share/plasma/plasmoids".source = "${aero.aerothemeplasma}/plasma/plasmoids";
+            ".local/share/plasma/layout-templates".source = "${aero.aerothemeplasma}/plasma/layout-templates";
+            ".local/share/plasma/shells".source = "${aero.aerothemeplasma}/plasma/shells";
+            ".local/share/kwin/effects".source = "${aero.aerothemeplasma}/kwin/effects";
+            ".local/share/kwin/tabbox".source = "${aero.aerothemeplasma}/kwin/tabbox";
+            ".local/share/kwin/outline".source = "${aero.aerothemeplasma}/kwin/outline";
+            ".config/fontconfig/fonts.conf".source = "${aero.aerothemeplasma}/misc/fontconfig/fonts.conf";
+            ".local/share/smod".source = "${aero.aerothemeplasma}/plasma/smod";
+            ".local/share/sddm/themes/sddm-theme-mod".source = "${aero.aerothemeplasma}/plasma/sddm/sddm-theme-mod";
           };
         };
         programs.plasma = {

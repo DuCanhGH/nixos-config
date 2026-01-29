@@ -1,7 +1,7 @@
 { pkgs, lib, mkAeroDerivation, repo, commonCmakeFlags }:
 
 mkAeroDerivation {
-  pname = "desktopcontainment";
+  pname = "aero-desktopcontainment";
   version = "git";
   src = "${repo}/plasma/plasmoids/src/desktopcontainment";
   buildInputs = with pkgs; [

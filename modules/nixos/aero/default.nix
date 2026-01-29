@@ -2,10 +2,10 @@
 { pkgs, lib, stdenv, ... }:
 let
   repo = pkgs.fetchFromGitHub {
-    owner = "WackyIdeas";
+    owner = "DuCanhGH";
     repo = "aerothemeplasma";
-    rev = "9c9d4f2a4e84319351428b8b13f84eb0eb4e2ada";
-    hash = "sha256-fXxNDNm5dFRr5g3k0alEsoc83wyKMIt9Ud/yFOCT3II=";
+    rev = "df422863c99dcb25a18238ff6bc7b64c28c7ea09";
+    hash = "sha256-6nlB6HDBvqCApMVv/IXS0M4nczjfWaTPNQdZNLbQ+2I=";
   };
   commonCmakeFlags = [
     "-DCMAKE_BUILD_TYPE=Release"
@@ -24,7 +24,7 @@ let
 
     extendDrvArgs = final: args @ {
       pname,
-      version ? "git",
+      version ? "0.0.1",
       src,
       cmakeFlags ? [],
       configurePhase ? ''cmake -B build -G Ninja ${lib.concatStringsSep " " (commonCmakeFlags ++ cmakeFlags)}'',
@@ -96,6 +96,8 @@ let
   decoration = pkgs.callPackage ./decoration.nix  {
     inherit mkAeroDerivation repo;
   };
+in  {
+  inherit repo mkAeroDerivation decoration;
   aeroglassblur = pkgs.callPackage ./aeroglassblur.nix  {
     inherit mkAeroDerivation repo decoration;
   };
@@ -110,6 +112,12 @@ let
   };
   desktopcontainment = pkgs.callPackage ./desktopcontainment.nix  {
     inherit mkAeroDerivation repo commonCmakeFlags;
+  };
+  kcmloader = pkgs.callPackage ./kcmloader.nix  {
+    inherit mkAeroDerivation repo;
+  };
+  libplasma = pkgs.callPackage ./libplasma.nix  {
+    inherit mkAeroDerivation repo;
   };
   sevenstart = pkgs.callPackage ./sevenstart.nix  {
     inherit mkAeroDerivation repo;
@@ -126,6 +134,7 @@ let
   startupfeedback = pkgs.callPackage ./startupfeedback.nix  {
     inherit mkAeroDerivation repo decoration;
   };
-in  {
-  inherit repo mkAeroDerivation aeroglassblur aeroglide aerothemeplasma corebindingsplugin decoration desktopcontainment sevenstart seventasks smodglow smodsnap startupfeedback;
+  systemtray = pkgs.callPackage ./systemtray.nix  {
+    inherit mkAeroDerivation repo;
+  };
 }
