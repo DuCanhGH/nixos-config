@@ -7,8 +7,6 @@
       sbctl
       nurl
       unzip
-      kdePackages.sddm
-      kdePackages.sddm-kcm
       inputs.agenix.packages.x86_64-linux.default
     ]);
 

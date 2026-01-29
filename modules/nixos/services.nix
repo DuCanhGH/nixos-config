@@ -1,6 +1,8 @@
 { pkgs, ... }: {
   # List services that you want to enable:
 
+  services.dbus.enable = true;
+
   # Enable the X11 windowing system.
   services.xserver.enable = true;
   services.xserver.videoDrivers = [ "nvidia" ];
@@ -9,10 +11,13 @@
   # services.displayManager.gdm.enable = true;
   # services.desktopManager.gnome.enable = true;
 
+  services.displayManager.defaultSession = "plasma";
+
   # Enable the KDE Desktop Environment.
   services.displayManager.sddm = {
     enable = true;
-    settings.General.DisplayServer = "x11-user";
+    wayland.enable = true;
+    settings.General.DisplayServer = "wayland";
   };
   services.desktopManager.plasma6.enable = true;
   services.aero.enable = true;
