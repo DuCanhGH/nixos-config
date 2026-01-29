@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ config, pkgs, ... }: {
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
 
@@ -16,6 +16,8 @@
     # Enable "Silent boot"
     consoleLogLevel = 3;
     initrd.verbose = false;
+    initrd.kernelModules = [ "nvidia" ];
+
     kernelParams = [
       "quiet"
       "splash"
@@ -23,6 +25,8 @@
       "udev.log_priority=3"
       "rd.systemd.show_status=auto"
     ];
+
+    extraModulePackages = [ config.boot.kernelPackages.nvidia_x11 ];
   };
 
   fileSystems = {

@@ -5,28 +5,12 @@
     (import ../shared/packages.nix { inherit pkgs; }) ++ (with pkgs; [
       chromium
       sbctl
-      gnomeExtensions.kimpanel
+      nurl
+      unzip
+      xdg-desktop-portal-gtk
+      kdePackages.sddm-kcm
       inputs.agenix.packages.x86_64-linux.default
     ]);
-
-  environment.gnome.excludePackages = with pkgs; [
-    cheese      # photo booth
-    epiphany    # web browser
-    gedit       # text editor
-    simple-scan # document scanner
-    totem       # video player
-    yelp        # help viewer
-    evince      # document viewer
-    file-roller # archive manager
-    geary       # email client
-    tali        # poker game
-    iagno       # go game
-    hitori      # sudoku game
-    atomix      # puzzle game
-    gnome-calculator gnome-calendar gnome-characters gnome-clocks gnome-contacts
-    gnome-font-viewer gnome-logs gnome-maps gnome-music gnome-photos gnome-terminal
-    gnome-system-monitor gnome-weather gnome-disk-utility gnome-connections gnome-tour
-  ];
 
   programs.obs-studio = {
     enable = true;
@@ -56,6 +40,10 @@
   '';
 
   nixpkgs.config.allowUnfree = true;
+
+  nixpkgs.overlays = [
+    (import ./overlays/amd.nix)
+  ];
 
   nix = {
     settings.auto-optimise-store = true;
