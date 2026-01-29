@@ -23,6 +23,7 @@ in {
         home = {
           homeDirectory = "/home/ducanh";
           file = {
+            ".local/share/color-schemes".source = "${aero.aerothemeplasma}/share/color_scheme";
             ".local/share/plasma/desktoptheme".source = "${aero.aerothemeplasma}/share/plasma/desktoptheme";
             ".local/share/plasma/look-and-feel".source = "${aero.aerothemeplasma}/share/plasma/look-and-feel";
             ".local/share/plasma/plasmoids".source = "${aero.aerothemeplasma}/share/plasma/plasmoids";
@@ -39,6 +40,7 @@ in {
             ".local/share/kwin-wayland/tabbox".source = "${aero.aerothemeplasma}/share/kwin/tabbox";
             ".local/share/smod".source = "${aero.aerothemeplasma}/share/smod";
             ".config/fontconfig/fonts.conf".source = "${aero.aerothemeplasma}/share/fontconfig/fonts.conf";
+            ".config/Kvantum".source = "${aero.aerothemeplasma}/share/Kvantum";
             ".local/share/sddm/themes/sddm-theme-mod".source = "${aero.aerothemeplasma}/share/sddm/themes/sddm-theme-mod";
           };
         };
