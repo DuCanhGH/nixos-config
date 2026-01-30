@@ -31,6 +31,7 @@ stdenv.mkDerivation {
     cp -r "$src/misc/mimetype"/* $out/share/mime/packages/
     cp "$src/misc/fontconfig/fonts.conf" $out/share/fontconfig/
     tar -xzf "$src/misc/cursors/aero-drop.tar.gz" -C $out/share/icons
+    ln -sf "$out/share/icons/aero-drop" $out/share/icons/default
     tar -xzf "$src/misc/icons/Windows 7 Aero.tar.gz" -C "$out/share/icons/"
     tar -xzf "$src/misc/sounds/sounds.tar.gz" -C $out/share/sounds
   '';

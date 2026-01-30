@@ -37,9 +37,12 @@ in
       kdePackages.qtmultimedia
       kdePackages.qt5compat
       kdePackages.qtstyleplugin-kvantum
+      kdePackages.sddm-kcm
       # kdePackages.kwayland
       kdePackages.kitemmodels
+      kdePackages.kde-gtk-config
       kdePackages.plasma5support
+      xdg-desktop-portal-gtk
       # kdePackages.plasma-wayland-protocols
     ]);
 
