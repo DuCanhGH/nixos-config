@@ -31,6 +31,8 @@
 
   services.supergfxd.enable = true;
 
+  hardware.bluetooth.enable = true;
+
   hardware.nvidia = {
     powerManagement.enable = true;
     powerManagement.finegrained = true;
