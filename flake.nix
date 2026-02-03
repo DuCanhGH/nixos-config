@@ -48,6 +48,16 @@
         { home-manager.extraSpecialArgs = specialArgs; }
       ];
     };
+    nixosConfigurations.arkhe = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      inherit specialArgs;
+      modules = [
+        home-manager.nixosModules.home-manager
+        lanzaboote.nixosModules.lanzaboote
+        ./systems/arkhe/configuration.nix
+        homeManagerOptions
+      ];
+    };
     nixosConfigurations.pneuma = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       inherit specialArgs;
