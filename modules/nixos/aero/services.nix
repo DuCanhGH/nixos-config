@@ -1,21 +1,16 @@
-{ config, pkgs, lib, ... }:
-
-let
-  aero = pkgs.callPackage ./default.nix {};
-in
-{
+{ config, pkgs, lib, ... }: {
   options.services.aero = {
     enable = lib.mkEnableOption "Enable Aero";
   };
 
   config = lib.mkIf config.services.aero.enable {
     environment.variables = {
-      QT_PLUGIN_PATH = [ "${aero.aerothemeplasma}/lib/qt-6/plugins" "${aero.decoration}/lib/qt-6/plugins" ];
-      QML2_IMPORT_PATH = "${aero.aerothemeplasma}/lib/qt-6/qml:$QML2_IMPORT_PATH";
+      QT_PLUGIN_PATH = [ "${pkgs.aero.aerothemeplasma}/lib/qt-6/plugins" "${pkgs.aero.decoration}/lib/qt-6/plugins" ];
+      QML2_IMPORT_PATH = "${pkgs.kdePackages.libplasma}/lib/qt-6/qml:${pkgs.aero.aerothemeplasma}/lib/qt-6/qml:$QML2_IMPORT_PATH";
       QML_DISABLE_DISTANCEFIELD = "1";
     };
 
-    environment.systemPackages = (with aero; [
+    environment.systemPackages = (with pkgs.aero; [
       aeroglassblur
       aeroglide
       aerothemeplasma
@@ -47,11 +42,6 @@ in
       # kdePackages.plasma-wayland-protocols
     ]);
 
-    nixpkgs.overlays = [
-      (import ../overlays/aero.nix)
-      (import ../overlays/kde.nix)
-    ];
-
     services.displayManager.sddm = {
       theme = "sddm-theme-mod";
       settings = {
@@ -63,7 +53,7 @@ in
 
     services.displayManager.defaultSession = "aerothemeplasma";
 
-    services.displayManager.sessionPackages = [ aero.login-sessions ];
+    services.displayManager.sessionPackages = [ pkgs.aero.login-sessions ];
 
     fonts.packages = with pkgs; [
       corefonts

@@ -41,6 +41,8 @@
 
   nixpkgs.overlays = [
     (import ./overlays/amd.nix)
+    (import ./overlays/repos.nix)
+    (import ./overlays/kde.nix)
   ];
 
   nix = {

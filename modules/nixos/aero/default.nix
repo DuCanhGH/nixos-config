@@ -1,12 +1,7 @@
 # Source: https://gitgud.io/aean0x/aerothemeplasma/-/blob/f4edc9ff83f3fcfb5ebbbd9872795a30f01c06e6/nix/aerothemeplasma.nix
 { pkgs, lib, stdenv, ... }:
 let
-  repo = pkgs.fetchFromGitHub {
-    owner = "DuCanhGH";
-    repo = "aerothemeplasma";
-    rev = "b946975a02b7dadc62a938659d0b71f31bf13984";
-    hash = "sha256-1pP7RieqlbgmVnn6XaWbkn+f9sxT3UOW1794HG2kUpA=";
-  };
+  repo = pkgs.aero-repo;
   commonCmakeFlags = [
     "-DCMAKE_BUILD_TYPE=Release"
     "-DBUILD_KF6=ON"
@@ -25,7 +20,7 @@ let
 
     extendDrvArgs = final: args @ {
       pname,
-      version ? "0.0.1",
+      version ? repo.rev,
       src,
       cmakeFlags ? [],
       configurePhase ? ''cmake -B build -G Ninja ${lib.concatStringsSep " " (commonCmakeFlags ++ cmakeFlags)}'',
@@ -68,15 +63,14 @@ let
         kdePackages.kiconthemes
         kdePackages.kirigami
         kdePackages.libplasma
+        kdePackages.plasma5support
       ];
     in
       args
       // {
+        inherit pname version src;
         nativeBuildInputs = defaultNative ++ nativeBuildInputs;
         buildInputs = defaultBuild ++ buildInputs;
-
-        inherit pname version src;
-
         configurePhase = ''
           runHook preConfigure
           ${configurePhase}
