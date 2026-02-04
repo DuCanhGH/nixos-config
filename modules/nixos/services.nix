@@ -20,7 +20,8 @@
     services.displayManager.sddm = {
       enable = true;
       wayland.enable = false;
-      settings.General.DisplayServer = "x11-user";
+      # This option causes SDDM's splash screen not to show up.
+      # settings.General.DisplayServer = "x11-user";
     };
     services.desktopManager.plasma6.enable = true;
     services.aero.enable = true;

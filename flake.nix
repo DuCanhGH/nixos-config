@@ -34,7 +34,7 @@
   outputs = inputs@{ nixpkgs, nix-darwin, home-manager, lanzaboote, agenix, plasma-manager, ... }:
   let
     specialArgs = { inherit inputs; };
-    homeManagerOptions =         {
+    homeManagerOptions = {
       home-manager.extraSpecialArgs = specialArgs;
       home-manager.sharedModules = [plasma-manager.homeModules.plasma-manager];
     };
