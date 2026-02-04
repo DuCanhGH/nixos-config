@@ -84,6 +84,27 @@ in {
         };
         "kdeglobals"."General"."accentColorFromWallpaper" = false;
       };
+      window-rules = [
+        {
+          description = "POLKIT_RULES";
+          match = {
+            window-class = {
+              value = "(polkit-kde-authentication-agent-1)|(polkit-kde-manager)|(org.kde.polkit-kde-authentication-agent-1)";
+              type = "regex";
+            };
+            machine = {
+              value = "localhost";
+              type = "exact";
+            };
+          };
+          apply = {
+            minimize = {
+              value = false;
+              apply = "force";
+            };
+          };
+        }
+      ];
     };
   };
 }

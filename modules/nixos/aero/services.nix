@@ -42,13 +42,14 @@ in
       kdePackages.kitemmodels
       kdePackages.kde-gtk-config
       kdePackages.plasma5support
+      kdePackages.polkit-kde-agent-1
       xdg-desktop-portal-gtk
       # kdePackages.plasma-wayland-protocols
     ]);
 
     nixpkgs.overlays = [
       (import ../overlays/aero.nix)
-      (import ../overlays/libplasma.nix)
+      (import ../overlays/kde.nix)
     ];
 
     services.displayManager.sddm = {
