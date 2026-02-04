@@ -31,17 +31,12 @@
 
   services.supergfxd.enable = true;
 
+  services.amdgpu.enable = true;
+
   hardware.bluetooth.enable = true;
 
-  hardware.nvidia = {
-    powerManagement.enable = true;
-    powerManagement.finegrained = true;
-    package = config.boot.kernelPackages.nvidiaPackages.beta;
-    prime = {
-      offload.enable = true;
-      offload.enableOffloadCmd = true;
-      amdgpuBusId = "PCI:0@65:00:0";
-      nvidiaBusId = "PCI:0@01:0:0";
-    };
+  hardware.nvidia.prime = {
+    amdgpuBusId = "PCI:0@65:00:0";
+    nvidiaBusId = "PCI:0@01:0:0";
   };
 }

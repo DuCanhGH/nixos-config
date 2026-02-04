@@ -25,9 +25,4 @@
   networking.hostName = "arkhe"; # Define your hostname.
 
   hardware.bluetooth.enable = true;
-
-  hardware.nvidia = {
-    powerManagement.enable = false;
-    package = config.boot.kernelPackages.nvidiaPackages.beta;
-  };
 }

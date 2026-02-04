@@ -36,15 +36,4 @@
   swapDevices = [ { device = "/swap/swapfile"; } ];
 
   networking.hostName = "ousia"; # Define your hostname.
-
-  hardware.nvidia = {
-    powerManagement.enable = false;
-    package = config.boot.kernelPackages.nvidiaPackages.beta;
-  };
-
-  home-manager.users.ducanh = {
-    programs.git = {
-      signing.key = "96A86117534CA6B8";
-    };
-  };
 }
