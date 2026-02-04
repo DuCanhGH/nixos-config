@@ -4,8 +4,8 @@ let
   repo = pkgs.fetchFromGitHub {
     owner = "DuCanhGH";
     repo = "aerothemeplasma";
-    rev = "df422863c99dcb25a18238ff6bc7b64c28c7ea09";
-    hash = "sha256-6nlB6HDBvqCApMVv/IXS0M4nczjfWaTPNQdZNLbQ+2I=";
+    rev = "9db1309865203899c66f8d4490a19065d765856b";
+    hash = "sha256-9coWEif9xY53SRRjpYbQjzGQBGv1aJFeKTPSED+9V+Y=";
   };
   commonCmakeFlags = [
     "-DCMAKE_BUILD_TYPE=Release"

@@ -26,7 +26,7 @@
       "rd.systemd.show_status=auto"
     ];
 
-    extraModulePackages = [ config.boot.kernelPackages.nvidia_x11 ];
+    extraModulePackages = [ config.boot.kernelPackages.nvidia_x11_beta ];
   };
 
   fileSystems = {
