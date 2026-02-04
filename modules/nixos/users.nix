@@ -1,7 +1,4 @@
-{ inputs, pkgs, ... }:
-let
-  aero = pkgs.callPackage ./aero {};
-in {
+{ pkgs, ... }: {
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users = {
     ducanh = {
@@ -19,83 +16,9 @@ in {
     backupFileExtension = "backup";
     users = {
       ducanh = {
-        imports = [ ../../home/ducanh.nix ];
-        home = {
-          homeDirectory = "/home/ducanh";
-          file = {
-            ".local/share/color-schemes".source = "${aero.aerothemeplasma}/share/color_scheme";
-            ".local/share/plasma/desktoptheme".source = "${aero.aerothemeplasma}/share/plasma/desktoptheme";
-            ".local/share/plasma/look-and-feel".source = "${aero.aerothemeplasma}/share/plasma/look-and-feel";
-            ".local/share/plasma/plasmoids".source = "${aero.aerothemeplasma}/share/plasma/plasmoids";
-            ".local/share/plasma/layout-templates".source = "${aero.aerothemeplasma}/share/plasma/layout-templates";
-            ".local/share/kwin/effects".source = "${aero.aerothemeplasma}/share/kwin/effects";
-            ".local/share/kwin/outline".source = "${aero.aerothemeplasma}/share/kwin/outline";
-            ".local/share/kwin/tabbox".source = "${aero.aerothemeplasma}/share/kwin/tabbox";
-            ".local/share/kwin-x11/effects".source = "${aero.aerothemeplasma}/share/kwin/effects";
-            ".local/share/kwin-x11/outline".source = "${aero.aerothemeplasma}/share/kwin/outline";
-            ".local/share/kwin-x11/tabbox".source = "${aero.aerothemeplasma}/share/kwin/tabbox";
-            ".local/share/kwin-wayland/effects".source = "${aero.aerothemeplasma}/share/kwin/effects";
-            ".local/share/kwin-wayland/outline".source = "${aero.aerothemeplasma}/share/kwin/outline";
-            ".local/share/kwin-wayland/tabbox".source = "${aero.aerothemeplasma}/share/kwin/tabbox";
-            ".local/share/smod".source = "${aero.aerothemeplasma}/share/smod";
-            ".config/fontconfig/fonts.conf".source = "${aero.aerothemeplasma}/share/fontconfig/fonts.conf";
-            ".config/Kvantum".source = "${aero.aerothemeplasma}/share/Kvantum";
-          };
-        };
-        programs.plasma = {
-          enable = true;
-          shortcuts.kwin = {
-            "MinimizeAll" = "Meta+D";
-            "Peek at Desktop" = [];
-            "Walk Through Windows Alternative" = "Meta+Tab";
-          };
-          configFile = {
-            "kwinrc"."TabBox" = {
-              "LayoutName" = "thumbnail_seven";
-              "ShowDesktopMode" = 1;
-            };
-            "kwinrc"."TabBoxAlternative" = {
-              "LayoutName" = "flipswitch";
-            };
-            "kwinrc"."MouseBindings"."CommandWheel" = "Nothing";
-            "kwinrc"."Plugins" = {
-              "kwin4_effect_aeroglassblurEnabled" = true;
-              "kwin4_effect_aeroglideEnabled" = true;
-              "smodsnapEnabled" = true;
-              "smodglowEnabled" = true;
-              "startupfeedbackEnabled" = true;
-              "desaturateUnresponsiveAppsEnabled" = true;
-              "fadingPopupsEnabled" = true;
-              "loginEnabled" = true;
-              "squashEnabled" = true;
-              "smodpeekeffectEnabled" = true;
-              "dimScreenForAdminModeEnabled" = true;
-              "minimizeallEnabled" = true;
-              "dimscreenEnabled" = true;
-              "backgroundcontrastEnabled" = false;
-              "blurEnabled" = false;
-              "maximizeEnabled" = false;
-              "slidingpopupsEnabled" = false;
-              "dialogparentEnabled" = false;
-              "diminactiveEnabled" = false;
-              "logoutEnabled" = false;
-            };
-            "kwinrc"."Scripts" = {
-              "minimizeall" = true;
-              "smodpeekscript" = true;
-            };
-            "ksmserverrc"."General"."confirmLogout" = false;
-            "kcminputrc"."Mouse"."BusyCursor" = "none";
-            "klaunchrc"."FeedbackStyle"."BusyCursor" = false;
-            "kdeglobals"."General" = {
-              "font" = "Segoe UI,9,-1,5,50,0,0,0,0,0";
-              "menuFont" = "Segoe UI,9,-1,5,50,0,0,0,0,0";
-              "toolBarFont" = "Segoe UI,9,-1,5,50,0,0,0,0,0";
-              "smallestReadableFont" = "Segoe UI,9,-1,5,400,0,0,0,0,0,0,0,0,0,0,1";
-            };
-            "kdeglobals"."General"."accentColorFromWallpaper" = false;
-          };
-        };
+        imports = [ ../../home/ducanh.nix ./home/aero.nix ];
+        aero.enable = true;
+        home.homeDirectory = "/home/ducanh";
       };
     };
   };

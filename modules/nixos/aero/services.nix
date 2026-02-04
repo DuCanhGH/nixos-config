@@ -64,19 +64,9 @@ in
 
     services.displayManager.sessionPackages = [ aero.login-sessions ];
 
-    fonts = {
-      packages = with pkgs; [
-        corefonts
-        vista-fonts
-      ];
-      fontconfig = {
-        enable = true;
-        defaultFonts = {
-          sansSerif = ["Segoe UI"];
-          serif = ["Segoe UI"];
-          monospace = ["Hack"];
-        };
-      };
-    };
+    fonts.packages = with pkgs; [
+      corefonts
+      vista-fonts
+    ];
   };
 }
