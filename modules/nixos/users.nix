@@ -28,7 +28,6 @@ in {
             ".local/share/plasma/look-and-feel".source = "${aero.aerothemeplasma}/share/plasma/look-and-feel";
             ".local/share/plasma/plasmoids".source = "${aero.aerothemeplasma}/share/plasma/plasmoids";
             ".local/share/plasma/layout-templates".source = "${aero.aerothemeplasma}/share/plasma/layout-templates";
-            ".local/share/plasma/shells".source = "${aero.aerothemeplasma}/share/plasma/shells";
             ".local/share/kwin/effects".source = "${aero.aerothemeplasma}/share/kwin/effects";
             ".local/share/kwin/outline".source = "${aero.aerothemeplasma}/share/kwin/outline";
             ".local/share/kwin/tabbox".source = "${aero.aerothemeplasma}/share/kwin/tabbox";
@@ -41,7 +40,6 @@ in {
             ".local/share/smod".source = "${aero.aerothemeplasma}/share/smod";
             ".config/fontconfig/fonts.conf".source = "${aero.aerothemeplasma}/share/fontconfig/fonts.conf";
             ".config/Kvantum".source = "${aero.aerothemeplasma}/share/Kvantum";
-            ".local/share/sddm/themes/sddm-theme-mod".source = "${aero.aerothemeplasma}/share/sddm/themes/sddm-theme-mod";
           };
         };
         programs.plasma = {

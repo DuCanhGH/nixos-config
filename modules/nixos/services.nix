@@ -16,10 +16,11 @@
     # services.desktopManager.gnome.enable = true;
 
     # Enable the KDE Desktop Environment.
-    services.displayManager.defaultSession = "plasmax11";
+    # services.displayManager.defaultSession = "plasmax11";
     services.displayManager.sddm = {
       enable = true;
       wayland.enable = false;
+      settings.General.DisplayServer = "x11-user";
     };
     services.desktopManager.plasma6.enable = true;
     services.aero.enable = true;

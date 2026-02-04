@@ -60,6 +60,10 @@ in
       };
     };
 
+    services.displayManager.defaultSession = "aerothemeplasma";
+
+    services.displayManager.sessionPackages = [ aero.login-sessions ];
+
     fonts = {
       packages = with pkgs; [
         corefonts

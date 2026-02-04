@@ -114,6 +114,9 @@ in  {
   kcmloader = pkgs.callPackage ./kcmloader.nix  {
     inherit mkAeroDerivation repo;
   };
+  login-sessions = pkgs.callPackage ./login-sessions.nix  {
+    inherit mkAeroDerivation repo;
+  };
   notifications = pkgs.callPackage ./notifications.nix  {
     inherit mkAeroDerivation repo;
   };
