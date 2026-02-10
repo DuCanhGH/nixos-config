@@ -20,6 +20,8 @@
     };
   };
 
+  services.davinci.enable = true;
+
   swapDevices = [ { device = "/swap/swapfile"; } ];
 
   networking.hostName = "arkhe"; # Define your hostname.
