@@ -1,6 +1,6 @@
 { config, pkgs, ... }: {
   boot = {
-    kernelPackages = pkgs.linuxPackages_latest;
+    kernelPackages = pkgs.linuxPackages;
 
     plymouth = {
       enable = true;
@@ -33,7 +33,6 @@
     "/".options = [ "compress=zstd" ];
     "/home".options = [ "compress=zstd" ];
     "/nix".options = [ "compress=zstd" "noatime" ];
-    "/swap".options = [ "noatime" ];
   };
 
   hardware.graphics.enable = true;

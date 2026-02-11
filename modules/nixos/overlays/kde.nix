@@ -1,3 +1,4 @@
+{ waylandEnabled ? false }:
 final: prev: {
   kdePackages = prev.kdePackages // {
     polkit-kde-agent-1 = prev.kdePackages.polkit-kde-agent-1.overrideAttrs (old: {
@@ -6,5 +7,7 @@ final: prev: {
       '';
     });
   };
-  aero = final.callPackage ../aero {};
+  aero = final.callPackage ../aero {
+    inherit waylandEnabled;
+  };
 }

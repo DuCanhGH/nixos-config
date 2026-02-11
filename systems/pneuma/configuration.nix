@@ -13,16 +13,17 @@
     loader.systemd-boot.enable = lib.mkForce false;
     loader.systemd-boot.consoleMode = "max";
     loader.efi.canTouchEfiVariables = true;
-    loader.efi.efiSysMountPoint = "/boot";
     lanzaboote = {
       enable = true;
       pkiBundle = "/var/lib/sbctl";
     };
   };
 
-  swapDevices = [ { device = "/swap/swapfile"; } ];
-
   networking.hostName = "pneuma"; # Define your hostname.
+
+  services.xserver.dpi = 192;
+
+  services.aero.wayland.enable = true;
 
   services.asusd = {
     enable = true;

@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }: {
+{ config, pkgs, inputs, ... }: {
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages =
@@ -42,7 +42,9 @@
   nixpkgs.overlays = [
     (import ./overlays/amd.nix)
     (import ./overlays/repos.nix)
-    (import ./overlays/kde.nix)
+    (import ./overlays/kde.nix {
+      waylandEnabled = config.services.aero.wayland.enable;
+    })
   ];
 
   nix = {

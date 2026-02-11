@@ -20,6 +20,10 @@
     };
   };
 
+  fileSystems = {
+    "/swap".options = [ "noatime" ];
+  };
+
   services.davinci.enable = true;
 
   swapDevices = [ { device = "/swap/swapfile"; } ];

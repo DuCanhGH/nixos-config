@@ -1,12 +1,10 @@
 # Source: https://gitgud.io/aean0x/aerothemeplasma/-/blob/f4edc9ff83f3fcfb5ebbbd9872795a30f01c06e6/nix/aerothemeplasma.nix
-{ pkgs, lib, stdenv, ... }:
+{ waylandEnabled ? false, pkgs, lib, stdenv, ... }:
 let
   repo = pkgs.aero-repo;
-  commonCmakeFlags = [
+  commonCmakeFlags = ([
     "-DCMAKE_BUILD_TYPE=Release"
     "-DBUILD_KF6=ON"
-    # If using Wayland
-    # "-DKWIN_BUILD_WAYLAND=ON"
     "-DCMAKE_INSTALL_PREFIX=$out"
     "-DKDE_INSTALL_PLUGINDIR=lib/qt-6/plugins"
     "-DKDE_INSTALL_QMLDIR=lib/qt-6/qml"
@@ -14,7 +12,7 @@ let
     "-DKPLUGINFACTORY_INCLUDE=${pkgs.kdePackages.kcoreaddons.dev}/include/KF6/KCoreAddons"
     ''-DCMAKE_CXX_FLAGS="-I${pkgs.kdePackages.kwin-x11.dev}/include/kwin -I${pkgs.kdePackages.kcoreaddons.dev}/include/KF6/KCoreAddons -I${pkgs.kdePackages.libplasma.dev}/include/Plasma -I${pkgs.kdePackages.libplasma.dev}/include/PlasmaQuick"''
     "-DKWin_DIR=${pkgs.kdePackages.kwin-x11.dev}/lib/cmake/KWin"
-  ];
+  ]) ++ (if waylandEnabled then [ "-DKWIN_BUILD_WAYLAND=ON" ] else []);
   mkAeroDerivation = lib.extendMkDerivation {
     constructDrv = stdenv.mkDerivation;
 
@@ -37,7 +35,7 @@ let
         kdePackages.wrapQtAppsHook
         pkg-config
       ];
-      defaultBuild = with pkgs; [
+      defaultBuild = (with pkgs; [
         kdePackages.qtbase
         kdePackages.qttools
         kdePackages.qtwayland
@@ -53,18 +51,19 @@ let
         kdePackages.kdecoration
         kdePackages.kconfigwidgets
         kdePackages.kcolorscheme
-        # kdePackages.kwayland
-        # kdePackages.kwin
         kdePackages.kwin-x11
         kdePackages.ksvg
-        # kdePackages.plasma-wayland-protocols
         kdePackages.kguiaddons
         kdePackages.ki18n
         kdePackages.kiconthemes
         kdePackages.kirigami
         kdePackages.libplasma
         kdePackages.plasma5support
-      ];
+      ]) ++ (if waylandEnabled then with pkgs; [
+        kdePackages.kwin
+        kdePackages.kwayland
+        kdePackages.plasma-wayland-protocols
+      ] else [ ]);
     in
       args
       // {
