@@ -1,4 +1,5 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, ... }:
+{
   boot = {
     kernelPackages = pkgs.linuxPackages;
 
@@ -8,7 +9,7 @@
       themePackages = with pkgs; [
         # By default we would install all themes
         (adi1090x-plymouth-themes.override {
-          selected_themes = [];
+          selected_themes = [ ];
         })
       ];
     };
@@ -32,7 +33,10 @@
   fileSystems = {
     "/".options = [ "compress=zstd" ];
     "/home".options = [ "compress=zstd" ];
-    "/nix".options = [ "compress=zstd" "noatime" ];
+    "/nix".options = [
+      "compress=zstd"
+      "noatime"
+    ];
   };
 
   hardware.graphics.enable = true;

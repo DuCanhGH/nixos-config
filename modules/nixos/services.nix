@@ -1,5 +1,11 @@
 # List services that you want to enable:
-{ config, lib, pkgs, ... }: {
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+{
   options.services.amdgpu = {
     enable = lib.mkEnableOption "Set AMD iGPU as primary";
   };
@@ -9,7 +15,10 @@
 
     # Enable the X11 windowing system.
     services.xserver.enable = true;
-    services.xserver.videoDrivers = [ "nvidia" ] ++ (if config.services.amdgpu.enable then [ "amdgpu" ] else [ ]);
+    services.xserver.videoDrivers = [
+      "nvidia"
+    ]
+    ++ (if config.services.amdgpu.enable then [ "amdgpu" ] else [ ]);
 
     # Enable the GNOME Desktop Environment.
     # services.displayManager.gdm.enable = true;
@@ -19,7 +28,7 @@
     # services.displayManager.defaultSession = "plasmax11";
     services.displayManager.sddm = {
       enable = true;
-      wayland.enable = false;
+      wayland.enable = lib.mkDefault false;
       # This option causes SDDM's splash screen not to show up.
       # settings.General.DisplayServer = "x11-user";
     };

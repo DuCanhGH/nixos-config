@@ -1,4 +1,10 @@
-{ pkgs, lib, mkAeroDerivation, repo, commonCmakeFlags }:
+{
+  pkgs,
+  lib,
+  mkAeroDerivation,
+  repo,
+  commonCmakeFlags,
+}:
 
 mkAeroDerivation {
   pname = "aero-desktopcontainment";

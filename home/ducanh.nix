@@ -1,8 +1,14 @@
-{ inputs, config, pkgs, ... }:
+{
+  inputs,
+  config,
+  pkgs,
+  ...
+}:
 let
   agenixPublicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDX9GXpxfnALHa8pO7G/FPJp+rHACXzaG6HQ11lOk+2/ ngoducanh2912@gmail.com";
   sshPublicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID5fRr8pqUXd9sVUgz4PBaiZN5h9tRHW0862zNYz1OiT 75556609+DuCanhGH@users.noreply.github.com";
-in {
+in
+{
   imports = [
     inputs.agenix.homeManagerModules.default
   ];
@@ -22,11 +28,11 @@ in {
     identityPaths = [ "${config.home.homeDirectory}/.ssh/agenix" ];
     secrets = {
       ssh_ed25519 = {
-        file =  "${inputs.secrets}/ssh_ed25519.age";
+        file = "${inputs.secrets}/ssh_ed25519.age";
         path = "${config.home.homeDirectory}/.ssh/id_ed25519";
       };
       gpg_17143A = {
-        file =  "${inputs.secrets}/gpg_17143A.age";
+        file = "${inputs.secrets}/gpg_17143A.age";
         path = "${config.home.homeDirectory}/.gnupg/17143A062925B84B.key";
       };
     };

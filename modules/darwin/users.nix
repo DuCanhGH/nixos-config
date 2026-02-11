@@ -1,4 +1,10 @@
-{ inputs, pkgs, lib, ... }: {
+{
+  inputs,
+  pkgs,
+  lib,
+  ...
+}:
+{
   # Define a user account.
   users = {
     knownUsers = [ "ducanh" ];

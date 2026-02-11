@@ -1,6 +1,7 @@
 { pkgs, ... }:
 
-with pkgs; [
+with pkgs;
+[
   vim
   wget
   vscode
@@ -13,4 +14,6 @@ with pkgs; [
   clang-tools
   jdk21
   typst
+  nixfmt
+  nixfmt-tree
 ]

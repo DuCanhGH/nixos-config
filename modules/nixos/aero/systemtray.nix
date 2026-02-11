@@ -1,4 +1,8 @@
-{ pkgs, mkAeroDerivation, repo }:
+{
+  pkgs,
+  mkAeroDerivation,
+  repo,
+}:
 
 mkAeroDerivation {
   pname = "aero-systemtray";

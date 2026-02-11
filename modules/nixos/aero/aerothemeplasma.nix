@@ -1,9 +1,14 @@
-{ pkgs, lib, stdenv, repo }:
+{
+  pkgs,
+  lib,
+  stdenv,
+  repo,
+}:
 
 stdenv.mkDerivation {
   name = "aerothemeplasma";
   src = repo;
-  nativeBuildInputs = [pkgs.gnutar];
+  nativeBuildInputs = [ pkgs.gnutar ];
   dontBuild = true;
   installPhase = ''
     mkdir -p $out/share/plasma \

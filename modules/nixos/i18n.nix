@@ -1,4 +1,5 @@
-{ pkgs, lib, ... }: {
+{ pkgs, lib, ... }:
+{
   # Set your time zone.
   time.timeZone = lib.mkDefault "Asia/Ho_Chi_Minh";
 
@@ -27,8 +28,12 @@
           "Default Layout" = "us-altgr-intl";
           "DefaultIM" = "keyboard-us-altgr-intl";
         };
-        "Groups/0/Items/0" = { "Name" = "keyboard-us-altgr-intl"; };
-        "Groups/0/Items/1" = { "Name" = "bamboo"; };
+        "Groups/0/Items/0" = {
+          "Name" = "keyboard-us-altgr-intl";
+        };
+        "Groups/0/Items/1" = {
+          "Name" = "bamboo";
+        };
       };
     };
   };

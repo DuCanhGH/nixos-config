@@ -1,4 +1,6 @@
-{ waylandEnabled ? false }:
+{
+  waylandEnabled ? false,
+}:
 final: prev: {
   kdePackages = prev.kdePackages // {
     polkit-kde-agent-1 = prev.kdePackages.polkit-kde-agent-1.overrideAttrs (old: {

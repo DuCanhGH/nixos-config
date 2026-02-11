@@ -31,51 +31,61 @@
       flake = false;
     };
   };
-  outputs = inputs@{ nixpkgs, nix-darwin, home-manager, lanzaboote, agenix, plasma-manager, ... }:
-  let
-    specialArgs = { inherit inputs; };
-    homeManagerOptions = {
-      home-manager.extraSpecialArgs = specialArgs;
-      home-manager.sharedModules = [plasma-manager.homeModules.plasma-manager];
+  outputs =
+    inputs@{
+      nixpkgs,
+      nix-darwin,
+      home-manager,
+      lanzaboote,
+      agenix,
+      plasma-manager,
+      ...
+    }:
+    let
+      specialArgs = { inherit inputs; };
+      homeManagerOptions = {
+        home-manager.extraSpecialArgs = specialArgs;
+        home-manager.sharedModules = [ plasma-manager.homeModules.plasma-manager ];
+      };
+    in
+    {
+      darwinConfigurations.duckintosh = nix-darwin.lib.darwinSystem {
+        system = "aarch64-darwin";
+        inherit specialArgs;
+        modules = [
+          home-manager.darwinModules.home-manager
+          ./systems/duckintosh/configuration.nix
+          { home-manager.extraSpecialArgs = specialArgs; }
+        ];
+      };
+      nixosConfigurations.arkhe = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        inherit specialArgs;
+        modules = [
+          home-manager.nixosModules.home-manager
+          lanzaboote.nixosModules.lanzaboote
+          ./systems/arkhe/configuration.nix
+          homeManagerOptions
+        ];
+      };
+      nixosConfigurations.pneuma = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        inherit specialArgs;
+        modules = [
+          home-manager.nixosModules.home-manager
+          lanzaboote.nixosModules.lanzaboote
+          ./systems/pneuma/configuration.nix
+          homeManagerOptions
+        ];
+      };
+      nixosConfigurations.ousia = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        inherit specialArgs;
+        modules = [
+          home-manager.nixosModules.home-manager
+          ./systems/ousia/configuration.nix
+          homeManagerOptions
+        ];
+      };
     };
-  in {
-    darwinConfigurations.duckintosh = nix-darwin.lib.darwinSystem {
-      system = "aarch64-darwin";
-      inherit specialArgs;
-      modules = [
-        home-manager.darwinModules.home-manager
-        ./systems/duckintosh/configuration.nix
-        { home-manager.extraSpecialArgs = specialArgs; }
-      ];
-    };
-    nixosConfigurations.arkhe = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      inherit specialArgs;
-      modules = [
-        home-manager.nixosModules.home-manager
-        lanzaboote.nixosModules.lanzaboote
-        ./systems/arkhe/configuration.nix
-        homeManagerOptions
-      ];
-    };
-    nixosConfigurations.pneuma = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      inherit specialArgs;
-      modules = [
-        home-manager.nixosModules.home-manager
-        lanzaboote.nixosModules.lanzaboote
-        ./systems/pneuma/configuration.nix
-        homeManagerOptions
-      ];
-    };
-    nixosConfigurations.ousia = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      inherit specialArgs;
-      modules = [
-        home-manager.nixosModules.home-manager
-        ./systems/ousia/configuration.nix
-        homeManagerOptions
-      ];
-    };
-  };
 }

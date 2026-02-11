@@ -1,4 +1,10 @@
-{ config, lib, pkgs, ... }: {
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+{
   options.services.davinci = {
     enable = lib.mkEnableOption "Whether to install the DaVinci Resolve.";
   };

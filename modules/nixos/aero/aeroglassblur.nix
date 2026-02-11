@@ -1,4 +1,8 @@
-{ mkAeroDerivation, repo, decoration }:
+{
+  mkAeroDerivation,
+  repo,
+  decoration,
+}:
 
 mkAeroDerivation {
   pname = "aeroglassblur";

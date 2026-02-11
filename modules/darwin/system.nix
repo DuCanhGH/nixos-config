@@ -1,13 +1,20 @@
-{ pkgs, lib, inputs, ... }: {
+{
+  pkgs,
+  lib,
+  inputs,
+  ...
+}:
+{
   environment.systemPackages =
-    (import ../shared/packages.nix { inherit pkgs; }) ++ (with pkgs; [
+    (import ../shared/packages.nix { inherit pkgs; })
+    ++ (with pkgs; [
       firefox-unwrapped
       gnupg
       inputs.agenix.packages.aarch64-darwin.default
     ]);
 
   environment.shells = [ pkgs.fish ];
-  
+
   programs.fish.enable = true;
 
   programs.gnupg.agent = {

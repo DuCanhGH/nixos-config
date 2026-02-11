@@ -1,12 +1,21 @@
-{ config, lib, pkgs, ... }: {
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+{
   options.aero.enable = lib.mkEnableOption "Enable Aero user configuration";
   config = lib.mkIf config.aero.enable {
     home.file = {
       ".local/share/color-schemes".source = "${pkgs.aero.aerothemeplasma}/share/color_scheme";
-      ".local/share/plasma/desktoptheme".source = "${pkgs.aero.aerothemeplasma}/share/plasma/desktoptheme";
-      ".local/share/plasma/look-and-feel".source = "${pkgs.aero.aerothemeplasma}/share/plasma/look-and-feel";
+      ".local/share/plasma/desktoptheme".source =
+        "${pkgs.aero.aerothemeplasma}/share/plasma/desktoptheme";
+      ".local/share/plasma/look-and-feel".source =
+        "${pkgs.aero.aerothemeplasma}/share/plasma/look-and-feel";
       ".local/share/plasma/plasmoids".source = "${pkgs.aero.aerothemeplasma}/share/plasma/plasmoids";
-      ".local/share/plasma/layout-templates".source = "${pkgs.aero.aerothemeplasma}/share/plasma/layout-templates";
+      ".local/share/plasma/layout-templates".source =
+        "${pkgs.aero.aerothemeplasma}/share/plasma/layout-templates";
       ".local/share/kwin/effects".source = "${pkgs.aero.aerothemeplasma}/share/kwin/effects";
       ".local/share/kwin/outline".source = "${pkgs.aero.aerothemeplasma}/share/kwin/outline";
       ".local/share/kwin/tabbox".source = "${pkgs.aero.aerothemeplasma}/share/kwin/tabbox";
@@ -23,16 +32,16 @@
       enable = true;
       hinting = "full";
       defaultFonts = {
-        sansSerif = ["Segoe UI"];
-        serif = ["Segoe UI"];
-        monospace = ["Hack"];
+        sansSerif = [ "Segoe UI" ];
+        serif = [ "Segoe UI" ];
+        monospace = [ "Hack" ];
       };
     };
     programs.plasma = {
       enable = true;
       shortcuts.kwin = {
         "MinimizeAll" = "Meta+D";
-        "Peek at Desktop" = [];
+        "Peek at Desktop" = [ ];
         "Walk Through Windows Alternative" = "Meta+Tab";
       };
       configFile = {

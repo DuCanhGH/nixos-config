@@ -1,8 +1,15 @@
-{ config, pkgs, inputs, ... }: {
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
+{
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages =
-    (import ../shared/packages.nix { inherit pkgs; }) ++ (with pkgs; [
+    (import ../shared/packages.nix { inherit pkgs; })
+    ++ (with pkgs; [
       chromium
       sbctl
       nurl
@@ -50,7 +57,10 @@
   nix = {
     settings.auto-optimise-store = true;
     optimise.automatic = true;
-    settings.experimental-features = [ "nix-command" "flakes" ];
+    settings.experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
     gc = {
       automatic = true;
       dates = "weekly";

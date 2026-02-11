@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   # List services that you want to enable:
   services.postgresql = {
     enable = true;

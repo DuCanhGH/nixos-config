@@ -1,5 +1,11 @@
 # Source: https://gitgud.io/aean0x/aerothemeplasma/-/blob/f4edc9ff83f3fcfb5ebbbd9872795a30f01c06e6/nix/aerothemeplasma.nix
-{ waylandEnabled ? false, pkgs, lib, stdenv, ... }:
+{
+  waylandEnabled ? false,
+  pkgs,
+  lib,
+  stdenv,
+  ...
+}:
 let
   repo = pkgs.aero-repo;
   commonCmakeFlags = ([
@@ -12,59 +18,73 @@ let
     "-DKPLUGINFACTORY_INCLUDE=${pkgs.kdePackages.kcoreaddons.dev}/include/KF6/KCoreAddons"
     ''-DCMAKE_CXX_FLAGS="-I${pkgs.kdePackages.kwin-x11.dev}/include/kwin -I${pkgs.kdePackages.kcoreaddons.dev}/include/KF6/KCoreAddons -I${pkgs.kdePackages.libplasma.dev}/include/Plasma -I${pkgs.kdePackages.libplasma.dev}/include/PlasmaQuick"''
     "-DKWin_DIR=${pkgs.kdePackages.kwin-x11.dev}/lib/cmake/KWin"
-  ]) ++ (if waylandEnabled then [ "-DKWIN_BUILD_WAYLAND=ON" ] else []);
+  ])
+  ++ (if waylandEnabled then [ "-DKWIN_BUILD_WAYLAND=ON" ] else [ ]);
   mkAeroDerivation = lib.extendMkDerivation {
     constructDrv = stdenv.mkDerivation;
 
-    extendDrvArgs = final: args @ {
-      pname,
-      version ? repo.rev,
-      src,
-      cmakeFlags ? [],
-      configurePhase ? ''cmake -B build -G Ninja ${lib.concatStringsSep " " (commonCmakeFlags ++ cmakeFlags)}'',
-      buildPhase ? "ninja -C build",
-      installPhase ? "ninja install -C build",
-      nativeBuildInputs ? [],
-      buildInputs ? [],
-      ...
-    }: let
-      defaultNative = with pkgs; [
-        cmake
-        ninja
-        kdePackages.extra-cmake-modules
-        kdePackages.wrapQtAppsHook
-        pkg-config
-      ];
-      defaultBuild = (with pkgs; [
-        kdePackages.qtbase
-        kdePackages.qttools
-        kdePackages.qtwayland
-        kdePackages.qtdeclarative
-        kdePackages.qtvirtualkeyboard
-        kdePackages.qtmultimedia
-        kdePackages.qt5compat
-        kdePackages.qtstyleplugin-kvantum
-        kdePackages.kconfig
-        kdePackages.kcoreaddons
-        kdePackages.kwindowsystem
-        kdePackages.kcmutils
-        kdePackages.kdecoration
-        kdePackages.kconfigwidgets
-        kdePackages.kcolorscheme
-        kdePackages.kwin-x11
-        kdePackages.ksvg
-        kdePackages.kguiaddons
-        kdePackages.ki18n
-        kdePackages.kiconthemes
-        kdePackages.kirigami
-        kdePackages.libplasma
-        kdePackages.plasma5support
-      ]) ++ (if waylandEnabled then with pkgs; [
-        kdePackages.kwin
-        kdePackages.kwayland
-        kdePackages.plasma-wayland-protocols
-      ] else [ ]);
-    in
+    extendDrvArgs =
+      final:
+      args@{
+        pname,
+        version ? repo.rev,
+        src,
+        cmakeFlags ? [ ],
+        configurePhase ? "cmake -B build -G Ninja ${
+          lib.concatStringsSep " " (commonCmakeFlags ++ cmakeFlags)
+        }",
+        buildPhase ? "ninja -C build",
+        installPhase ? "ninja install -C build",
+        nativeBuildInputs ? [ ],
+        buildInputs ? [ ],
+        ...
+      }:
+      let
+        defaultNative = with pkgs; [
+          cmake
+          ninja
+          kdePackages.extra-cmake-modules
+          kdePackages.wrapQtAppsHook
+          pkg-config
+        ];
+        defaultBuild =
+          (with pkgs; [
+            kdePackages.qtbase
+            kdePackages.qttools
+            kdePackages.qtwayland
+            kdePackages.qtdeclarative
+            kdePackages.qtvirtualkeyboard
+            kdePackages.qtmultimedia
+            kdePackages.qt5compat
+            kdePackages.qtstyleplugin-kvantum
+            kdePackages.kconfig
+            kdePackages.kcoreaddons
+            kdePackages.kwindowsystem
+            kdePackages.kcmutils
+            kdePackages.kdecoration
+            kdePackages.kconfigwidgets
+            kdePackages.kcolorscheme
+            kdePackages.kwin-x11
+            kdePackages.ksvg
+            kdePackages.kguiaddons
+            kdePackages.ki18n
+            kdePackages.kiconthemes
+            kdePackages.kirigami
+            kdePackages.libplasma
+            kdePackages.plasma5support
+          ])
+          ++ (
+            if waylandEnabled then
+              with pkgs;
+              [
+                kdePackages.kwin
+                kdePackages.kwayland
+                kdePackages.plasma-wayland-protocols
+              ]
+            else
+              [ ]
+          );
+      in
       args
       // {
         inherit pname version src;
@@ -87,48 +107,49 @@ let
         '';
       };
   };
-  decoration = pkgs.callPackage ./decoration.nix  {
+  decoration = pkgs.callPackage ./decoration.nix {
     inherit mkAeroDerivation repo;
   };
-in  {
+in
+{
   inherit repo mkAeroDerivation decoration;
-  aeroglassblur = pkgs.callPackage ./aeroglassblur.nix  {
+  aeroglassblur = pkgs.callPackage ./aeroglassblur.nix {
     inherit mkAeroDerivation repo decoration;
   };
-  aeroglide = pkgs.callPackage ./aeroglide.nix  {
+  aeroglide = pkgs.callPackage ./aeroglide.nix {
     inherit mkAeroDerivation repo decoration;
   };
   aerothemeplasma = pkgs.callPackage ./aerothemeplasma.nix {
     inherit repo;
   };
-  desktopcontainment = pkgs.callPackage ./desktopcontainment.nix  {
+  desktopcontainment = pkgs.callPackage ./desktopcontainment.nix {
     inherit mkAeroDerivation repo commonCmakeFlags;
   };
-  kcmloader = pkgs.callPackage ./kcmloader.nix  {
+  kcmloader = pkgs.callPackage ./kcmloader.nix {
     inherit mkAeroDerivation repo;
   };
-  login-sessions = pkgs.callPackage ./login-sessions.nix  {
+  login-sessions = pkgs.callPackage ./login-sessions.nix {
     inherit mkAeroDerivation repo;
   };
-  notifications = pkgs.callPackage ./notifications.nix  {
+  notifications = pkgs.callPackage ./notifications.nix {
     inherit mkAeroDerivation repo;
   };
-  sevenstart = pkgs.callPackage ./sevenstart.nix  {
+  sevenstart = pkgs.callPackage ./sevenstart.nix {
     inherit mkAeroDerivation repo;
   };
-  seventasks = pkgs.callPackage ./seventasks.nix  {
+  seventasks = pkgs.callPackage ./seventasks.nix {
     inherit mkAeroDerivation repo;
   };
-  smodglow = pkgs.callPackage ./smodglow.nix  {
+  smodglow = pkgs.callPackage ./smodglow.nix {
     inherit mkAeroDerivation repo decoration;
   };
-  smodsnap = pkgs.callPackage ./smodsnap.nix  {
+  smodsnap = pkgs.callPackage ./smodsnap.nix {
     inherit mkAeroDerivation repo decoration;
   };
-  startupfeedback = pkgs.callPackage ./startupfeedback.nix  {
+  startupfeedback = pkgs.callPackage ./startupfeedback.nix {
     inherit mkAeroDerivation repo decoration;
   };
-  systemtray = pkgs.callPackage ./systemtray.nix  {
+  systemtray = pkgs.callPackage ./systemtray.nix {
     inherit mkAeroDerivation repo;
   };
 }

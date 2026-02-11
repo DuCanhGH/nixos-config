@@ -1,4 +1,8 @@
-{ pkgs, mkAeroDerivation, repo }:
+{
+  pkgs,
+  mkAeroDerivation,
+  repo,
+}:
 
 mkAeroDerivation {
   pname = "aero-login-sessions";
@@ -19,5 +23,8 @@ mkAeroDerivation {
     cp build/aerothemeplasmax11.desktop $out/share/xsessions/aerothemeplasma.desktop
     cp build/aerothemeplasma.desktop $out/share/wayland-sessions/aerothemeplasma-wayland.desktop
   '';
-  passthru.providedSessions = [ "aerothemeplasma" "aerothemeplasma-wayland" ];
+  passthru.providedSessions = [
+    "aerothemeplasma"
+    "aerothemeplasma-wayland"
+  ];
 }
