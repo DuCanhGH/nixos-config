@@ -28,25 +28,42 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/9d000552-dc0e-4315-8e9f-bebdbc3e8eea";
+    device = "/dev/disk/by-uuid/2b2434f5-7c01-475d-9aa7-a82a7ce41913";
     fsType = "btrfs";
     options = [ "subvol=root" ];
   };
 
-  fileSystems."/nix" = {
-    device = "/dev/disk/by-uuid/9d000552-dc0e-4315-8e9f-bebdbc3e8eea";
-    fsType = "btrfs";
-    options = [ "subvol=nix" ];
-  };
+  boot.initrd.luks.devices."enc".device = "/dev/disk/by-uuid/b5e0991e-2b71-4368-8506-388ea02f86f4";
 
   fileSystems."/home" = {
-    device = "/dev/disk/by-uuid/9d000552-dc0e-4315-8e9f-bebdbc3e8eea";
+    device = "/dev/disk/by-uuid/2b2434f5-7c01-475d-9aa7-a82a7ce41913";
     fsType = "btrfs";
     options = [ "subvol=home" ];
   };
 
+  fileSystems."/nix" = {
+    device = "/dev/disk/by-uuid/2b2434f5-7c01-475d-9aa7-a82a7ce41913";
+    fsType = "btrfs";
+    options = [ "subvol=nix" ];
+  };
+
+  fileSystems."/swap" = {
+    device = "/dev/disk/by-uuid/2b2434f5-7c01-475d-9aa7-a82a7ce41913";
+    fsType = "btrfs";
+    options = [ "subvol=swap" ];
+  };
+
+  fileSystems."/efi" = {
+    device = "/dev/disk/by-uuid/2665-CDBE";
+    fsType = "vfat";
+    options = [
+      "fmask=0022"
+      "dmask=0022"
+    ];
+  };
+
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/652D-F1AF";
+    device = "/dev/disk/by-uuid/A6F8-3115";
     fsType = "vfat";
     options = [
       "fmask=0022"
@@ -55,7 +72,10 @@
   };
 
   swapDevices = [
-    { device = "/dev/disk/by-uuid/998d2990-7691-4e57-bb65-be6dcf822e6e"; }
+    {
+      device = "/swap/swapfile";
+      size = 4096;
+    }
   ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
@@ -63,8 +83,6 @@
   # still possible to use this option, but it's recommended to use it in conjunction
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
   networking.useDHCP = lib.mkDefault true;
-  # networking.interfaces.br-ea297b5ae8fa.useDHCP = lib.mkDefault true;
-  # networking.interfaces.docker0.useDHCP = lib.mkDefault true;
   # networking.interfaces.enp103s0f3u1u1.useDHCP = lib.mkDefault true;
   # networking.interfaces.wlp3s0.useDHCP = lib.mkDefault true;
 

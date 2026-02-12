@@ -18,16 +18,28 @@
   boot = {
     loader.systemd-boot.enable = lib.mkForce false;
     loader.systemd-boot.consoleMode = "max";
+    loader.systemd-boot.xbootldrMountPoint = "/boot";
     loader.efi.canTouchEfiVariables = true;
+    loader.efi.efiSysMountPoint = "/efi";
     lanzaboote = {
       enable = true;
       pkiBundle = "/var/lib/sbctl";
     };
   };
 
-  networking.hostName = "pneuma"; # Define your hostname.
+  fileSystems = {
+    "/efi/EFI/Linux" = {
+      device = "/boot/EFI/Linux";
+      options = [ "bind" ];
+    };
+    "/efi/EFI/nixos" = {
+      device = "/boot/EFI/nixos";
+      options = [ "bind" ];
+    };
+    "/swap".options = [ "noatime" ];
+  };
 
-  services.xserver.dpi = 192;
+  networking.hostName = "pneuma"; # Define your hostname.
 
   services.aero.wayland.enable = true;
 
