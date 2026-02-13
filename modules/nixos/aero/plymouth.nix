@@ -56,15 +56,14 @@ pkgs.stdenv.mkDerivation {
     for key in "''${!config_values[@]}"; do
       value=''${config_values[$key]}
 
-      dimensions=$(magick -density 96 -font "$FONT" -pointsize "$FONT_SIZE" label:"$value" -format "%[fx:w+27]x%[fx:h+27]" info:)
+      dimensions=$(magick -density 96 -font "$FONT" -pointsize "$FONT_SIZE" label:"$value" -format "%[fx:w+54]x%[fx:h+54]" info:)
 
-      [[ $key == *"Update"* ]] && pos="center" || pos="northwest"
       [[ $key == *"Update"* ]] && ofs="+0+0" || ofs="+0+1"
 
       magick -density 96 -size "$dimensions" xc:none \
         -font "$FONT" -pointsize "$FONT_SIZE" \
         -fill "rgba(0,0,0,0.8)" \
-        -gravity $pos \
+        -gravity center \
         -annotate $ofs "$value" \
         -blur 0x2 \
         -channel A -evaluate multiply 0.8 +channel \
@@ -73,7 +72,7 @@ pkgs.stdenv.mkDerivation {
     substituteInPlace plymouth-vista.script \
       --replace-fail "global.UseLegacyBootScreen = 1" "global.UseLegacyBootScreen = 0" \
       --replace-fail "global.UseShadow = 0" "global.UseShadow = 1" \
-      --replace-fail "global.Pref = 1" "global.Pref = 2" \
+      --replace-fail "global.Pref = 1" "global.Pref = 3" \
       --replace-fail 'global.AuthuiStyle = "vista"' 'global.AuthuiStyle = "7"' \
       --replace-fail 'global.PasswordTitle = "Windows Boot Manager"' 'global.PasswordTitle = "Linux Boot Manager"' \
       --replace-fail 'global.AnswerTitle = "Windows Boot Manager"' 'global.AnswerTitle = "Linux Boot Manager"' \
