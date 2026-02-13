@@ -20,6 +20,8 @@
     ]
     ++ (if config.services.amdgpu.enable then [ "amdgpu" ] else [ ]);
 
+    boot.initrd.kernelModules = lib.mkIf config.services.amdgpu.enable [ "amdgpu" ];
+
     # Enable the GNOME Desktop Environment.
     # services.displayManager.gdm.enable = true;
     # services.desktopManager.gnome.enable = true;

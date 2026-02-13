@@ -52,19 +52,18 @@ pkgs.stdenv.mkDerivation {
     mkdir -p "$FC_CACHEDIR" "$XDG_CACHE_HOME"
     ${pkgs.fontconfig}/bin/fc-cache -v -f "$FC_CACHEDIR" || true
     FONT="${pkgs.aero.aerofonts}/share/fonts/truetype/segoeui.ttf"
-    FONT_SIZE=18
+    # size = actual_size + 1
+    SHADOW_SIZE=19
     for key in "''${!config_values[@]}"; do
       value=''${config_values[$key]}
 
-      dimensions=$(magick -density 96 -font "$FONT" -pointsize "$FONT_SIZE" label:"$value" -format "%[fx:w+54]x%[fx:h+54]" info:)
-
-      [[ $key == *"Update"* ]] && ofs="+0+0" || ofs="+0+1"
+      dimensions=$(magick -density 96 -font "$FONT" -pointsize "$SHADOW_SIZE" label:"$value" -format "%[fx:w+1]x%[fx:h]" info:)
 
       magick -density 96 -size "$dimensions" xc:none \
-        -font "$FONT" -pointsize "$FONT_SIZE" \
+        -font "$FONT" -pointsize "$SHADOW_SIZE" \
         -fill "rgba(0,0,0,0.8)" \
         -gravity center \
-        -annotate $ofs "$value" \
+        -annotate +0-1 "$value" \
         -blur 0x2 \
         -channel A -evaluate multiply 0.8 +channel \
         -trim +repage "./images/blur$key.png"

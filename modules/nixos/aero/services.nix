@@ -6,16 +6,24 @@
 }:
 let
   plymouth-vista = pkgs.callPackage ./plymouth.nix { };
+  cfg = config.services.aero;
 in
 {
   options.services.aero = {
     enable = lib.mkEnableOption "Enable Aero";
     wayland.enable = lib.mkEnableOption "Enable Wayland";
-    plymouth.enable = lib.mkEnableOption "Enable Plymouth Vista";
+    plymouth = {
+      enable = lib.mkEnableOption "Enable Plymouth Vista";
+      delay = lib.mkOption {
+        default = 10;
+        description = "Delay before quitting Plymouth";
+        type = lib.types.nullOr lib.types.ints.unsigned;
+      };
+    };
   };
 
-  config = lib.mkIf config.services.aero.enable {
-    boot.plymouth = lib.mkIf config.services.aero.plymouth.enable {
+  config = lib.mkIf cfg.enable {
+    boot.plymouth = lib.mkIf cfg.plymouth.enable {
       theme = "plymouth-vista";
       themePackages = [
         plymouth-vista
@@ -25,8 +33,8 @@ in
       '';
     };
 
-    systemd.services.plymouth-quit.serviceConfig = {
-      ExecStartPre = [ "${pkgs.coreutils}/bin/sleep 10" ];
+    systemd.services.plymouth-quit.serviceConfig = lib.mkIf (cfg.plymouth.delay != null) {
+      ExecStartPre = [ "${pkgs.coreutils}/bin/sleep ${lib.toString cfg.plymouth.delay}" ];
     };
 
     environment.variables = {
@@ -70,7 +78,7 @@ in
         xdg-desktop-portal-gtk
       ])
       ++ (
-        if config.services.aero.wayland.enable then
+        if cfg.wayland.enable then
           with pkgs;
           [
             kdePackages.qtwayland
@@ -82,11 +90,11 @@ in
       );
 
     services.displayManager.sddm = {
-      wayland.enable = config.services.aero.wayland.enable;
+      wayland.enable = cfg.wayland.enable;
       theme = "sddm-theme-mod";
       settings = {
         General = {
-          DisplayServer = lib.mkIf config.services.aero.wayland.enable "wayland";
+          DisplayServer = lib.mkIf cfg.wayland.enable "wayland";
         };
         Theme = {
           CursorTheme = "aero-drop";
@@ -95,7 +103,7 @@ in
     };
 
     services.displayManager.defaultSession =
-      if config.services.aero.wayland.enable then "aerothemeplasma-wayland" else "aerothemeplasma";
+      if cfg.wayland.enable then "aerothemeplasma-wayland" else "aerothemeplasma";
 
     services.displayManager.sessionPackages = [ pkgs.aero.login-sessions ];
 

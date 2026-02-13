@@ -41,7 +41,10 @@
 
   networking.hostName = "pneuma"; # Define your hostname.
 
-  services.aero.wayland.enable = true;
+  services.aero = { 
+    wayland.enable = true;
+    plymouth.delay = 5;
+  };
 
   services.asusd = {
     enable = true;
