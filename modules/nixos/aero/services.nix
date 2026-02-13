@@ -40,6 +40,7 @@ in
 
     environment.systemPackages =
       (with pkgs.aero; [
+        aerofonts
         aeroglassblur
         aeroglide
         aerothemeplasma

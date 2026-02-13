@@ -3,8 +3,8 @@ let
   plymouth-vista-repo = pkgs.fetchFromGitHub {
     owner = "rustussy";
     repo = "plymouth-vista";
-    rev = "46e13ba4c6eda056df01a9b54f23368eb97b2ef5";
-    hash = "sha256-bVbtuHk45b3T94CzReuaEP5yrzv4Np2iCaZkgmmc1Eo=";
+    rev = "d9f0d8848db3394521b595298da0d7151ff7eb65";
+    hash = "sha256-yZwjd/k72AsfAoMrmyZPL7WBYgc1ed+/xy1y10uVtB0=";
   };
 in
 pkgs.stdenv.mkDerivation {
@@ -12,13 +12,64 @@ pkgs.stdenv.mkDerivation {
   src = plymouth-vista-repo;
   prePatch = ''
     substituteInPlace PlymouthVista.plymouth \
-      --replace "/usr/share/plymouth/themes/PlymouthVista" "$out/share/plymouth/themes/plymouth-vista" \
-      --replace "PlymouthVista.script" "plymouth-vista.script"
+      --replace-fail "/usr/share/plymouth/themes/PlymouthVista" "$out/share/plymouth/themes/plymouth-vista" \
+      --replace-fail "PlymouthVista.script" "plymouth-vista.script"
   '';
+  nativeBuildInputs = [ pkgs.imagemagick ];
   buildPhase = ''
     pushd ./src
     cat bootlegacy.sp boot7.sp bootmgr.sp plymouth_config.sp stringutils.sp wupdate.sp shutdown.sp vistaresume.sp main.sp > ../plymouth-vista.script
     popd
+    config_keys=("ShutdownText" "UpdateTextMTL" "RebootText" "LogoffText")
+    declare -A config_values
+    config_values["''${config_keys[0]}"]="Shutting down..."
+    config_values["''${config_keys[1]}"]="Configuring Windows Updates\n%i% complete\nDo not turn off your computer."
+    config_values["''${config_keys[2]}"]="Rebooting..."
+    config_values["''${config_keys[3]}"]="Logging off..."
+    escape_sed() {
+      local s="$1"
+      s="''${s//\\/\\\\}"   # \ -> \\
+      s="''${s//&/\\&}"     # & -> \&
+      s="''${s//|/\\|}"     # | -> \|
+      printf '%s' "$s"
+    }
+    for key in "''${!config_values[@]}"; do
+      value=''${config_values[$key]}
+      escaped="$(escape_sed "$value")"
+      sed -E -i "s|^([[:space:]]*global\.''${key}[[:space:]]*=[[:space:]]*)\"[^\"]*\";|\1\"''${escaped}\";|" plymouth-vista.script
+    done
+    unformatted_text=''${config_values["UpdateTextMTL"]}
+    for i in {0..100}; do
+      key="Update$i"
+      value=$(echo $unformatted_text | sed "s/"%i"/$i/g")
+      config_values["$key"]="$value"
+    done
+    unset config_values["UpdateTextMTL"]
+    export FONTCONFIG_FILE=${pkgs.fontconfig}/etc/fonts/fonts.conf
+    export FONTCONFIG_PATH=${pkgs.fontconfig}/etc/fonts
+    export FC_CACHEDIR="$PWD/.fontconfig-cache"
+    export XDG_CACHE_HOME="$PWD/.cache"
+    mkdir -p "$FC_CACHEDIR" "$XDG_CACHE_HOME"
+    ${pkgs.fontconfig}/bin/fc-cache -v -f "$FC_CACHEDIR" || true
+    FONT="${pkgs.aero.aerofonts}/share/fonts/truetype/segoeui.ttf"
+    FONT_SIZE=18
+    for key in "''${!config_values[@]}"; do
+      value=''${config_values[$key]}
+
+      dimensions=$(magick -density 96 -font "$FONT" -pointsize "$FONT_SIZE" label:"$value" -format "%[fx:w+27]x%[fx:h+27]" info:)
+
+      [[ $key == *"Update"* ]] && pos="center" || pos="northwest"
+      [[ $key == *"Update"* ]] && ofs="+0+0" || ofs="+0+1"
+
+      magick -density 96 -size "$dimensions" xc:none \
+        -font "$FONT" -pointsize "$FONT_SIZE" \
+        -fill "rgba(0,0,0,0.8)" \
+        -gravity $pos \
+        -annotate $ofs "$value" \
+        -blur 0x2 \
+        -channel A -evaluate multiply 0.8 +channel \
+        -trim +repage "./images/blur$key.png"
+    done
     substituteInPlace plymouth-vista.script \
       --replace-fail "global.UseLegacyBootScreen = 1" "global.UseLegacyBootScreen = 0" \
       --replace-fail "global.UseShadow = 0" "global.UseShadow = 1" \

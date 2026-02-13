@@ -127,6 +127,7 @@ let
 in
 {
   inherit repo mkAeroDerivation decoration;
+  aerofonts = pkgs.callPackage ./aerofonts.nix { };
   aeroglassblur = pkgs.callPackage ./aeroglassblur.nix {
     inherit mkAeroDerivation repo decoration;
   };
