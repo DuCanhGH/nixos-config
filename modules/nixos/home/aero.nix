@@ -45,6 +45,50 @@
         "Walk Through Windows Alternative" = "Meta+Tab";
       };
       configFile = {
+        "kwinrc"."MouseBindings" = {
+          "CommandAll1" = "Activate, raise and move";
+          "CommandWheel" = "Nothing";
+        };
+        "kwinrc"."Effect-glide" = {
+          "Duration" = 200;
+          "InRotationAngle" = 4;
+          "OutDistance" = 20;
+          "OutRotationAngle" = 4;
+        };
+        "kwinrc"."Plugins" = {
+          "aeroglassblurEnabled" = true;
+          "aeroglideEnabled" = true;
+          "backgroundcontrastEnabled" = false;
+          "blurEnabled" = false;
+          "desaturateUnresponsiveAppsEnabled" = true;
+          "dialogparentEnabled" = false;
+          "dimScreenForAdminModeEnabled" = true;
+          "diminactiveEnabled" = false;
+          "dimscreenEnabled" = false;
+          "dimscreenaeroEnabled" = true;
+          "fadingPopupsEnabled" = true;
+          "fadingpopupsEnabled" = false;
+          "kwin4_effect_aeroglassblurEnabled" = true;
+          "kwin4_effect_aeroglideEnabled" = true;
+          "libkwin_effect_smodsnapEnabled" = true;
+          "loginEnabled" = false;
+          "logoutEnabled" = false;
+          "maximizeEnabled" = false;
+          "minimizeallEnabled" = true;
+          "scaleEnabled" = false;
+          "slideEnabled" = false;
+          "slidingpopupsEnabled" = false;
+          "smodglowEnabled" = true;
+          "smodpeekeffectEnabled" = true;
+          "smodsnapEnabled" = true;
+          "squashEnabled" = true;
+          "startupfeedbackEnabled" = true;
+          "windowapertureEnabled" = false;
+        };
+        "kwinrc"."Scripts" = {
+          "minimizeall" = true;
+          "smodpeekscript" = true;
+        };
         "kwinrc"."TabBox" = {
           "LayoutName" = "thumbnail_seven";
           "ShowDesktopMode" = 1;
@@ -52,43 +96,36 @@
         "kwinrc"."TabBoxAlternative" = {
           "LayoutName" = "flipswitch";
         };
-        "kwinrc"."MouseBindings"."CommandWheel" = "Nothing";
-        "kwinrc"."Plugins" = {
-          "kwin4_effect_aeroglassblurEnabled" = true;
-          "kwin4_effect_aeroglideEnabled" = true;
-          "smodsnapEnabled" = true;
-          "smodglowEnabled" = true;
-          "startupfeedbackEnabled" = true;
-          "desaturateUnresponsiveAppsEnabled" = true;
-          "fadingPopupsEnabled" = true;
-          "loginEnabled" = true;
-          "squashEnabled" = true;
-          "smodpeekeffectEnabled" = true;
-          "dimScreenForAdminModeEnabled" = true;
-          "minimizeallEnabled" = true;
-          "dimscreenEnabled" = true;
-          "backgroundcontrastEnabled" = false;
-          "blurEnabled" = false;
-          "maximizeEnabled" = false;
-          "slidingpopupsEnabled" = false;
-          "dialogparentEnabled" = false;
-          "diminactiveEnabled" = false;
-          "logoutEnabled" = false;
-        };
-        "kwinrc"."Scripts" = {
-          "minimizeall" = true;
-          "smodpeekscript" = true;
+        "kwinrc"."org.kde.kdecoration2" = {
+          "library" = "org.smod.smod";
+          "theme" = "SMOD";
         };
         "ksmserverrc"."General"."confirmLogout" = false;
-        "kcminputrc"."Mouse"."BusyCursor" = "none";
-        "klaunchrc"."FeedbackStyle"."BusyCursor" = false;
-        "kdeglobals"."General" = {
-          "font" = "Segoe UI,9,-1,5,50,0,0,0,0,0";
-          "menuFont" = "Segoe UI,9,-1,5,50,0,0,0,0,0";
-          "toolBarFont" = "Segoe UI,9,-1,5,50,0,0,0,0,0";
-          "smallestReadableFont" = "Segoe UI,9,-1,5,400,0,0,0,0,0,0,0,0,0,0,1";
+        "kcminputrc"."Mouse" = {
+          "BusyCursor" = "none";
+          "cursorSize" = 32;
+          "cursorTheme" = "aero-drop";
         };
-        "kdeglobals"."General"."accentColorFromWallpaper" = false;
+        "klaunchrc"."FeedbackStyle"."BusyCursor" = false;
+        "kdeglobals" = {
+          "General" = {
+            "XftAntialias" = true;
+            "XftHintStyle" = "hintslight";
+            "XftSubPixel" = "rgb";
+            "accentColorFromWallpaper" = false;
+            "font" = "Segoe UI,9,-1,5,50,0,0,0,0,0";
+            "menuFont" = "Segoe UI,9,-1,5,50,0,0,0,0,0";
+            "toolBarFont" = "Segoe UI,9,-1,5,50,0,0,0,0,0";
+            "smallestReadableFont" = "Segoe UI,9,-1,5,400,0,0,0,0,0,0,0,0,0,0,1";
+          };
+          "Icons"."Theme" = "Windows 7 Aero";
+          "KDE" = {
+            "LookAndFeelPackage" = "authui7";
+            "widgetStyle" = "kvantum";
+          };
+          "Sounds"."Theme" = "Windows 7";
+          "WM"."activeFont" = "Segoe UI,10,-1,5,400,0,0,0,0,0,0,0,0,0,0,1";
+        };
       };
       window-rules = [
         {
