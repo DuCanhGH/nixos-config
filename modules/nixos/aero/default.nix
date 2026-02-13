@@ -14,12 +14,23 @@ let
     "-DCMAKE_INSTALL_PREFIX=$out"
     "-DKDE_INSTALL_PLUGINDIR=lib/qt-6/plugins"
     "-DKDE_INSTALL_QMLDIR=lib/qt-6/qml"
-    "-DKWIN_INCLUDE=${pkgs.kdePackages.kwin-x11.dev}/include/kwin"
     "-DKPLUGINFACTORY_INCLUDE=${pkgs.kdePackages.kcoreaddons.dev}/include/KF6/KCoreAddons"
-    ''-DCMAKE_CXX_FLAGS="-I${pkgs.kdePackages.kwin-x11.dev}/include/kwin -I${pkgs.kdePackages.kcoreaddons.dev}/include/KF6/KCoreAddons -I${pkgs.kdePackages.libplasma.dev}/include/Plasma -I${pkgs.kdePackages.libplasma.dev}/include/PlasmaQuick"''
-    "-DKWin_DIR=${pkgs.kdePackages.kwin-x11.dev}/lib/cmake/KWin"
   ])
-  ++ (if waylandEnabled then [ "-DKWIN_BUILD_WAYLAND=ON" ] else [ ]);
+  ++ (
+    if waylandEnabled then
+      [
+        "-DKWIN_BUILD_WAYLAND=ON"
+        "-DKWIN_INCLUDE=${pkgs.kdePackages.kwin.dev}/include/kwin"
+        "-DKWin_DIR=${pkgs.kdePackages.kwin.dev}/lib/cmake/KWin"
+        ''-DCMAKE_CXX_FLAGS="-I${pkgs.kdePackages.kwin.dev}/include/kwin -I${pkgs.kdePackages.kcoreaddons.dev}/include/KF6/KCoreAddons -I${pkgs.kdePackages.libplasma.dev}/include/Plasma -I${pkgs.kdePackages.libplasma.dev}/include/PlasmaQuick"''
+      ]
+    else
+      [
+        "-DKWIN_INCLUDE=${pkgs.kdePackages.kwin-x11.dev}/include/kwin"
+        "-DKWin_DIR=${pkgs.kdePackages.kwin-x11.dev}/lib/cmake/KWin"
+        ''-DCMAKE_CXX_FLAGS="-I${pkgs.kdePackages.kwin-x11.dev}/include/kwin -I${pkgs.kdePackages.kcoreaddons.dev}/include/KF6/KCoreAddons -I${pkgs.kdePackages.libplasma.dev}/include/Plasma -I${pkgs.kdePackages.libplasma.dev}/include/PlasmaQuick"''
+      ]
+  );
   mkAeroDerivation = lib.extendMkDerivation {
     constructDrv = stdenv.mkDerivation;
 
@@ -64,7 +75,6 @@ let
             kdePackages.kdecoration
             kdePackages.kconfigwidgets
             kdePackages.kcolorscheme
-            kdePackages.kwin-x11
             kdePackages.ksvg
             kdePackages.kguiaddons
             kdePackages.ki18n
@@ -72,6 +82,7 @@ let
             kdePackages.kirigami
             kdePackages.libplasma
             kdePackages.plasma5support
+            kdePackages.plasma-workspace
           ])
           ++ (
             if waylandEnabled then
@@ -82,7 +93,10 @@ let
                 kdePackages.plasma-wayland-protocols
               ]
             else
-              [ ]
+              with pkgs;
+              [
+                kdePackages.kwin-x11
+              ]
           );
       in
       args
