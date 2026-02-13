@@ -17,7 +17,7 @@
 
   boot = {
     loader.systemd-boot.enable = lib.mkForce false;
-    loader.systemd-boot.consoleMode = "max";
+    loader.systemd-boot.consoleMode = lib.mkDefault "max";
     loader.efi.canTouchEfiVariables = true;
     loader.efi.efiSysMountPoint = "/boot";
     lanzaboote = {

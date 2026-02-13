@@ -33,7 +33,10 @@
       # settings.General.DisplayServer = "x11-user";
     };
     services.desktopManager.plasma6.enable = true;
-    services.aero.enable = true;
+    services.aero = {
+      enable = true;
+      plymouth.enable = true;
+    };
 
     # Configure keymap in X11
     # services.xserver.xkb.layout = "us";

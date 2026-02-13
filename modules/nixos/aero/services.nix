@@ -4,15 +4,31 @@
   lib,
   ...
 }:
+let
+  plymouth-vista = pkgs.callPackage ./plymouth.nix { };
+in
 {
   options.services.aero = {
     enable = lib.mkEnableOption "Enable Aero";
-    wayland = {
-      enable = lib.mkEnableOption "Enable Wayland";
-    };
+    wayland.enable = lib.mkEnableOption "Enable Wayland";
+    plymouth.enable = lib.mkEnableOption "Enable Plymouth Vista";
   };
 
   config = lib.mkIf config.services.aero.enable {
+    boot.plymouth = lib.mkIf config.services.aero.plymouth.enable {
+      theme = "plymouth-vista";
+      themePackages = [
+        plymouth-vista
+      ];
+      extraConfig = ''
+        UseSimpledrm = 1
+      '';
+    };
+
+    systemd.services.plymouth-quit.serviceConfig = {
+      ExecStartPre = [ "${pkgs.coreutils}/bin/sleep 10" ];
+    };
+
     environment.variables = {
       QT_PLUGIN_PATH = [
         "${pkgs.aero.aerothemeplasma}/lib/qt-6/plugins"

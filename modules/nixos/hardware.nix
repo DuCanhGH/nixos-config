@@ -3,16 +3,7 @@
   boot = {
     kernelPackages = pkgs.linuxPackages;
 
-    plymouth = {
-      enable = true;
-      theme = "bgrt";
-      themePackages = with pkgs; [
-        # By default we would install all themes
-        (adi1090x-plymouth-themes.override {
-          selected_themes = [ ];
-        })
-      ];
-    };
+    plymouth.enable = true;
 
     # Enable "Silent boot"
     consoleLogLevel = 3;
