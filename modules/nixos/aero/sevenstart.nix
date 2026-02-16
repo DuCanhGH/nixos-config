@@ -1,10 +1,10 @@
 {
   pkgs,
   mkAeroDerivation,
-  repo,
+  aero,
 }:
 
 mkAeroDerivation {
   pname = "aero-sevenstart";
-  src = "${repo}/plasma/plasmoids/src/sevenstart_src";
+  src = "${aero.dev}/plasma/plasmoids/sevenstart_src";
 }

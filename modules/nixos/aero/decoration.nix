@@ -1,6 +1,6 @@
-{ mkAeroDerivation, repo }:
+{ mkAeroDerivation, aero }:
 
 mkAeroDerivation {
   pname = "aero-decoration";
-  src = "${repo}/kwin/decoration";
+  src = "${aero.dev}/kwin/decoration";
 }

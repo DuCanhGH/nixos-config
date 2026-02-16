@@ -8,6 +8,9 @@
 }:
 let
   repo = pkgs.aero-repo;
+  libplasma = pkgs.callPackage ./libplasma.nix {
+    inherit repo;
+  };
   commonCmakeFlags = ([
     "-DCMAKE_BUILD_TYPE=Release"
     "-DBUILD_KF6=ON"
@@ -22,13 +25,13 @@ let
         "-DKWIN_BUILD_WAYLAND=ON"
         "-DKWIN_INCLUDE=${pkgs.kdePackages.kwin.dev}/include/kwin"
         "-DKWin_DIR=${pkgs.kdePackages.kwin.dev}/lib/cmake/KWin"
-        ''-DCMAKE_CXX_FLAGS="-I${pkgs.kdePackages.kwin.dev}/include/kwin -I${pkgs.kdePackages.kcoreaddons.dev}/include/KF6/KCoreAddons -I${pkgs.kdePackages.libplasma.dev}/include/Plasma -I${pkgs.kdePackages.libplasma.dev}/include/PlasmaQuick"''
+        ''-DCMAKE_CXX_FLAGS="-I${pkgs.kdePackages.kwin.dev}/include/kwin -I${pkgs.kdePackages.kcoreaddons.dev}/include/KF6/KCoreAddons -I${libplasma.dev}/include/Plasma -I${libplasma.dev}/include/PlasmaQuick"''
       ]
     else
       [
         "-DKWIN_INCLUDE=${pkgs.kdePackages.kwin-x11.dev}/include/kwin"
         "-DKWin_DIR=${pkgs.kdePackages.kwin-x11.dev}/lib/cmake/KWin"
-        ''-DCMAKE_CXX_FLAGS="-I${pkgs.kdePackages.kwin-x11.dev}/include/kwin -I${pkgs.kdePackages.kcoreaddons.dev}/include/KF6/KCoreAddons -I${pkgs.kdePackages.libplasma.dev}/include/Plasma -I${pkgs.kdePackages.libplasma.dev}/include/PlasmaQuick"''
+        ''-DCMAKE_CXX_FLAGS="-I${pkgs.kdePackages.kwin-x11.dev}/include/kwin -I${pkgs.kdePackages.kcoreaddons.dev}/include/KF6/KCoreAddons -I${libplasma.dev}/include/Plasma -I${libplasma.dev}/include/PlasmaQuick"''
       ]
   );
   mkAeroDerivation = lib.extendMkDerivation {
@@ -121,50 +124,56 @@ let
         '';
       };
   };
+  aero = pkgs.callPackage ./aerothemeplasma.nix {
+    inherit repo;
+  };
   decoration = pkgs.callPackage ./decoration.nix {
-    inherit mkAeroDerivation repo;
+    inherit mkAeroDerivation aero;
   };
 in
 {
-  inherit repo mkAeroDerivation decoration;
+  inherit
+    repo
+    mkAeroDerivation
+    decoration
+    libplasma
+    ;
+  aerothemeplasma = aero;
   aerofonts = pkgs.callPackage ./aerofonts.nix { };
   aeroglassblur = pkgs.callPackage ./aeroglassblur.nix {
-    inherit mkAeroDerivation repo decoration;
+    inherit mkAeroDerivation aero decoration;
   };
   aeroglide = pkgs.callPackage ./aeroglide.nix {
-    inherit mkAeroDerivation repo decoration;
-  };
-  aerothemeplasma = pkgs.callPackage ./aerothemeplasma.nix {
-    inherit repo;
+    inherit mkAeroDerivation aero decoration;
   };
   desktopcontainment = pkgs.callPackage ./desktopcontainment.nix {
-    inherit mkAeroDerivation repo commonCmakeFlags;
+    inherit mkAeroDerivation aero commonCmakeFlags;
   };
   kcmloader = pkgs.callPackage ./kcmloader.nix {
-    inherit mkAeroDerivation repo;
+    inherit mkAeroDerivation aero;
   };
   login-sessions = pkgs.callPackage ./login-sessions.nix {
-    inherit mkAeroDerivation repo;
+    inherit mkAeroDerivation aero libplasma;
   };
   notifications = pkgs.callPackage ./notifications.nix {
-    inherit mkAeroDerivation repo;
+    inherit mkAeroDerivation aero;
   };
   sevenstart = pkgs.callPackage ./sevenstart.nix {
-    inherit mkAeroDerivation repo;
+    inherit mkAeroDerivation aero;
   };
   seventasks = pkgs.callPackage ./seventasks.nix {
-    inherit mkAeroDerivation repo;
+    inherit mkAeroDerivation aero;
   };
   smodglow = pkgs.callPackage ./smodglow.nix {
-    inherit mkAeroDerivation repo decoration;
+    inherit mkAeroDerivation aero decoration;
   };
   smodsnap = pkgs.callPackage ./smodsnap.nix {
-    inherit mkAeroDerivation repo decoration;
+    inherit mkAeroDerivation aero decoration;
   };
   startupfeedback = pkgs.callPackage ./startupfeedback.nix {
-    inherit mkAeroDerivation repo decoration;
+    inherit mkAeroDerivation aero decoration;
   };
   systemtray = pkgs.callPackage ./systemtray.nix {
-    inherit mkAeroDerivation repo;
+    inherit mkAeroDerivation aero;
   };
 }

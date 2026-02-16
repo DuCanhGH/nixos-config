@@ -37,12 +37,7 @@ in
       ExecStartPre = [ "${pkgs.coreutils}/bin/sleep ${lib.toString cfg.plymouth.delay}" ];
     };
 
-    environment.variables = {
-      QT_PLUGIN_PATH = [
-        "${pkgs.aero.aerothemeplasma}/lib/qt-6/plugins"
-        "${pkgs.aero.decoration}/lib/qt-6/plugins"
-      ];
-      QML2_IMPORT_PATH = "${pkgs.kdePackages.libplasma}/lib/qt-6/qml:${pkgs.aero.aerothemeplasma}/lib/qt-6/qml:$QML2_IMPORT_PATH";
+    environment.sessionVariables = {
       QML_DISABLE_DISTANCEFIELD = "1";
     };
 
@@ -55,6 +50,7 @@ in
         decoration
         desktopcontainment
         kcmloader
+        libplasma
         notifications
         sevenstart
         seventasks

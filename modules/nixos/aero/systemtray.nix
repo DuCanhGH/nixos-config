@@ -1,7 +1,7 @@
 {
   pkgs,
   mkAeroDerivation,
-  repo,
+  aero
 }:
 
 mkAeroDerivation {
@@ -11,5 +11,5 @@ mkAeroDerivation {
     kdePackages.kstatusnotifieritem
     kdePackages.kitemmodels
   ];
-  src = "${repo}/plasma/plasmoids/src/systemtray_src";
+  src = "${aero.dev}/plasma/plasmoids/systemtray_src";
 }

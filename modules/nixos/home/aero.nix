@@ -7,24 +7,10 @@
 {
   options.aero.enable = lib.mkEnableOption "Enable Aero user configuration";
   config = lib.mkIf config.aero.enable {
+    home.packages = with pkgs; [
+      aero.aerothemeplasma
+    ];
     home.file = {
-      ".local/share/color-schemes".source = "${pkgs.aero.aerothemeplasma}/share/color_scheme";
-      ".local/share/plasma/desktoptheme".source =
-        "${pkgs.aero.aerothemeplasma}/share/plasma/desktoptheme";
-      ".local/share/plasma/look-and-feel".source =
-        "${pkgs.aero.aerothemeplasma}/share/plasma/look-and-feel";
-      ".local/share/plasma/plasmoids".source = "${pkgs.aero.aerothemeplasma}/share/plasma/plasmoids";
-      ".local/share/plasma/layout-templates".source =
-        "${pkgs.aero.aerothemeplasma}/share/plasma/layout-templates";
-      ".local/share/kwin/effects".source = "${pkgs.aero.aerothemeplasma}/share/kwin/effects";
-      ".local/share/kwin/outline".source = "${pkgs.aero.aerothemeplasma}/share/kwin/outline";
-      ".local/share/kwin/tabbox".source = "${pkgs.aero.aerothemeplasma}/share/kwin/tabbox";
-      ".local/share/kwin-x11/effects".source = "${pkgs.aero.aerothemeplasma}/share/kwin/effects";
-      ".local/share/kwin-x11/outline".source = "${pkgs.aero.aerothemeplasma}/share/kwin/outline";
-      ".local/share/kwin-x11/tabbox".source = "${pkgs.aero.aerothemeplasma}/share/kwin/tabbox";
-      ".local/share/kwin-wayland/effects".source = "${pkgs.aero.aerothemeplasma}/share/kwin/effects";
-      ".local/share/kwin-wayland/outline".source = "${pkgs.aero.aerothemeplasma}/share/kwin/outline";
-      ".local/share/kwin-wayland/tabbox".source = "${pkgs.aero.aerothemeplasma}/share/kwin/tabbox";
       ".local/share/smod".source = "${pkgs.aero.aerothemeplasma}/share/smod";
       ".config/Kvantum".source = "${pkgs.aero.aerothemeplasma}/share/Kvantum";
     };

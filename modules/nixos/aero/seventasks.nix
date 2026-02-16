@@ -1,6 +1,6 @@
-{ mkAeroDerivation, repo }:
+{ mkAeroDerivation, aero }:
 
 mkAeroDerivation {
   pname = "aero-seventasks";
-  src = "${repo}/plasma/plasmoids/src/seventasks_src";
+  src = "${aero.dev}/plasma/plasmoids/seventasks_src";
 }

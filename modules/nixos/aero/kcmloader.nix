@@ -1,6 +1,6 @@
-{ mkAeroDerivation, repo }:
+{ mkAeroDerivation, aero }:
 
 mkAeroDerivation {
   pname = "aero-kcmloader";
-  src = "${repo}/plasma/aerothemeplasma-kcmloader";
+  src = "${aero.dev}/plasma/aerothemeplasma-kcmloader";
 }

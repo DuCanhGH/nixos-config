@@ -1,6 +1,6 @@
-{ mkAeroDerivation, repo }:
+{ mkAeroDerivation, aero }:
 
 mkAeroDerivation {
   pname = "aero-notifications";
-  src = "${repo}/plasma/plasmoids/src/notifications_src/";
+  src = "${aero.dev}/plasma/plasmoids/notifications_src/";
 }

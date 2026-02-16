@@ -1,15 +1,11 @@
-{ pkgs, lib }:
-let
-  plymouth-vista-repo = pkgs.fetchFromGitHub {
+{ pkgs, lib }: pkgs.stdenvNoCC.mkDerivation {
+  name = "plymouth-vista";
+  src = pkgs.fetchFromGitHub {
     owner = "rustussy";
     repo = "plymouth-vista";
     rev = "d9f0d8848db3394521b595298da0d7151ff7eb65";
     hash = "sha256-yZwjd/k72AsfAoMrmyZPL7WBYgc1ed+/xy1y10uVtB0=";
   };
-in
-pkgs.stdenv.mkDerivation {
-  name = "plymouth-vista";
-  src = plymouth-vista-repo;
   prePatch = ''
     substituteInPlace PlymouthVista.plymouth \
       --replace-fail "/usr/share/plymouth/themes/PlymouthVista" "$out/share/plymouth/themes/plymouth-vista" \

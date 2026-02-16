@@ -1,6 +1,6 @@
 {
   mkAeroDerivation,
-  repo,
+  aero,
   decoration,
 }:
 
@@ -9,5 +9,5 @@ mkAeroDerivation {
   buildInputs = [
     decoration
   ];
-  src = "${repo}/kwin/effects_cpp/aeroglide";
+  src = "${aero.dev}/kwin/effects/aeroglide";
 }

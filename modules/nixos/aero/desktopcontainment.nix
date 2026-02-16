@@ -2,14 +2,14 @@
   pkgs,
   lib,
   mkAeroDerivation,
-  repo,
+  aero,
   commonCmakeFlags,
 }:
 
 mkAeroDerivation {
   pname = "aero-desktopcontainment";
   version = "git";
-  src = "${repo}/plasma/plasmoids/src/desktopcontainment";
+  src = "${aero.dev}/plasma/plasmoids/desktopcontainment";
   buildInputs = with pkgs; [
     kdePackages.knotifyconfig
     kdePackages.krunner
