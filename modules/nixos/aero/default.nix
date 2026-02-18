@@ -154,7 +154,7 @@ in
     inherit mkAeroDerivation aero decoration;
   };
   desktopcontainment = pkgs.callPackage ./desktopcontainment.nix {
-    inherit mkAeroDerivation aero commonCmakeFlags;
+    inherit mkAeroDerivation aero;
   };
   kcmloader = pkgs.callPackage ./kcmloader.nix {
     inherit mkAeroDerivation aero;
