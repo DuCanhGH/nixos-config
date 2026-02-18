@@ -138,13 +138,7 @@ let
   };
 in
 {
-  inherit
-    repo
-    mkAeroDerivation
-    decoration
-    libplasma
-    plasmashell
-    ;
+  inherit decoration libplasma plasmashell;
   aerothemeplasma = aero;
   aerofonts = pkgs.callPackage ./aerofonts.nix { };
   aeroglassblur = pkgs.callPackage ./aeroglassblur.nix {
