@@ -2,7 +2,7 @@
   pkgs,
   mkAeroDerivation,
   aero,
-  libplasma,
+  plasmashell
 }:
 
 mkAeroDerivation {
@@ -18,12 +18,12 @@ mkAeroDerivation {
     cp build/aerothemeplasma.desktop $out/share/wayland-sessions/aerothemeplasma-wayland.desktop
   '';
   postFixup = ''
-    sed -i '/export PLASMA_DEFAULT_SHELL/iexport LD_PRELOAD="${libplasma.out}/lib/libATPlasmaQuick.so ${libplasma.out}/lib/qt-6/qml/io/gitgud/wackyideas/plasma/core/libcorebindingsplugin.so''${LD_PRELOAD:+ }''${LD_PRELOAD}"' $out/bin/startatp-wayland
-    sed -i '/export PLASMA_DEFAULT_SHELL/iexport LD_PRELOAD="${libplasma.out}/lib/libATPlasmaQuick.so ${libplasma.out}/lib/qt-6/qml/io/gitgud/wackyideas/plasma/core/libcorebindingsplugin.so''${LD_PRELOAD:+ }''${LD_PRELOAD}"' $out/bin/startatp
+    substituteInPlace $out/bin/startatp \
+      --replace-fail "startplasma-x11" "${plasmashell}/bin/startplasma-x11"
 
     substituteInPlace $out/bin/startatp-wayland \
-      --replace-fail "$out/lib64/libexec/plasma-dbus-run-session-if-needed" "${pkgs.kdePackages.plasma-workspace}/libexec/plasma-dbus-run-session-if-needed" \
-      --replace-fail "$out/bin/startplasma-wayland" "${pkgs.kdePackages.plasma-workspace}/bin/startplasma-wayland"
+      --replace-fail "$out/lib64/libexec/plasma-dbus-run-session-if-needed" "${plasmashell}/libexec/plasma-dbus-run-session-if-needed" \
+      --replace-fail "$out/bin/startplasma-wayland" "${plasmashell}/bin/startplasma-wayland"
   '';
   passthru.providedSessions = [
     "aerothemeplasma"

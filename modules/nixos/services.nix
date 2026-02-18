@@ -18,9 +18,14 @@
     services.xserver.videoDrivers = [
       "nvidia"
     ]
-    ++ (if config.services.amdgpu.enable then [ "amdgpu" ] else [ ]);
+    ++ (lib.optionals config.services.amdgpu.enable [ "amdgpu" ]);
 
-    boot.initrd.kernelModules = lib.mkIf config.services.amdgpu.enable [ "amdgpu" ];
+    boot = {
+      initrd.kernelModules = if config.services.amdgpu.enable then [ "amdgpu" ] else [ "nvidia" ];
+      extraModulePackages = lib.optionals (!config.services.amdgpu.enable) [
+        config.boot.kernelPackages.nvidia_x11_beta
+      ];
+    };
 
     # Enable the GNOME Desktop Environment.
     # services.displayManager.gdm.enable = true;

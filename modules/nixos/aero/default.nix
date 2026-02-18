@@ -1,4 +1,3 @@
-# Source: https://gitgud.io/aean0x/aerothemeplasma/-/blob/f4edc9ff83f3fcfb5ebbbd9872795a30f01c06e6/nix/aerothemeplasma.nix
 {
   waylandEnabled ? false,
   pkgs,
@@ -11,13 +10,19 @@ let
   libplasma = pkgs.callPackage ./libplasma.nix {
     inherit repo;
   };
+  plasmashell = pkgs.callPackage ./plasmashell.nix {
+    inherit libplasma;
+  };
+  # Source: https://gitgud.io/aean0x/aerothemeplasma/-/blob/f4edc9ff83f3fcfb5ebbbd9872795a30f01c06e6/nix/aerothemeplasma.nix#L99-L110
   commonCmakeFlags = ([
     "-DCMAKE_BUILD_TYPE=Release"
-    "-DBUILD_KF6=ON"
     "-DCMAKE_INSTALL_PREFIX=$out"
+    "-DBUILD_KF6=ON"
     "-DKDE_INSTALL_PLUGINDIR=lib/qt-6/plugins"
     "-DKDE_INSTALL_QMLDIR=lib/qt-6/qml"
     "-DKPLUGINFACTORY_INCLUDE=${pkgs.kdePackages.kcoreaddons.dev}/include/KF6/KCoreAddons"
+    "-DPlasma_DIR=${libplasma.dev}/lib/cmake/Plasma"
+    "-DPlasmaQuick_DIR=${libplasma.dev}/lib/cmake/PlasmaQuick"
   ])
   ++ (
     if waylandEnabled then
@@ -34,6 +39,7 @@ let
         ''-DCMAKE_CXX_FLAGS="-I${pkgs.kdePackages.kwin-x11.dev}/include/kwin -I${pkgs.kdePackages.kcoreaddons.dev}/include/KF6/KCoreAddons -I${libplasma.dev}/include/Plasma -I${libplasma.dev}/include/PlasmaQuick"''
       ]
   );
+  # Source: https://github.com/Rotlug/aerothemeplasma-nixos/blob/8452aa903e76f9c20a62024c6d6f2c4be6933c8d/default.nix#L23-L70
   mkAeroDerivation = lib.extendMkDerivation {
     constructDrv = stdenv.mkDerivation;
 
@@ -137,6 +143,7 @@ in
     mkAeroDerivation
     decoration
     libplasma
+    plasmashell
     ;
   aerothemeplasma = aero;
   aerofonts = pkgs.callPackage ./aerofonts.nix { };
@@ -153,7 +160,7 @@ in
     inherit mkAeroDerivation aero;
   };
   login-sessions = pkgs.callPackage ./login-sessions.nix {
-    inherit mkAeroDerivation aero libplasma;
+    inherit mkAeroDerivation aero plasmashell;
   };
   notifications = pkgs.callPackage ./notifications.nix {
     inherit mkAeroDerivation aero;

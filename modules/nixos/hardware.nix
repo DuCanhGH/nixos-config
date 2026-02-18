@@ -8,7 +8,6 @@
     # Enable "Silent boot"
     consoleLogLevel = 3;
     initrd.verbose = false;
-    initrd.kernelModules = [ "nvidia" ];
 
     kernelParams = [
       "quiet"
@@ -17,8 +16,6 @@
       "udev.log_priority=3"
       "rd.systemd.show_status=auto"
     ];
-
-    extraModulePackages = [ config.boot.kernelPackages.nvidia_x11_beta ];
   };
 
   fileSystems = {

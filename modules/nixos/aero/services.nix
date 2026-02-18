@@ -58,6 +58,7 @@ in
         smodsnap
         startupfeedback
         systemtray
+        (lib.hiPrio plasmashell)
       ])
       ++ (with pkgs; [
         kdePackages.qtbase
