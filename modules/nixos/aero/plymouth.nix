@@ -3,31 +3,20 @@
   pkgs,
   lib,
   stdenvNoCC,
-  makeFontsConf,
-  aerofonts,
 }:
 stdenvNoCC.mkDerivation {
   name = "plymouth-vista";
   src = pkgs.fetchFromGitHub {
     owner = "rustussy";
     repo = "plymouth-vista";
-    rev = "752fd0a360e9e088cf88f7890271dbf3e8637843";
-    hash = "sha256-R6pgl98sOsRA9Ln/sLSokrgWrTJFkPM7O74kqAboPVA=";
+    rev = "6358d7460663c44a4aafee7e908328c4ff4aeb1a";
+    hash = "sha256-2K1JIxUlOwj+UQqRHuDbO1mloYO0oTIjryewTD5rqVc=";
   };
-  nativeBuildInputs = [ pkgs.imagemagick ];
-  env = {
-    FONTCONFIG_FILE = makeFontsConf {
-      fontDirectories = [ aerofonts ];
-    };
-  };
-  postPatch = ''
-    patchShebangs ./compile.sh ./pv_conf.sh ./gen_blur.sh
-  '';
+  postPatch = "patchShebangs ./compile.sh ./pv_conf.sh";
   buildPhase = ''
     runHook preBuild
 
     ./compile.sh
-    XDG_CACHE_HOME="$(mktemp -d)" ./gen_blur.sh
 
     ./pv_conf.sh -s UseLegacyBootScreen -v 0
     ./pv_conf.sh -s UseShadow -v 1
@@ -35,6 +24,7 @@ stdenvNoCC.mkDerivation {
     ./pv_conf.sh -s AuthuiStyle -v 7
     ./pv_conf.sh -s PasswordTitle -v "Linux Boot Manager"
     ./pv_conf.sh -s AnswerTitle -v "Linux Boot Manager"
+    ./pv_conf.sh -s UpdateTextMTL -v "Configuring Linux updates\n%i% complete\nDo not turn off your computer."
     ./pv_conf.sh -s StartingText -v "Starting Linux"
     ./pv_conf.sh -s ResumingText -v "Resuming Linux"
     ./pv_conf.sh -s NoGuiResumeText -v "Resuming Linux..."
