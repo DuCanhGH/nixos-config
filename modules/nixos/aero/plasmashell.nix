@@ -5,9 +5,7 @@ pkgs.kdePackages.plasma-workspace.overrideAttrs (oldAttrs: {
     "-DPlasma_DIR=${libplasma.dev}/lib/cmake/Plasma"
     "-DPlasmaQuick_DIR=${libplasma.dev}/lib/cmake/PlasmaQuick"
   ];
-  extraPropagatedBuildInputs = (oldAttrs.extraPropagatedBuildInputs or [ ]) ++ [
-    libplasma
-  ];
+  buildInputs = (oldAttrs.buildInputs or [ ]) ++ [ libplasma ];
   excludeDependencies = [ "libplasma" ];
   ninjaFlags = [
     "plasmashell"
