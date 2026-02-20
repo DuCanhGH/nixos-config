@@ -18,6 +18,7 @@ let
     "-DBUILD_KF6=ON"
     "-DPlasma_DIR=${libplasma.dev}/lib/cmake/Plasma"
     "-DPlasmaQuick_DIR=${libplasma.dev}/lib/cmake/PlasmaQuick"
+    "-DKPLUGINFACTORY_INCLUDE=${pkgs.kdePackages.kcoreaddons.dev}/include/KF6/KCoreAddons"
   ])
   ++ (lib.optionals waylandEnabled [
     "-DKWIN_BUILD_WAYLAND=ON"
@@ -41,8 +42,10 @@ let
         defaultNative = with pkgs; [
           cmake
           ninja
+          libplasma.dev
           kdePackages.extra-cmake-modules
           kdePackages.wrapQtAppsHook
+          kdePackages.kcoreaddons.dev
           pkg-config
         ];
         defaultBuild =

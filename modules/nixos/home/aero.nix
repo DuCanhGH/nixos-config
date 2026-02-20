@@ -12,6 +12,9 @@
     ];
     home.file = {
       ".local/share/smod".source = "${pkgs.aero.aerothemeplasma}/share/smod";
+      ".local/share/kwin/outline".source = "${pkgs.aero.aerothemeplasma}/share/kwin/outline";
+      ".local/share/kwin-x11/outline".source = "${pkgs.aero.aerothemeplasma}/share/kwin/outline";
+      ".local/share/kwin-wayland/outline".source = "${pkgs.aero.aerothemeplasma}/share/kwin/outline";
       ".config/Kvantum".source = "${pkgs.aero.aerothemeplasma}/share/Kvantum";
     };
     fonts.fontconfig = {
