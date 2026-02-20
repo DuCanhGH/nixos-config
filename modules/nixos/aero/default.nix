@@ -13,32 +13,15 @@ let
   plasmashell = pkgs.callPackage ./plasmashell.nix {
     inherit libplasma;
   };
-  # Source: https://gitgud.io/aean0x/aerothemeplasma/-/blob/f4edc9ff83f3fcfb5ebbbd9872795a30f01c06e6/nix/aerothemeplasma.nix#L99-L110
   commonCmakeFlags = ([
     "-DCMAKE_BUILD_TYPE=Release"
-    "-DCMAKE_INSTALL_PREFIX=$out"
     "-DBUILD_KF6=ON"
-    "-DKDE_INSTALL_PLUGINDIR=lib/qt-6/plugins"
-    "-DKDE_INSTALL_QMLDIR=lib/qt-6/qml"
-    "-DKPLUGINFACTORY_INCLUDE=${pkgs.kdePackages.kcoreaddons.dev}/include/KF6/KCoreAddons"
     "-DPlasma_DIR=${libplasma.dev}/lib/cmake/Plasma"
     "-DPlasmaQuick_DIR=${libplasma.dev}/lib/cmake/PlasmaQuick"
   ])
-  ++ (
-    if waylandEnabled then
-      [
-        "-DKWIN_BUILD_WAYLAND=ON"
-        "-DKWIN_INCLUDE=${pkgs.kdePackages.kwin.dev}/include/kwin"
-        "-DKWin_DIR=${pkgs.kdePackages.kwin.dev}/lib/cmake/KWin"
-        ''-DCMAKE_CXX_FLAGS="-I${pkgs.kdePackages.kwin.dev}/include/kwin -I${pkgs.kdePackages.kcoreaddons.dev}/include/KF6/KCoreAddons -I${libplasma.dev}/include/Plasma -I${libplasma.dev}/include/PlasmaQuick"''
-      ]
-    else
-      [
-        "-DKWIN_INCLUDE=${pkgs.kdePackages.kwin-x11.dev}/include/kwin"
-        "-DKWin_DIR=${pkgs.kdePackages.kwin-x11.dev}/lib/cmake/KWin"
-        ''-DCMAKE_CXX_FLAGS="-I${pkgs.kdePackages.kwin-x11.dev}/include/kwin -I${pkgs.kdePackages.kcoreaddons.dev}/include/KF6/KCoreAddons -I${libplasma.dev}/include/Plasma -I${libplasma.dev}/include/PlasmaQuick"''
-      ]
-  );
+  ++ (lib.optionals waylandEnabled [
+    "-DKWIN_BUILD_WAYLAND=ON"
+  ]);
   # Source: https://github.com/Rotlug/aerothemeplasma-nixos/blob/8452aa903e76f9c20a62024c6d6f2c4be6933c8d/default.nix#L23-L70
   mkAeroDerivation = lib.extendMkDerivation {
     constructDrv = stdenv.mkDerivation;
@@ -47,14 +30,9 @@ let
       final:
       args@{
         pname,
-        version ? repo.rev,
+        version ? "0.0.1",
         src,
         cmakeFlags ? [ ],
-        configurePhase ? "cmake -B build -G Ninja ${
-          lib.concatStringsSep " " (commonCmakeFlags ++ cmakeFlags)
-        }",
-        buildPhase ? "ninja -C build",
-        installPhase ? "ninja install -C build",
         nativeBuildInputs ? [ ],
         buildInputs ? [ ],
         ...
@@ -110,23 +88,9 @@ let
       args
       // {
         inherit pname version src;
+        cmakeFlags = commonCmakeFlags ++ cmakeFlags;
         nativeBuildInputs = defaultNative ++ nativeBuildInputs;
         buildInputs = defaultBuild ++ buildInputs;
-        configurePhase = ''
-          runHook preConfigure
-          ${configurePhase}
-          runHook postConfigure
-        '';
-        buildPhase = ''
-          runHook preBuild
-          ${buildPhase}
-          runHook postBuild
-        '';
-        installPhase = ''
-          runHook preInstall
-          ${installPhase}
-          runHook postInstall
-        '';
       };
   };
   aero = pkgs.callPackage ./aerothemeplasma.nix {

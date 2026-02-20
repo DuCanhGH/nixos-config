@@ -11,18 +11,6 @@
       aero.aerothemeplasma
     ];
     home.file = {
-      ".local/share/kwin" = {
-        source = "${pkgs.aero.aerothemeplasma}/share/kwin";
-        recursive = true;
-      };
-      ".local/share/kwin-x11" = {
-        source = "${pkgs.aero.aerothemeplasma}/share/kwin";
-        recursive = true;
-      };
-      ".local/share/kwin-wayland" = {
-        source = "${pkgs.aero.aerothemeplasma}/share/kwin";
-        recursive = true;
-      };
       ".local/share/smod".source = "${pkgs.aero.aerothemeplasma}/share/smod";
       ".config/Kvantum".source = "${pkgs.aero.aerothemeplasma}/share/Kvantum";
     };
