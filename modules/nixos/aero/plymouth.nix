@@ -9,8 +9,8 @@ stdenvNoCC.mkDerivation {
   src = pkgs.fetchFromGitHub {
     owner = "rustussy";
     repo = "plymouth-vista";
-    rev = "6358d7460663c44a4aafee7e908328c4ff4aeb1a";
-    hash = "sha256-2K1JIxUlOwj+UQqRHuDbO1mloYO0oTIjryewTD5rqVc=";
+    rev = "7022b4f4ccf8819969848e105ff0884d6e9482cd";
+    hash = "sha256-rz0jPlxt137JbVmQRqDvUM5DaY3R8Fdpf3i+fJCOygU=";
   };
   postPatch = "patchShebangs ./compile.sh ./pv_conf.sh";
   buildPhase = ''
