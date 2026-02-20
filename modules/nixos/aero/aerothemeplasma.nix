@@ -15,7 +15,7 @@ stdenvNoCC.mkDerivation {
     "dev"
   ];
   postPatch = ''
-    substituteInPlace $(find plasma -type f -name '*.qml' -o -name '*.js') \
+    substituteInPlace $(find plasma kwin -type f -name '*.qml' -o -name '*.js') \
       --replace-quiet "import org.kde.plasma.core" "import io.gitgud.wackyideas.plasma.core" \
       --replace-quiet "import org.kde.plasma.plasmoid" "import io.gitgud.wackyideas.plasma.plasmoid"
   '';
@@ -43,6 +43,8 @@ stdenvNoCC.mkDerivation {
     cp -r kwin/outline $out/share/kwin/
     cp -r kwin/scripts $out/share/kwin/
     cp -r kwin/smod $out/share/
+    ln -sf $out/share/kwin $out/share/kwin-x11
+    ln -sf $out/share/kwin $out/share/kwin-wayland
     cp -r misc/kvantum/Kvantum $out/share/
     cp -r plasma/sddm/sddm-theme-mod $out/share/sddm/themes/
     cp -r misc/mimetype/* $out/share/mime/packages/

@@ -100,7 +100,7 @@ in
     };
 
     services.displayManager.defaultSession =
-      if cfg.wayland.enable then "aerothemeplasma-wayland" else "aerothemeplasma";
+      if cfg.wayland.enable then "aerothemeplasma" else "aerothemeplasmax11";
 
     services.displayManager.sessionPackages = [ pkgs.aero.login-sessions ];
 
