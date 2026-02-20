@@ -89,7 +89,6 @@ let
             kdePackages.ki18n
             kdePackages.kiconthemes
             kdePackages.kirigami
-            kdePackages.libplasma
             kdePackages.plasma5support
             kdePackages.plasma-workspace
           ])

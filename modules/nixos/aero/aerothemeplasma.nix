@@ -42,8 +42,6 @@ stdenvNoCC.mkDerivation {
     cp -r kwin/tabbox $out/share/kwin/
     cp -r kwin/outline $out/share/kwin/
     cp -r kwin/scripts $out/share/kwin/
-    ln -sf $out/share/kwin $out/share/kwin-x11
-    ln -sf $out/share/kwin $out/share/kwin-wayland
     cp -r kwin/smod $out/share/
     cp -r misc/kvantum/Kvantum $out/share/
     cp -r plasma/sddm/sddm-theme-mod $out/share/sddm/themes/

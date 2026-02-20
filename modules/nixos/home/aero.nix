@@ -11,6 +11,18 @@
       aero.aerothemeplasma
     ];
     home.file = {
+      ".local/share/kwin" = {
+        source = "${pkgs.aero.aerothemeplasma}/share/kwin";
+        recursive = true;
+      };
+      ".local/share/kwin-x11" = {
+        source = "${pkgs.aero.aerothemeplasma}/share/kwin";
+        recursive = true;
+      };
+      ".local/share/kwin-wayland" = {
+        source = "${pkgs.aero.aerothemeplasma}/share/kwin";
+        recursive = true;
+      };
       ".local/share/smod".source = "${pkgs.aero.aerothemeplasma}/share/smod";
       ".config/Kvantum".source = "${pkgs.aero.aerothemeplasma}/share/Kvantum";
     };
@@ -54,8 +66,6 @@
           "dimscreenaeroEnabled" = true;
           "fadingPopupsEnabled" = true;
           "fadingpopupsEnabled" = false;
-          "kwin4_effect_aeroglassblurEnabled" = true;
-          "kwin4_effect_aeroglideEnabled" = true;
           "libkwin_effect_smodsnapEnabled" = true;
           "loginEnabled" = false;
           "logoutEnabled" = false;
