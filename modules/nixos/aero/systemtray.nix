@@ -7,6 +7,7 @@
 mkAeroDerivation {
   pname = "aero-systemtray";
   buildInputs = with pkgs; [
+    kdePackages.qtwayland
     kdePackages.knotifyconfig
     kdePackages.kstatusnotifieritem
     kdePackages.kitemmodels

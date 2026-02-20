@@ -1,4 +1,5 @@
 {
+  pkgs,
   mkAeroDerivation,
   aero,
   decoration,

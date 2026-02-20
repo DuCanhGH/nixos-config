@@ -42,51 +42,22 @@ let
         defaultNative = with pkgs; [
           cmake
           ninja
+          pkg-config
           libplasma.dev
           kdePackages.extra-cmake-modules
           kdePackages.wrapQtAppsHook
           kdePackages.kcoreaddons.dev
-          pkg-config
         ];
-        defaultBuild =
-          (with pkgs; [
-            kdePackages.qtbase
-            kdePackages.qttools
-            kdePackages.qtwayland
-            kdePackages.qtdeclarative
-            kdePackages.qtvirtualkeyboard
-            kdePackages.qtmultimedia
-            kdePackages.qt5compat
-            kdePackages.qtstyleplugin-kvantum
-            kdePackages.kconfig
-            kdePackages.kcoreaddons
-            kdePackages.kwindowsystem
-            kdePackages.kcmutils
-            kdePackages.kdecoration
-            kdePackages.kconfigwidgets
-            kdePackages.kcolorscheme
-            kdePackages.ksvg
-            kdePackages.kguiaddons
-            kdePackages.ki18n
-            kdePackages.kiconthemes
-            kdePackages.kirigami
-            kdePackages.plasma5support
-            kdePackages.plasma-workspace
-          ])
-          ++ (
-            if waylandEnabled then
-              with pkgs;
-              [
-                kdePackages.kwin
-                kdePackages.kwayland
-                kdePackages.plasma-wayland-protocols
-              ]
-            else
-              with pkgs;
-              [
-                kdePackages.kwin-x11
-              ]
-          );
+        defaultBuild = (
+          with pkgs;
+          (
+            [
+              kdePackages.qtbase
+              kdePackages.qttools
+            ]
+            ++ (if waylandEnabled then [ kdePackages.kwin ] else [ kdePackages.kwin-x11 ])
+          )
+        );
       in
       args
       // {

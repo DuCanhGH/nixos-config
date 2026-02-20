@@ -61,30 +61,11 @@ in
         (lib.hiPrio plasmashell)
       ])
       ++ (with pkgs; [
-        kdePackages.qtbase
-        kdePackages.qtdeclarative
-        kdePackages.qtvirtualkeyboard
         kdePackages.qtmultimedia
-        kdePackages.qt5compat
         kdePackages.qtstyleplugin-kvantum
         kdePackages.sddm-kcm
         kdePackages.kitemmodels
-        kdePackages.kde-gtk-config
-        kdePackages.plasma5support
-        kdePackages.polkit-kde-agent-1
-        xdg-desktop-portal-gtk
-      ])
-      ++ (
-        if cfg.wayland.enable then
-          with pkgs;
-          [
-            kdePackages.qtwayland
-            kdePackages.kwayland
-            kdePackages.plasma-wayland-protocols
-          ]
-        else
-          [ ]
-      );
+      ]);
 
     services.displayManager.sddm = {
       wayland.enable = cfg.wayland.enable;
