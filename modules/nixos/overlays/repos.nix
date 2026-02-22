@@ -2,7 +2,7 @@ final: prev: {
   aero-repo = prev.fetchFromGitHub {
     owner = "rustussy";
     repo = "aerothemeplasma";
-    rev = "3d17a9799cfeaea796b28e2817fd508ad1527c38";
-    hash = "sha256-dXXl5TQJnQ2JtdNFfTzffqkpzYjPqwyCh1ARexOxLHw=";
+    rev = "06a14c58245e321e6cb85ae5f1d1faa908bb36bb";
+    hash = "sha256-BtjlMvqT2a5QjPjK3kch3/EST2V5cdgMgDtrOnu1yb4=";
   };
 }

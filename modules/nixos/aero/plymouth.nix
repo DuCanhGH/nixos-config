@@ -11,8 +11,8 @@ stdenvNoCC.mkDerivation {
   src = pkgs.fetchFromGitHub {
     owner = "rustussy";
     repo = "plymouth-vista";
-    rev = "3a5f8b801513d4ce95062e7d57a409ac400e8074";
-    hash = "sha256-WiUAkdzcxvbk2qeDmOIlf2DW+XLX11lJi5xzKP9rMcY=";
+    rev = "7c6d86524f53821f2b531ed4bc0444e0a3184d80";
+    hash = "sha256-5HV3OS0PKcgh2HjKVkazkWdrubjm/rMSSQWaE/twPe0=";
   };
   nativeBuildInputs = [ pkgs.imagemagick ];
   env = {
