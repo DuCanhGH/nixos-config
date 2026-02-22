@@ -3,16 +3,24 @@
   pkgs,
   lib,
   stdenvNoCC,
+  makeFontsConf,
+  aerofonts,
 }:
 stdenvNoCC.mkDerivation {
   name = "plymouth-vista";
   src = pkgs.fetchFromGitHub {
     owner = "rustussy";
     repo = "plymouth-vista";
-    rev = "7022b4f4ccf8819969848e105ff0884d6e9482cd";
-    hash = "sha256-rz0jPlxt137JbVmQRqDvUM5DaY3R8Fdpf3i+fJCOygU=";
+    rev = "3a5f8b801513d4ce95062e7d57a409ac400e8074";
+    hash = "sha256-WiUAkdzcxvbk2qeDmOIlf2DW+XLX11lJi5xzKP9rMcY=";
   };
-  postPatch = "patchShebangs ./compile.sh ./pv_conf.sh";
+  nativeBuildInputs = [ pkgs.imagemagick ];
+  env = {
+    FONTCONFIG_FILE = makeFontsConf {
+      fontDirectories = [ aerofonts ];
+    };
+  };
+  postPatch = "patchShebangs ./compile.sh ./pv_conf.sh ./gen_blur.sh";
   buildPhase = ''
     runHook preBuild
 
@@ -29,6 +37,8 @@ stdenvNoCC.mkDerivation {
     ./pv_conf.sh -s ResumingText -v "Resuming Linux"
     ./pv_conf.sh -s NoGuiResumeText -v "Resuming Linux..."
     ./pv_conf.sh -s CopyrightText -v "© Microslop Copyschlop"
+
+    XDG_CACHE_HOME="$(mktemp -d)" ./gen_blur.sh
 
     substituteInPlace plymouth-vista.plymouth --replace-fail "/usr/share" "$out/share"
     runHook postBuild

@@ -5,7 +5,9 @@
   ...
 }:
 let
-  plymouth-vista = pkgs.callPackage ./plymouth.nix { };
+  plymouth-vista = pkgs.callPackage ./plymouth.nix {
+    inherit (pkgs.aero) aerofonts;
+  };
   cfg = config.services.aero;
 in
 {
