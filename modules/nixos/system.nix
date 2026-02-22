@@ -49,7 +49,7 @@
   nixpkgs.overlays = [
     (import ./overlays/amd.nix)
     (import ./overlays/repos.nix)
-    (import ./overlays/kde.nix {
+    (import ./overlays/aero.nix {
       waylandEnabled = config.services.aero.wayland.enable;
     })
   ];

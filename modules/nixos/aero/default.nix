@@ -6,10 +6,7 @@
   ...
 }:
 let
-  repo = pkgs.aero-repo;
-  libplasma = pkgs.callPackage ./libplasma.nix {
-    inherit repo;
-  };
+  libplasma = pkgs.callPackage ./libplasma.nix { };
   plasmashell = pkgs.callPackage ./plasmashell.nix {
     inherit libplasma;
   };
@@ -23,6 +20,7 @@ let
   ++ (lib.optionals waylandEnabled [
     "-DKWIN_BUILD_WAYLAND=ON"
   ]);
+  aeroEffects = "${pkgs.aero-kwin-repo}/effects_cpp/${if waylandEnabled then "wayland" else "x11"}";
   # Source: https://github.com/Rotlug/aerothemeplasma-nixos/blob/8452aa903e76f9c20a62024c6d6f2c4be6933c8d/default.nix#L23-L70
   mkAeroDerivation = lib.extendMkDerivation {
     constructDrv = stdenv.mkDerivation;
@@ -67,9 +65,7 @@ let
         buildInputs = defaultBuild ++ buildInputs;
       };
   };
-  aero = pkgs.callPackage ./aerothemeplasma.nix {
-    inherit repo;
-  };
+  aero = pkgs.callPackage ./aerothemeplasma.nix { };
   decoration = pkgs.callPackage ./decoration.nix {
     inherit mkAeroDerivation aero;
   };
@@ -79,16 +75,25 @@ in
   aerothemeplasma = aero;
   aerofonts = pkgs.callPackage ./aerofonts.nix { };
   aeroglassblur = pkgs.callPackage ./aeroglassblur.nix {
-    inherit mkAeroDerivation aero decoration;
+    inherit mkAeroDerivation aeroEffects decoration;
   };
   aeroglide = pkgs.callPackage ./aeroglide.nix {
-    inherit mkAeroDerivation aero decoration;
+    inherit mkAeroDerivation aeroEffects decoration;
   };
   desktopcontainment = pkgs.callPackage ./desktopcontainment.nix {
     inherit mkAeroDerivation aero;
   };
   kcmloader = pkgs.callPackage ./kcmloader.nix {
     inherit mkAeroDerivation aero;
+  };
+  kwin = pkgs.callPackage ./kwin.nix {
+    inherit mkAeroDerivation;
+  };
+  libshowdesktop = pkgs.callPackage ./libshowdesktop.nix {
+    inherit mkAeroDerivation;
+  };
+  libtaskmanager = pkgs.callPackage ./libtaskmanager.nix {
+    inherit mkAeroDerivation;
   };
   login-sessions = pkgs.callPackage ./login-sessions.nix {
     inherit mkAeroDerivation aero plasmashell;
@@ -103,15 +108,18 @@ in
     inherit mkAeroDerivation aero;
   };
   smodglow = pkgs.callPackage ./smodglow.nix {
-    inherit mkAeroDerivation aero decoration;
+    inherit mkAeroDerivation decoration;
   };
   smodsnap = pkgs.callPackage ./smodsnap.nix {
-    inherit mkAeroDerivation aero decoration;
+    inherit mkAeroDerivation aeroEffects decoration;
   };
   startupfeedback = pkgs.callPackage ./startupfeedback.nix {
-    inherit mkAeroDerivation aero decoration;
+    inherit mkAeroDerivation aeroEffects decoration;
   };
   systemtray = pkgs.callPackage ./systemtray.nix {
     inherit mkAeroDerivation aero;
+  };
+  uac-polkit-agent = pkgs.callPackage ./uac-polkit-agent.nix {
+    inherit mkAeroDerivation;
   };
 }

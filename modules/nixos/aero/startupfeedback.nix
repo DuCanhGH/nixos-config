@@ -1,7 +1,7 @@
 {
   pkgs,
   mkAeroDerivation,
-  aero,
+  aeroEffects,
   decoration,
 }:
 
@@ -10,5 +10,5 @@ mkAeroDerivation {
   buildInputs = [
     decoration
   ];
-  src = "${aero.dev}/kwin/effects/startupfeedback";
+  src = "${aeroEffects}/startupfeedback";
 }

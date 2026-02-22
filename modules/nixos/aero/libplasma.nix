@@ -1,10 +1,14 @@
 # https://github.com/nyakase/aerothemeplasma-nix/blob/8b3aa15df981b4620bf695fad1f2b4df055ea3a6/flake.nix
-{ pkgs, repo }:
+{ pkgs }:
 pkgs.kdePackages.libplasma.overrideAttrs (oldAttrs: {
   pname = "aero-libplasma";
+  # https://github.com/NixOS/nixpkgs/blob/76e87812ad15014a37ea69953bbb33091c515690/pkgs/kde/plasma/libplasma/rb-extracomponents.patch
   postPatch = ''
     shopt -s globstar
-    cp -r ${repo}/misc/libplasma/src .
+    rm -rf ./* && cp -r ${pkgs.aero-libplasma-repo}/* .
+    substituteInPlace src/declarativeimports/plasmaextracomponents/CMakeLists.txt \
+      --replace-fail "ecm_finalize_qml_module" "add_dependencies(plasmaextracomponentsplugin org_kde_plasmacomponents3)
+        ecm_finalize_qml_module"
     substituteInPlace src/**/CMakeLists.txt \
       --replace-quiet 'URI "org.kde.plasma.' 'URI "io.gitgud.wackyideas.plasma.' \
       --replace-quiet "EXPORT_NAME Plasma" "OUTPUT_NAME ATPlasma"

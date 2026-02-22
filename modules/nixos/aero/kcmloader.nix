@@ -6,7 +6,7 @@
 
 mkAeroDerivation {
   pname = "aero-kcmloader";
-  src = "${aero.dev}/plasma/aerothemeplasma-kcmloader";
+  src = "${pkgs.aero-workspace-repo}/aeroshell-kcmloader";
   buildInputs = [
     pkgs.kdePackages.kcmutils
   ];
