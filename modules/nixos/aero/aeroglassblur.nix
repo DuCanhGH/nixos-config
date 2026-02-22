@@ -1,6 +1,6 @@
 {
   mkAeroDerivation,
-  aero,
+  aeroEffects,
   decoration,
 }:
 
@@ -9,5 +9,5 @@ mkAeroDerivation {
   buildInputs = [
     decoration
   ];
-  src = "${aero.dev}/kwin/effects/kde-effects-aeroglassblur";
+  src = "${aeroEffects}/kde-effects-aeroglassblur";
 }

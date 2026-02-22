@@ -11,10 +11,10 @@
       aero.aerothemeplasma
     ];
     home.file = {
-      ".local/share/smod".source = "${pkgs.aero.aerothemeplasma}/share/smod";
-      ".local/share/kwin/outline".source = "${pkgs.aero.aerothemeplasma}/share/kwin/outline";
-      ".local/share/kwin-x11/outline".source = "${pkgs.aero.aerothemeplasma}/share/kwin/outline";
-      ".local/share/kwin-wayland/outline".source = "${pkgs.aero.aerothemeplasma}/share/kwin/outline";
+      ".local/share/smod".source = "${pkgs.aero.kwin}/share/smod";
+      ".local/share/kwin/outline".source = "${pkgs.aero.kwin}/share/aeroshell/outline";
+      ".local/share/kwin-x11/outline".source = "${pkgs.aero.kwin}/share/aeroshell/outline";
+      ".local/share/kwin-wayland/outline".source = "${pkgs.aero.kwin}/share/aeroshell/outline";
       ".config/Kvantum".source = "${pkgs.aero.aerothemeplasma}/share/Kvantum";
     };
     fonts.fontconfig = {
@@ -77,7 +77,7 @@
           "smodpeekscript" = true;
         };
         "kwinrc"."TabBox" = {
-          "LayoutName" = "thumbnail_seven";
+          "LayoutName" = "thumbnail_aero";
           "ShowDesktopMode" = 1;
         };
         "kwinrc"."TabBoxAlternative" = {

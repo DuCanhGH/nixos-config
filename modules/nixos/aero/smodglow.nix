@@ -1,6 +1,6 @@
 {
+  pkgs,
   mkAeroDerivation,
-  aero,
   decoration,
 }:
 
@@ -9,5 +9,5 @@ mkAeroDerivation {
   buildInputs = [
     decoration
   ];
-  src = "${aero.dev}/kwin/effects/smodglow";
+  src = "${pkgs.aero-smod-repo}/smodglow";
 }

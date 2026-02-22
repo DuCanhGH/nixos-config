@@ -5,7 +5,7 @@
 }:
 mkAeroDerivation {
   pname = "aero-decoration";
-  src = "${aero.dev}/kwin/decoration";
+  src = pkgs.aero-smod-repo;
   buildInputs = with pkgs.kdePackages; [
     kirigami
     kcoreaddons

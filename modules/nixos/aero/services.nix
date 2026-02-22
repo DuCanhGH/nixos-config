@@ -41,6 +41,7 @@ in
 
     environment.sessionVariables = {
       QML_DISABLE_DISTANCEFIELD = "1";
+      USE_UAC_AGENT = "1";
     };
 
     environment.systemPackages =
@@ -52,7 +53,10 @@ in
         decoration
         desktopcontainment
         kcmloader
+        kwin
         libplasma
+        libshowdesktop
+        libtaskmanager
         notifications
         sevenstart
         seventasks
@@ -85,7 +89,13 @@ in
     services.displayManager.defaultSession =
       if cfg.wayland.enable then "aerothemeplasma" else "aerothemeplasmax11";
 
-    services.displayManager.sessionPackages = [ pkgs.aero.login-sessions ];
+    services.displayManager.sessionPackages = with pkgs; [
+      aero.login-sessions
+    ];
+
+    systemd.packages = with pkgs; [
+      aero.uac-polkit-agent
+    ];
 
     fonts.packages = with pkgs; [
       corefonts

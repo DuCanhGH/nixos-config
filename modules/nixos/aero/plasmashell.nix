@@ -7,6 +7,7 @@ pkgs.kdePackages.plasma-workspace.overrideAttrs (oldAttrs: {
   ];
   buildInputs = (oldAttrs.buildInputs or [ ]) ++ [ libplasma ];
   excludeDependencies = [ "libplasma" ];
+  outputs = [ "out" ];
   ninjaFlags = [
     "plasmashell"
     "startplasma-x11"

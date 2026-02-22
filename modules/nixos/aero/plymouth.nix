@@ -8,12 +8,7 @@
 }:
 stdenvNoCC.mkDerivation {
   name = "plymouth-vista";
-  src = pkgs.fetchFromGitHub {
-    owner = "rustussy";
-    repo = "plymouth-vista";
-    rev = "7c6d86524f53821f2b531ed4bc0444e0a3184d80";
-    hash = "sha256-5HV3OS0PKcgh2HjKVkazkWdrubjm/rMSSQWaE/twPe0=";
-  };
+  src = pkgs.plymouth-vista-repo;
   nativeBuildInputs = [ pkgs.imagemagick ];
   env = {
     FONTCONFIG_FILE = makeFontsConf {
