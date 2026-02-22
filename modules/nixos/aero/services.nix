@@ -41,7 +41,6 @@ in
 
     environment.sessionVariables = {
       QML_DISABLE_DISTANCEFIELD = "1";
-      USE_UAC_AGENT = "1";
     };
 
     environment.systemPackages =
