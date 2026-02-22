@@ -1,13 +1,13 @@
 {
   mkAeroDerivation,
   aeroEffects,
-  decoration,
+  smod,
 }:
 
 mkAeroDerivation {
   pname = "aeroglassblur";
   buildInputs = [
-    decoration
+    smod
   ];
   src = "${aeroEffects}/kde-effects-aeroglassblur";
 }

@@ -6,8 +6,8 @@
   ...
 }:
 let
-  libplasma = pkgs.callPackage ./libplasma.nix { };
-  plasmashell = pkgs.callPackage ./plasmashell.nix {
+  libplasma = pkgs.callPackage ./kde/libplasma.nix { };
+  plasmashell = pkgs.callPackage ./kde/plasmashell.nix {
     inherit libplasma;
   };
   commonCmakeFlags = ([
@@ -65,61 +65,61 @@ let
         buildInputs = defaultBuild ++ buildInputs;
       };
   };
-  aero = pkgs.callPackage ./aerothemeplasma.nix { };
-  decoration = pkgs.callPackage ./decoration.nix {
+  aero = pkgs.callPackage ./misc/aerothemeplasma.nix { };
+  smod = pkgs.callPackage ./kde/smod.nix {
     inherit mkAeroDerivation aero;
   };
 in
 {
-  inherit decoration libplasma plasmashell;
+  inherit smod libplasma plasmashell;
   aerothemeplasma = aero;
-  aerofonts = pkgs.callPackage ./aerofonts.nix { };
-  aeroglassblur = pkgs.callPackage ./aeroglassblur.nix {
-    inherit mkAeroDerivation aeroEffects decoration;
+  aeroglassblur = pkgs.callPackage ./effects/aeroglassblur.nix {
+    inherit mkAeroDerivation aeroEffects smod;
   };
-  aeroglide = pkgs.callPackage ./aeroglide.nix {
-    inherit mkAeroDerivation aeroEffects decoration;
+  aeroglide = pkgs.callPackage ./effects/aeroglide.nix {
+    inherit mkAeroDerivation aeroEffects smod;
   };
-  desktopcontainment = pkgs.callPackage ./desktopcontainment.nix {
+  smodglow = pkgs.callPackage ./effects/smodglow.nix {
+    inherit mkAeroDerivation smod;
+  };
+  smodsnap = pkgs.callPackage ./effects/smodsnap.nix {
+    inherit mkAeroDerivation aeroEffects smod;
+  };
+  startupfeedback = pkgs.callPackage ./effects/startupfeedback.nix {
+    inherit mkAeroDerivation aeroEffects smod;
+  };
+  kwin = pkgs.callPackage ./kde/kwin.nix {
+    inherit mkAeroDerivation;
+  };
+  libshowdesktop = pkgs.callPackage ./kde/libshowdesktop.nix {
+    inherit mkAeroDerivation;
+  };
+  libtaskmanager = pkgs.callPackage ./kde/libtaskmanager.nix {
+    inherit mkAeroDerivation;
+  };
+  uac-polkit-agent = pkgs.callPackage ./kde/uac-polkit-agent.nix {
+    inherit mkAeroDerivation;
+  };
+  aerofonts = pkgs.callPackage ./misc/aerofonts.nix { };
+  kcmloader = pkgs.callPackage ./misc/kcmloader.nix {
     inherit mkAeroDerivation aero;
   };
-  kcmloader = pkgs.callPackage ./kcmloader.nix {
+  desktopcontainment = pkgs.callPackage ./plasma/desktopcontainment.nix {
     inherit mkAeroDerivation aero;
   };
-  kwin = pkgs.callPackage ./kwin.nix {
-    inherit mkAeroDerivation;
-  };
-  libshowdesktop = pkgs.callPackage ./libshowdesktop.nix {
-    inherit mkAeroDerivation;
-  };
-  libtaskmanager = pkgs.callPackage ./libtaskmanager.nix {
-    inherit mkAeroDerivation;
-  };
-  login-sessions = pkgs.callPackage ./login-sessions.nix {
+  login-sessions = pkgs.callPackage ./plasma/login-sessions.nix {
     inherit mkAeroDerivation aero plasmashell;
   };
-  notifications = pkgs.callPackage ./notifications.nix {
+  notifications = pkgs.callPackage ./plasma/notifications.nix {
     inherit mkAeroDerivation aero;
   };
-  sevenstart = pkgs.callPackage ./sevenstart.nix {
+  sevenstart = pkgs.callPackage ./plasma/sevenstart.nix {
     inherit mkAeroDerivation aero;
   };
-  seventasks = pkgs.callPackage ./seventasks.nix {
+  seventasks = pkgs.callPackage ./plasma/seventasks.nix {
     inherit mkAeroDerivation aero;
   };
-  smodglow = pkgs.callPackage ./smodglow.nix {
-    inherit mkAeroDerivation decoration;
-  };
-  smodsnap = pkgs.callPackage ./smodsnap.nix {
-    inherit mkAeroDerivation aeroEffects decoration;
-  };
-  startupfeedback = pkgs.callPackage ./startupfeedback.nix {
-    inherit mkAeroDerivation aeroEffects decoration;
-  };
-  systemtray = pkgs.callPackage ./systemtray.nix {
+  systemtray = pkgs.callPackage ./plasma/systemtray.nix {
     inherit mkAeroDerivation aero;
-  };
-  uac-polkit-agent = pkgs.callPackage ./uac-polkit-agent.nix {
-    inherit mkAeroDerivation;
   };
 }

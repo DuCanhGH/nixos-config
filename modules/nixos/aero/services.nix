@@ -5,7 +5,7 @@
   ...
 }:
 let
-  plymouth-vista = pkgs.callPackage ./plymouth.nix {
+  plymouth-vista = pkgs.callPackage ./misc/plymouth.nix {
     inherit (pkgs.aero) aerofonts;
   };
   cfg = config.services.aero;
@@ -49,7 +49,6 @@ in
         aeroglassblur
         aeroglide
         aerothemeplasma
-        decoration
         desktopcontainment
         kcmloader
         kwin
@@ -59,6 +58,7 @@ in
         notifications
         sevenstart
         seventasks
+        smod
         smodglow
         smodsnap
         startupfeedback

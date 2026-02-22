@@ -1,13 +1,13 @@
 {
   mkAeroDerivation,
   aeroEffects,
-  decoration,
+  smod,
 }:
 
 mkAeroDerivation {
   pname = "aero-smodsnap";
   buildInputs = [
-    decoration
+    smod
   ];
   src = "${aeroEffects}/kwin-effect-smodsnap-v2";
 }

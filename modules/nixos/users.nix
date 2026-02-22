@@ -22,7 +22,7 @@
       ducanh = {
         imports = [
           ../../home/ducanh.nix
-          ./home/aero.nix
+          ./aero/home.nix
         ];
         aero.enable = true;
         home.homeDirectory = "/home/ducanh";

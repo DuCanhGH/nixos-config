@@ -1,13 +1,13 @@
 {
   pkgs,
   mkAeroDerivation,
-  decoration,
+  smod,
 }:
 
 mkAeroDerivation {
   pname = "aero-smodglow";
   buildInputs = [
-    decoration
+    smod
   ];
   src = "${pkgs.aero-smod-repo}/smodglow";
 }

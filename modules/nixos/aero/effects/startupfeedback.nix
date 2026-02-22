@@ -2,13 +2,13 @@
   pkgs,
   mkAeroDerivation,
   aeroEffects,
-  decoration,
+  smod,
 }:
 
 mkAeroDerivation {
   pname = "aero-startupfeedback";
   buildInputs = [
-    decoration
+    smod
   ];
   src = "${aeroEffects}/startupfeedback";
 }

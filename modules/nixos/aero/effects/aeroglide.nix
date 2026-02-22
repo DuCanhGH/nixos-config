@@ -1,13 +1,13 @@
 {
   mkAeroDerivation,
   aeroEffects,
-  decoration,
+  smod,
 }:
 
 mkAeroDerivation {
   pname = "aeroglide";
   buildInputs = [
-    decoration
+    smod
   ];
   src = "${aeroEffects}/aeroglide";
 }
