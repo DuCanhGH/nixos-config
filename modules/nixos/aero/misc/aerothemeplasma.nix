@@ -39,6 +39,7 @@ stdenvNoCC.mkDerivation {
     cp -r "${pkgs.aero-icons-repo}/aero-drop" $out/share/icons/
     cp -r "${pkgs.aero-icons-repo}/Windows 7 Aero" $out/share/icons/
     cp -r "${pkgs.aero-sounds-repo}/Windows 7"* $out/share/sounds/
+    cp -f "$out/share/sounds/Windows 7/og/Windows Startup.wav" $out/share/sddm/themes/sddm-theme-mod/Assets/session-start.wav
     ln -sf $out/share/icons/aero-drop $out/share/icons/default
     cp -r plasma/plasmoids/src/* $dev/plasma/plasmoids
     cp -r plasma/sddm $dev/plasma
