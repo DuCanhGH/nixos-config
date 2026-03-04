@@ -5,7 +5,7 @@
 }:
 mkAeroDerivation {
   pname = "aero-smod";
-  src = pkgs.aero-smod-repo;
+  src = pkgs.repos.aero-smod;
   buildInputs = with pkgs.kdePackages; [
     kirigami
     kcoreaddons

@@ -30,6 +30,34 @@
       url = "git+ssh://git@github.com/DuCanhGH/nix-secrets.git";
       flake = false;
     };
+    aerothemeplasma = {
+      url = "git+ssh://git@github.com/rustussy/aerothemeplasma";
+      flake = false;
+    };
+    aero-libplasma = {
+      url = "git+ssh://git@github.com/rustussy/aeroshell-libplasma";
+      flake = false;
+    };
+    aero-workspace = {
+      url = "git+ssh://git@github.com/rustussy/aeroshell-workspace";
+      flake = false;
+    };
+    aero-kwin = {
+      url = "git+ssh://git@github.com/rustussy/aeroshell-kwin-components";
+      flake = false;
+    };
+    aero-smod = {
+      url = "git+ssh://git@github.com/rustussy/aeroshell-smod";
+      flake = false;
+    };
+    uac-polkit-agent = {
+      url = "git+ssh://git@github.com/rustussy/uac-polkit-agent";
+      flake = false;
+    };
+    plymouth-vista = {
+      url = "git+ssh://git@github.com/rustussy/plymouth-vista";
+      flake = false;
+    };
   };
   outputs =
     inputs@{

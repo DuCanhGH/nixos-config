@@ -8,7 +8,7 @@
 }:
 stdenvNoCC.mkDerivation {
   name = "plymouth-vista";
-  src = pkgs.plymouth-vista-repo;
+  src = pkgs.repos.plymouth-vista;
   nativeBuildInputs = [ pkgs.imagemagick ];
   env = {
     FONTCONFIG_FILE = makeFontsConf {

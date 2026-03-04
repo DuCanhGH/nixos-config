@@ -16,11 +16,10 @@ let
     "-DPlasma_DIR=${libplasma.dev}/lib/cmake/Plasma"
     "-DPlasmaQuick_DIR=${libplasma.dev}/lib/cmake/PlasmaQuick"
     "-DKPLUGINFACTORY_INCLUDE=${pkgs.kdePackages.kcoreaddons.dev}/include/KF6/KCoreAddons"
-  ])
-  ++ (lib.optionals waylandEnabled [
-    "-DKWIN_BUILD_WAYLAND=ON"
+    (lib.cmakeBool "KWIN_BUILD_WAYLAND" waylandEnabled)
+    (lib.cmakeBool "INSTALL_X11_COMPONENTS" (!waylandEnabled))
   ]);
-  aeroEffects = "${pkgs.aero-kwin-repo}/effects_cpp/${if waylandEnabled then "wayland" else "x11"}";
+  aeroEffects = "${pkgs.repos.aero-kwin}/effects_cpp/${if waylandEnabled then "wayland" else "x11"}";
   # Source: https://github.com/Rotlug/aerothemeplasma-nixos/blob/8452aa903e76f9c20a62024c6d6f2c4be6933c8d/default.nix#L23-L70
   mkAeroDerivation = lib.extendMkDerivation {
     constructDrv = stdenv.mkDerivation;
@@ -65,7 +64,7 @@ let
         buildInputs = defaultBuild ++ buildInputs;
       };
   };
-  aero = pkgs.callPackage ./misc/aerothemeplasma.nix { };
+  aero = pkgs.callPackage ./plasma/aerothemeplasma.nix { };
   smod = pkgs.callPackage ./kde/smod.nix {
     inherit mkAeroDerivation aero;
   };
@@ -79,14 +78,12 @@ in
   aeroglide = pkgs.callPackage ./effects/aeroglide.nix {
     inherit mkAeroDerivation aeroEffects smod;
   };
-  smodglow = pkgs.callPackage ./effects/smodglow.nix {
-    inherit mkAeroDerivation smod;
+  aerofonts = pkgs.callPackage ./misc/aerofonts.nix { };
+  desktopcontainment = pkgs.callPackage ./plasma/desktopcontainment.nix {
+    inherit mkAeroDerivation aero;
   };
-  smodsnap = pkgs.callPackage ./effects/smodsnap.nix {
-    inherit mkAeroDerivation aeroEffects smod;
-  };
-  startupfeedback = pkgs.callPackage ./effects/startupfeedback.nix {
-    inherit mkAeroDerivation aeroEffects smod;
+  kcmloader = pkgs.callPackage ./misc/kcmloader.nix {
+    inherit mkAeroDerivation aero;
   };
   kwin = pkgs.callPackage ./kde/kwin.nix {
     inherit mkAeroDerivation;
@@ -97,18 +94,13 @@ in
   libtaskmanager = pkgs.callPackage ./kde/libtaskmanager.nix {
     inherit mkAeroDerivation;
   };
-  uac-polkit-agent = pkgs.callPackage ./kde/uac-polkit-agent.nix {
-    inherit mkAeroDerivation;
-  };
-  aerofonts = pkgs.callPackage ./misc/aerofonts.nix { };
-  kcmloader = pkgs.callPackage ./misc/kcmloader.nix {
-    inherit mkAeroDerivation aero;
-  };
-  desktopcontainment = pkgs.callPackage ./plasma/desktopcontainment.nix {
-    inherit mkAeroDerivation aero;
-  };
   login-sessions = pkgs.callPackage ./plasma/login-sessions.nix {
-    inherit mkAeroDerivation aero plasmashell;
+    inherit
+      mkAeroDerivation
+      aero
+      plasmashell
+      waylandEnabled
+      ;
   };
   notifications = pkgs.callPackage ./plasma/notifications.nix {
     inherit mkAeroDerivation aero;
@@ -119,7 +111,19 @@ in
   seventasks = pkgs.callPackage ./plasma/seventasks.nix {
     inherit mkAeroDerivation aero;
   };
+  smodglow = pkgs.callPackage ./effects/smodglow.nix {
+    inherit mkAeroDerivation smod;
+  };
+  smodsnap = pkgs.callPackage ./effects/smodsnap.nix {
+    inherit mkAeroDerivation aeroEffects smod;
+  };
+  startupfeedback = pkgs.callPackage ./effects/startupfeedback.nix {
+    inherit mkAeroDerivation aeroEffects smod;
+  };
   systemtray = pkgs.callPackage ./plasma/systemtray.nix {
     inherit mkAeroDerivation aero;
+  };
+  uac-polkit-agent = pkgs.callPackage ./kde/uac-polkit-agent.nix {
+    inherit mkAeroDerivation;
   };
 }

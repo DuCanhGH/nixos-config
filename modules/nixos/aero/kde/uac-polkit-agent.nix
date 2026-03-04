@@ -1,7 +1,10 @@
-{ pkgs, mkAeroDerivation }:
+{
+  pkgs,
+  mkAeroDerivation,
+}:
 mkAeroDerivation {
   pname = "aero-uac-polkit-agent";
-  src = pkgs.uac-polkit-agent-repo;
+  src = pkgs.repos.uac-polkit-agent;
   postFixup = ''
     rm -rf $out/share/systemd/user/uac-polkit-agent.service
     substituteInPlace $out/etc/systemd/user/plasma-polkit-agent.service.d/uac-polkit-agent.conf \

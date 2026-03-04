@@ -4,8 +4,12 @@
 }:
 mkAeroDerivation {
   pname = "aero-libshowdesktop";
-  src = pkgs.aero-workspace-repo;
+  src = pkgs.repos.aero-workspace;
   ninjaFlags = [ "showdesktopplugin" ];
+  buildInputs = with pkgs.kdePackages; [
+    libksysguard
+    plasma-workspace
+  ];
   installPhase = ''
     runHook preInstall
     ninja libshowdesktop/install

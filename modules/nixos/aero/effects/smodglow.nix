@@ -9,5 +9,5 @@ mkAeroDerivation {
   buildInputs = [
     smod
   ];
-  src = "${pkgs.aero-smod-repo}/smodglow";
+  src = "${pkgs.repos.aero-smod}/smodglow";
 }

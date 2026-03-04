@@ -5,7 +5,7 @@ pkgs.kdePackages.libplasma.overrideAttrs (oldAttrs: {
   # https://github.com/NixOS/nixpkgs/blob/76e87812ad15014a37ea69953bbb33091c515690/pkgs/kde/plasma/libplasma/rb-extracomponents.patch
   postPatch = ''
     shopt -s globstar
-    rm -rf ./* && cp -r ${pkgs.aero-libplasma-repo}/* .
+    rm -rf ./* && cp -r ${pkgs.repos.aero-libplasma}/* .
     substituteInPlace src/declarativeimports/plasmaextracomponents/CMakeLists.txt \
       --replace-fail "ecm_finalize_qml_module" "add_dependencies(plasmaextracomponentsplugin org_kde_plasmacomponents3)
         ecm_finalize_qml_module"
