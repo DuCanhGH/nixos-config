@@ -47,6 +47,26 @@ in
     enable = true;
     signing.signByDefault = true;
     signing.key = "17143A062925B84B";
+    includes = [
+      {
+        condition = "gitdir:~/Documents/github/";
+        contents = {
+          user = {
+            name = "DuCanhGH";
+            email = "75556609+DuCanhGH@users.noreply.github.com";
+          };
+        };
+      }
+      {
+        condition = "gitdir:~/Documents/gitgud/";
+        contents = {
+          user = {
+            name = "rustussy";
+            email = "ngoducanh2912@gmail.com";
+          };
+        };
+      }
+    ];
     settings = {
       user = {
         name = "DuCanhGH";
