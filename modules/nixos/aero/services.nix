@@ -31,9 +31,6 @@ in
       themePackages = [
         plymouth-vista
       ];
-      extraConfig = ''
-        UseSimpledrm = 1
-      '';
     };
 
     systemd.services.plymouth-quit.serviceConfig = lib.mkIf (cfg.plymouth.delay != null) {

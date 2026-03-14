@@ -21,10 +21,19 @@
     ++ (lib.optionals config.services.amdgpu.enable [ "amdgpu" ]);
 
     boot = {
-      initrd.kernelModules = if config.services.amdgpu.enable then [ "amdgpu" ] else [ "nvidia" ];
-      extraModulePackages = lib.optionals (!config.services.amdgpu.enable) [
-        config.boot.kernelPackages.nvidia_x11_beta
-      ];
+      initrd.kernelModules =
+        if config.services.amdgpu.enable then
+          [
+            "amdgpu"
+          ]
+        else
+          [
+            "nvidia"
+            "nvidia-drm"
+            "nvidia-uvm"
+            "nvidia-modeset"
+          ];
+      kernelParams = lib.optionals (!config.services.amdgpu.enable) [ "nvidia-drm.modeset=1" ];
     };
 
     # Enable the GNOME Desktop Environment.
