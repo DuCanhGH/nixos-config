@@ -65,8 +65,10 @@
           "scaleEnabled" = false;
           "slideEnabled" = false;
           "slidingpopupsEnabled" = false;
+          "smodglow-x11Enabled" = true;
           "smodglowEnabled" = true;
           "smodpeekeffectEnabled" = true;
+          "smodpeekscriptEnabled" = true;
           "smodsnapEnabled" = true;
           "squashEnabled" = true;
           "startupfeedbackEnabled" = true;
