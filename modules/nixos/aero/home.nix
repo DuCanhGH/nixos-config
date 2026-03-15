@@ -12,9 +12,6 @@
     ];
     home.file = {
       ".local/share/smod".source = "${pkgs.aero.kwin}/share/smod";
-      ".local/share/kwin/outline".source = "${pkgs.aero.kwin}/share/aeroshell/outline";
-      ".local/share/kwin-x11/outline".source = "${pkgs.aero.kwin}/share/aeroshell/outline";
-      ".local/share/kwin-wayland/outline".source = "${pkgs.aero.kwin}/share/aeroshell/outline";
       ".config/Kvantum".source = "${pkgs.aero.aerothemeplasma}/share/Kvantum";
     };
     fonts.fontconfig = {
@@ -37,7 +34,9 @@
         "kwinrc"."MouseBindings" = {
           "CommandAll1" = "Activate, raise and move";
           "CommandWheel" = "Nothing";
+          "CommandTitlebarWheel" = "Nothing";
         };
+        "kwinrc"."Outline"."QmlPath" = "aeroshell/outline/plasma/outline.qml";
         "kwinrc"."Effect-glide" = {
           "Duration" = 200;
           "InRotationAngle" = 4;
@@ -83,25 +82,36 @@
           "ShowDesktopMode" = 1;
         };
         "kwinrc"."TabBoxAlternative" = {
-          "LayoutName" = "flipswitch";
+          "LayoutName" = "flip3d";
+          "ShowDesktopMode" = 1;
         };
         "kwinrc"."org.kde.kdecoration2" = {
+          "ButtonsOnLeft" = "M";
+          "ButtonsOnRight" = "H_IAX";
           "library" = "org.smod.smod";
           "theme" = "SMOD";
         };
         "ksmserverrc"."General"."confirmLogout" = false;
         "kcminputrc"."Mouse" = {
-          "BusyCursor" = "none";
           "cursorSize" = 32;
           "cursorTheme" = "aero-drop";
         };
-        "klaunchrc"."FeedbackStyle"."BusyCursor" = false;
+        "klaunchrc" = {
+          "FeedbackStyle"."BusyCursor" = false;
+          "BusyCursorSettings" = {
+            "Bouncing" = false;
+            "Blinking" = false;
+          };
+        };
         "kdeglobals" = {
+          "Sounds"."Theme" = "Windows 7";
           "General" = {
             "XftAntialias" = true;
             "XftHintStyle" = "hintslight";
             "XftSubPixel" = "rgb";
+            "AccentColor" = "0,0,0,0";
             "accentColorFromWallpaper" = false;
+            "ColorScheme" = "Aero";
             "font" = "Segoe UI,9,-1,5,50,0,0,0,0,0";
             "menuFont" = "Segoe UI,9,-1,5,50,0,0,0,0,0";
             "toolBarFont" = "Segoe UI,9,-1,5,50,0,0,0,0,0";
@@ -112,7 +122,6 @@
             "LookAndFeelPackage" = "authui7";
             "widgetStyle" = "kvantum";
           };
-          "Sounds"."Theme" = "Windows 7";
           "WM"."activeFont" = "Segoe UI,10,-1,5,400,0,0,0,0,0,0,0,0,0,0,1";
         };
       };
