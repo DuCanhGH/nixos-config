@@ -51,11 +51,11 @@
     "aero-workspace": {
       "flake": false,
       "locked": {
-        "lastModified": 1773508219,
-        "narHash": "sha256-FmfUvrcsSH+va7IsTdK1qjbJ1VYdr1vdSC43iakL9ls=",
+        "lastModified": 1773614459,
+        "narHash": "sha256-4ycZNNpin3rYOtAqNWWmUHP6GBhAos8s1xYhi112HVQ=",
         "ref": "refs/heads/Plasma/6.6",
-        "rev": "a040a91314a3a39685866fdef4d350685290fcf6",
-        "revCount": 12,
+        "rev": "2dff1291230d4222c6c56e75ad6d88e048d61d87",
+        "revCount": 14,
         "type": "git",
         "url": "ssh://git@github.com/rustussy/aeroshell-workspace"
       },
@@ -67,11 +67,11 @@
     "aerothemeplasma": {
       "flake": false,
       "locked": {
-        "lastModified": 1773591303,
-        "narHash": "sha256-Z7hUaUkrx5L49CSD4MumWklhDUi69L5lmlLAhpIwOc8=",
+        "lastModified": 1773647844,
+        "narHash": "sha256-kSGtRTFJdpgPJDOXeX9vQYvKiqZ8pvlpBS6j54m/k5U=",
         "ref": "refs/heads/Plasma/6.6",
-        "rev": "960cd05fd95b0a75365f9fff66f74103254c6160",
-        "revCount": 693,
+        "rev": "d2a1220ff2b94ec490413ceb333ca4f1c3de3e4d",
+        "revCount": 699,
         "type": "git",
         "url": "ssh://git@github.com/rustussy/aerothemeplasma"
       },
@@ -206,11 +206,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1773422513,
-        "narHash": "sha256-MPjR48roW7CUMU6lu0+qQGqj92Kuh3paIulMWFZy+NQ=",
+        "lastModified": 1773608492,
+        "narHash": "sha256-QZteyExJYSQzgxqdsesDPbQgjctGG7iKV/6ooyQPITk=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "ef12a9a2b0f77c8fa3dda1e7e494fca668909056",
+        "rev": "9a40ec3b78fc688d0908485887d355caa5666d18",
         "type": "github"
       },
       "original": {
@@ -267,11 +267,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1773389992,
-        "narHash": "sha256-wvfdLLWJ2I9oEpDd9PfMA8osfIZicoQ5MT1jIwNs9Tk=",
+        "lastModified": 1773579282,
+        "narHash": "sha256-LWvZj9Bvm1EuoO6zbX4yjZebwnZNfeTbmCJGS7RGQ3Y=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "c06b4ae3d6599a672a6210b7021d699c351eebda",
+        "rev": "5a88de74db0e948139be4b46f9a94d64aa11391c",
         "type": "github"
       },
       "original": {
@@ -416,11 +416,11 @@
     "uac-polkit-agent": {
       "flake": false,
       "locked": {
-        "lastModified": 1773194304,
-        "narHash": "sha256-3wwOn5ZOXjSL1qcl8PudHmqkcT19IiVG87m7KRmwFFQ=",
+        "lastModified": 1773604303,
+        "narHash": "sha256-MXZCC0tzr3dPY+4yNKx+4l70gRM8ZZqoxbj7U4qrf5M=",
         "ref": "refs/heads/Plasma/6.6",
-        "rev": "fd663cbeb599753c3d661637330673cc9136a7b8",
-        "revCount": 812,
+        "rev": "30f6179a2ac78f68c039dc870574afaa1b5f9bd2",
+        "revCount": 813,
         "type": "git",
         "url": "ssh://git@github.com/rustussy/uac-polkit-agent"
       },

@@ -12,9 +12,6 @@ stdenvNoCC.mkDerivation {
     "out"
     "dev"
   ];
-  patches = [
-    ./authui-on-failed-fix.patch
-  ];
   postPatch = ''
     substituteInPlace $(find plasma -type f -name '*.qml' -o -name '*.js') \
       --replace-quiet "import org.kde.plasma.core" "import io.gitgud.wackyideas.plasma.core" \
