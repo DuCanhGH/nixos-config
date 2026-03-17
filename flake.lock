@@ -304,6 +304,22 @@
         "type": "github"
       }
     },
+    "plasma-video-wallpaper": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1773741392,
+        "narHash": "sha256-LBlMnSeFBa/tVpvhyp+8Sy4rRJKILm37JjUS5uMjlMo=",
+        "ref": "refs/heads/main",
+        "rev": "befeba39ad41032ca08d440baba7c1d53beef1a0",
+        "revCount": 228,
+        "type": "git",
+        "url": "ssh://git@github.com/rustussy/plasma-video-wallpaper"
+      },
+      "original": {
+        "type": "git",
+        "url": "ssh://git@github.com/rustussy/plasma-video-wallpaper"
+      }
+    },
     "plymouth-vista": {
       "flake": false,
       "locked": {
@@ -356,6 +372,7 @@
         "nix-darwin": "nix-darwin",
         "nixpkgs": "nixpkgs",
         "plasma-manager": "plasma-manager",
+        "plasma-video-wallpaper": "plasma-video-wallpaper",
         "plymouth-vista": "plymouth-vista",
         "secrets": "secrets",
         "uac-polkit-agent": "uac-polkit-agent"

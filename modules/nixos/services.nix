@@ -6,9 +6,7 @@
   ...
 }:
 {
-  options.services.amdgpu = {
-    enable = lib.mkEnableOption "Set AMD iGPU as primary";
-  };
+  options.services.amdgpu.enable = lib.mkEnableOption "Set AMD iGPU as primary";
 
   config = {
     services.dbus.enable = true;

@@ -105,6 +105,9 @@ in
   notifications = pkgs.callPackage ./plasma/notifications.nix {
     inherit mkAeroDerivation aero;
   };
+  plasma-video-wallpaper = pkgs.callPackage ./plasma/plasma-video-wallpaper.nix {
+    inherit mkAeroDerivation;
+  };
   sevenstart = pkgs.callPackage ./plasma/sevenstart.nix {
     inherit mkAeroDerivation aero;
   };

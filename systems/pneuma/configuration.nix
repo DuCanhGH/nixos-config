@@ -44,6 +44,7 @@
   services.aero = { 
     wayland.enable = true;
     plymouth.delay = 5;
+    video-wallpaper.enable = true;
   };
 
   services.asusd.enable = true;

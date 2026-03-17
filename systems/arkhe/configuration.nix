@@ -30,11 +30,13 @@
     "/swap".options = [ "noatime" ];
   };
 
-  services.davinci.enable = true;
-
   swapDevices = [ { device = "/swap/swapfile"; } ];
 
   networking.hostName = "arkhe"; # Define your hostname.
+
+  services.davinci.enable = true;
+
+  services.aero.video-wallpaper.enable = true;
 
   hardware.bluetooth.enable = true;
 }

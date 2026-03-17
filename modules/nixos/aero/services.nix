@@ -15,6 +15,7 @@ in
   options.services.aero = {
     enable = lib.mkEnableOption "Enable Aero";
     wayland.enable = lib.mkEnableOption "Enable Wayland";
+    video-wallpaper.enable = lib.mkEnableOption "Enable Plasma Video Wallpaper";
     plymouth = {
       enable = lib.mkEnableOption "Enable Plymouth Vista";
       delay = lib.mkOption {
@@ -63,6 +64,7 @@ in
         systemtray
         (lib.hiPrio plasmashell)
       ])
+      ++ (lib.optionals cfg.video-wallpaper.enable [ pkgs.aero.plasma-video-wallpaper ])
       ++ (with pkgs; [
         kdePackages.qtmultimedia
         kdePackages.qtstyleplugin-kvantum

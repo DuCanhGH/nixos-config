@@ -9,6 +9,7 @@ final: prev: {
       aero-smod
       uac-polkit-agent
       plymouth-vista
+      plasma-video-wallpaper
       ;
     aero-icons = prev.fetchFromGitLab {
       domain = "gitgud.io";

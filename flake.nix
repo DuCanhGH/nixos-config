@@ -58,6 +58,10 @@
       url = "git+ssh://git@github.com/rustussy/plymouth-vista";
       flake = false;
     };
+    plasma-video-wallpaper = {
+      url = "git+ssh://git@github.com/rustussy/plasma-video-wallpaper";
+      flake = false;
+    };
   };
   outputs =
     inputs@{
