@@ -7,6 +7,9 @@
 let
   agenixPublicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDX9GXpxfnALHa8pO7G/FPJp+rHACXzaG6HQ11lOk+2/ ngoducanh2912@gmail.com";
   sshPublicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID5fRr8pqUXd9sVUgz4PBaiZN5h9tRHW0862zNYz1OiT 75556609+DuCanhGH@users.noreply.github.com";
+  neovim = pkgs.callPackage ../modules/neovim {
+    inherit inputs;
+  };
 in
 {
   imports = [
@@ -22,6 +25,7 @@ in
         text = sshPublicKey;
       };
     };
+    packages = [ neovim ];
     stateVersion = "24.11";
   };
   age = {
@@ -31,9 +35,9 @@ in
         file = "${inputs.secrets}/ssh_ed25519.age";
         path = "${config.home.homeDirectory}/.ssh/id_ed25519";
       };
-      gpg_17143A = {
-        file = "${inputs.secrets}/gpg_17143A.age";
-        path = "${config.home.homeDirectory}/.gnupg/17143A062925B84B.key";
+      gpg_DFD8DA = {
+        file = "${inputs.secrets}/gpg_DFD8DA.age";
+        path = "${config.home.homeDirectory}/.gnupg/DFD8DA4152EDBB37.key";
       };
     };
   };
@@ -46,31 +50,21 @@ in
   programs.git = {
     enable = true;
     signing.signByDefault = true;
-    signing.key = "17143A062925B84B";
+    signing.key = "DFD8DA4152EDBB37";
     includes = [
       {
         condition = "gitdir:~/Documents/github/";
-        contents = {
-          user = {
-            name = "DuCanhGH";
-            email = "75556609+DuCanhGH@users.noreply.github.com";
-          };
-        };
+        contents.user.name = "DuCanhGH";
       }
       {
         condition = "gitdir:~/Documents/gitgud/";
-        contents = {
-          user = {
-            name = "rustussy";
-            email = "ngoducanh2912@gmail.com";
-          };
-        };
+        contents.user.name = "rustussy";
       }
     ];
     settings = {
       user = {
         name = "DuCanhGH";
-        email = "75556609+DuCanhGH@users.noreply.github.com";
+        email = "ngoducanh2912@gmail.com";
       };
       credential."https://github.com" = {
         helper = "!${pkgs.gh}/bin/gh auth git-credential";
