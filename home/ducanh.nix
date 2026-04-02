@@ -49,8 +49,11 @@ in
   };
   programs.git = {
     enable = true;
-    signing.signByDefault = true;
-    signing.key = "DFD8DA4152EDBB37";
+    signing = {
+      format = "openpgp";
+      signByDefault = true;
+      key = "DFD8DA4152EDBB37";
+    };
     includes = [
       {
         condition = "gitdir:~/Documents/github/";
