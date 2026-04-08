@@ -37,12 +37,6 @@
           "CommandTitlebarWheel" = "Nothing";
         };
         "kwinrc"."Outline"."QmlPath" = "aeroshell/outline/plasma/outline.qml";
-        "kwinrc"."Effect-glide" = {
-          "Duration" = 200;
-          "InRotationAngle" = 4;
-          "OutDistance" = 20;
-          "OutRotationAngle" = 4;
-        };
         "kwinrc"."Plugins" = {
           "aeroglassblurEnabled" = true;
           "aeroglideEnabled" = true;

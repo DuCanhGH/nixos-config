@@ -1,6 +1,9 @@
 {
   vim = {
-    lsp.enable = true;
+    lsp = {
+      enable = true;
+      presets.tailwindcss-language-server.enable = true;
+    };
     languages = {
       enableTreesitter = true;
       enableExtraDiagnostics = true;
@@ -28,8 +31,7 @@
         format.enable = true;
         treesitter.enable = true;
       };
-      tailwind.enable = true;
-      ts = {
+      typescript = {
         enable = true;
         lsp.enable = true;
         format.enable = true;
