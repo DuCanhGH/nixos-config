@@ -30,10 +30,12 @@
   fileSystems = {
     "/efi/EFI/Linux" = {
       device = "/boot/EFI/Linux";
+      fsType = "vfat";
       options = [ "bind" ];
     };
     "/efi/EFI/nixos" = {
       device = "/boot/EFI/nixos";
+      fsType = "vfat";
       options = [ "bind" ];
     };
     "/swap".options = [ "noatime" ];
