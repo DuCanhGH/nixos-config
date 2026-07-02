@@ -36,5 +36,31 @@
 
   services.aero.video-wallpaper.enable = true;
 
+  services.llama-cpp = {
+    enable = true;
+    package = pkgs.llama-cpp.override { cudaSupport = true; };
+    modelsPreset = {
+      "gpt-oss-20b" = {
+        hf-repo = "ggml-org/gpt-oss-20b-GGUF";
+        hf-file = "gpt-oss-20b-mxfp4.gguf";
+        alias = "openai/gpt-oss-20b";
+        ctx-size = 0;
+        batch-size = 2048;
+        ubatch-size = 2048;
+        flash-attn = "on";
+        n-cpu-moe = 16;
+      };
+    };
+  };
+
+  nix.settings = {
+    substituters = [
+      "https://cache.nixos-cuda.org"
+    ];
+    trusted-public-keys = [
+      "cache.nixos-cuda.org:74DUi4Ye579gUqzH4ziL9IyiJBlDpMRn9MBN8oNan9M="
+    ];
+  };
+
   hardware.bluetooth.enable = true;
 }
