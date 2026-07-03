@@ -40,15 +40,23 @@
     enable = true;
     package = pkgs.llama-cpp.override { cudaSupport = true; };
     modelsPreset = {
-      "gpt-oss-20b" = {
-        hf-repo = "ggml-org/gpt-oss-20b-GGUF";
-        hf-file = "gpt-oss-20b-mxfp4.gguf";
-        alias = "openai/gpt-oss-20b";
-        ctx-size = 0;
+      "Qwen/Qwen3.6-35B-A3B" = {
+        hf-repo = "unsloth/Qwen3.6-35B-A3B-GGUF";
+        hf-file = "Qwen3.6-35B-A3B-UD-Q4_K_XL.gguf";
+        jinja = true;
+        ctk = "q8_0";
+        ctv = "q8_0";
+        fit = "on";
+        fit-ctx = 131072;
         batch-size = 2048;
-        ubatch-size = 2048;
+        ubatch-size = 768;
         flash-attn = "on";
-        n-cpu-moe = 16;
+        temp = 0.6;
+        top-p = 0.95;
+        top-k = 20;
+        min-p = 0.0;
+        presence-penalty = 0.0;
+        repeat-penalty = 1.0;
       };
     };
   };
