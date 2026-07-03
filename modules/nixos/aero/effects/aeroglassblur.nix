@@ -1,6 +1,7 @@
 {
+  pkgs,
   mkAeroDerivation,
-  aeroEffects,
+  mkBuildTarget,
   smod,
 }:
 
@@ -8,6 +9,8 @@ mkAeroDerivation {
   pname = "aeroglassblur";
   buildInputs = [
     smod
+    pkgs.wayland-protocols
   ];
-  src = "${aeroEffects}/kde-effects-aeroglassblur";
+  src = pkgs.repos.aero-kwin;
+  ninjaFlags = [ "${mkBuildTarget "aeroglassblur"}" ];
 }

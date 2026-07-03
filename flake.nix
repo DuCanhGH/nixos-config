@@ -14,7 +14,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     lanzaboote = {
-      url = "github:nix-community/lanzaboote/v1.0.0";
+      url = "github:nix-community/lanzaboote/v1.1.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     agenix = {
@@ -94,16 +94,6 @@
           { home-manager.extraSpecialArgs = specialArgs; }
         ];
       };
-      nixosConfigurations.arkhe = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        inherit specialArgs;
-        modules = [
-          home-manager.nixosModules.home-manager
-          lanzaboote.nixosModules.lanzaboote
-          ./systems/arkhe/configuration.nix
-          homeManagerOptions
-        ];
-      };
       nixosConfigurations.pneuma = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         inherit specialArgs;
@@ -119,6 +109,7 @@
         inherit specialArgs;
         modules = [
           home-manager.nixosModules.home-manager
+          lanzaboote.nixosModules.lanzaboote
           ./systems/ousia/configuration.nix
           homeManagerOptions
         ];

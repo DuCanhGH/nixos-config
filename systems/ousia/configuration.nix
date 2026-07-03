@@ -2,9 +2,9 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 {
+  pkgs,
   config,
   lib,
-  pkgs,
   ...
 }:
 {
@@ -15,24 +15,13 @@
 
   boot = {
     loader.systemd-boot.enable = lib.mkForce false;
-    # Use the grub EFI boot loader.
-    loader.grub.enable = true;
-    loader.grub.useOSProber = true;
-    loader.grub.device = "nodev";
-    loader.grub.efiSupport = true;
-    loader.grub.splashImage = null;
-    loader.grub.theme = pkgs.stdenv.mkDerivation {
-      pname = "HyperFluent";
-      version = "1.0.1";
-      src = pkgs.fetchFromGitHub {
-        owner = "Coopydood";
-        repo = "HyperFluent-GRUB-Theme";
-        rev = "50a69ef1c020d1e4e69a683f6f8cf79161fb1a92";
-        hash = "sha256-l6oZqo6ATv9DWUKAe3fgx3c12SOX0qaqfwd3ppcdUZk=";
-      };
-      installPhase = "cp -r $src/nixos $out";
-    };
+    loader.systemd-boot.consoleMode = lib.mkDefault "max";
     loader.efi.canTouchEfiVariables = true;
+    loader.efi.efiSysMountPoint = "/boot";
+    lanzaboote = {
+      enable = true;
+      pkiBundle = "/var/lib/sbctl";
+    };
   };
 
   fileSystems = {
@@ -42,4 +31,49 @@
   swapDevices = [ { device = "/swap/swapfile"; } ];
 
   networking.hostName = "ousia"; # Define your hostname.
+
+  services.davinci.enable = true;
+
+  services.aero.video-wallpaper.enable = true;
+
+  services.llama-cpp = {
+    enable = true;
+    package = pkgs.llama-cpp.override { cudaSupport = true; };
+    settings.webui = false;
+    settings.models-preset = (pkgs.formats.ini { }).generate "models-preset.ini" {
+      "Qwen/Qwen3.6-35B-A3B" = {
+        hf-repo = "unsloth/Qwen3.6-35B-A3B-GGUF";
+        hf-file = "Qwen3.6-35B-A3B-UD-Q4_K_XL.gguf";
+        jinja = true;
+        ctk = "q8_0";
+        ctv = "q8_0";
+        fit = "on";
+        fit-ctx = 131072;
+        batch-size = 2048;
+        ubatch-size = 768;
+        flash-attn = "on";
+        temp = 0.6;
+        top-p = 0.95;
+        top-k = 20;
+        min-p = 0.0;
+        presence-penalty = 0.0;
+        repeat-penalty = 1.0;
+      };
+    };
+  };
+
+  home-manager.users.ducanh = {
+    programs.opencode.enable = true;
+  };
+
+  nix.settings = {
+    substituters = [
+      "https://cache.nixos-cuda.org"
+    ];
+    trusted-public-keys = [
+      "cache.nixos-cuda.org:74DUi4Ye579gUqzH4ziL9IyiJBlDpMRn9MBN8oNan9M="
+    ];
+  };
+
+  hardware.bluetooth.enable = true;
 }

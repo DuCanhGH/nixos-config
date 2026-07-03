@@ -1,6 +1,6 @@
 {
+  pkgs,
   mkAeroDerivation,
-  aeroEffects,
   smod,
 }:
 
@@ -8,6 +8,8 @@ mkAeroDerivation {
   pname = "aero-smodsnap";
   buildInputs = [
     smod
+    pkgs.wayland-protocols
   ];
-  src = "${aeroEffects}/kwin-effect-smodsnap-v2";
+  src = pkgs.repos.aero-kwin;
+  ninjaFlags = [ "kwin_effect_smodsnap" ];
 }

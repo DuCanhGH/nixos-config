@@ -1,6 +1,7 @@
 {
+  pkgs,
   mkAeroDerivation,
-  aeroEffects,
+  mkBuildTarget,
   smod,
 }:
 
@@ -8,6 +9,8 @@ mkAeroDerivation {
   pname = "aeroglide";
   buildInputs = [
     smod
+    pkgs.wayland-protocols
   ];
-  src = "${aeroEffects}/aeroglide";
+  src = pkgs.repos.aero-kwin;
+  ninjaFlags = [ "${mkBuildTarget "aeroglide"}" ];
 }

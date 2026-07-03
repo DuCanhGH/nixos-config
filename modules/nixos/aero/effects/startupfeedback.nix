@@ -1,7 +1,7 @@
 {
   pkgs,
   mkAeroDerivation,
-  aeroEffects,
+  mkBuildTarget,
   smod,
 }:
 
@@ -9,6 +9,8 @@ mkAeroDerivation {
   pname = "aero-startupfeedback";
   buildInputs = [
     smod
+    pkgs.wayland-protocols
   ];
-  src = "${aeroEffects}/startupfeedback";
+  src = pkgs.repos.aero-kwin;
+  ninjaFlags = [ "${mkBuildTarget "launchfeedback"}" ];
 }
