@@ -53,6 +53,10 @@
     };
   };
 
+  home-manager.users.ducanh = {
+    programs.opencode.enable = true;
+  };
+
   nix.settings = {
     substituters = [
       "https://cache.nixos-cuda.org"

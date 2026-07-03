@@ -22,6 +22,7 @@
       ducanh = {
         imports = [
           ../../home/ducanh.nix
+          ./home
           ./aero/home.nix
         ];
         aero.enable = true;
