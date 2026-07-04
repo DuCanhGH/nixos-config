@@ -39,18 +39,20 @@
   services.llama-cpp = {
     enable = true;
     package = pkgs.llama-cpp.override { cudaSupport = true; };
-    settings.webui = false;
     settings.models-preset = (pkgs.formats.ini { }).generate "models-preset.ini" {
-      "Qwen/Qwen3.6-35B-A3B" = {
-        hf-repo = "unsloth/Qwen3.6-35B-A3B-GGUF";
-        hf-file = "Qwen3.6-35B-A3B-UD-Q4_K_XL.gguf";
+      "Qwen/Qwen3.6-35B-A3B-MTP" = {
+        hf-repo = "unsloth/Qwen3.6-35B-A3B-MTP-GGUF";
+        hf-file = "Qwen3.6-35B-A3B-UD-Q4_K_M.gguf";
         jinja = true;
+        spec-type = "draft-mtp";
+        spec-draft-n-max = 2;
         ctk = "q8_0";
         ctv = "q8_0";
         fit = "on";
         fit-ctx = 131072;
+        threads = 8;
         batch-size = 2048;
-        ubatch-size = 768;
+        ubatch-size = 512;
         flash-attn = "on";
         temp = 0.6;
         top-p = 0.95;
