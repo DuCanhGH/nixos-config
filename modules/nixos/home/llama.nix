@@ -14,7 +14,7 @@ in
             "Qwen/Qwen3.6-35B-A3B-MTP" = {
               name = "Qwen3.6-35B-A3B-MTP (local)";
               limit = {
-                context = 131072;
+                context = 262144;
                 output = 32768;
               };
             };

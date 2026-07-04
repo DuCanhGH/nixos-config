@@ -49,7 +49,7 @@
         ctk = "q8_0";
         ctv = "q8_0";
         fit = "on";
-        fit-ctx = 131072;
+        fit-ctx = 262144;
         threads = 8;
         batch-size = 2048;
         ubatch-size = 512;
