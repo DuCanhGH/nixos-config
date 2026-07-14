@@ -46,10 +46,12 @@
         jinja = true;
         spec-type = "draft-mtp";
         spec-draft-n-max = 2;
+        np = 1;
         ctk = "q8_0";
         ctv = "q8_0";
         fit = "on";
         fit-ctx = 262144;
+        fit-target = 512;
         threads = 8;
         batch-size = 2048;
         ubatch-size = 512;
