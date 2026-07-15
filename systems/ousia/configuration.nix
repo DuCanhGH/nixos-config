@@ -46,7 +46,6 @@
         jinja = true;
         spec-type = "draft-mtp";
         spec-draft-n-max = 2;
-        np = 1;
         ctk = "q8_0";
         ctv = "q8_0";
         fit = "on";
@@ -67,16 +66,18 @@
   };
 
   home-manager.users.ducanh = {
-    programs.opencode.enable = true;
-  };
-
-  nix.settings = {
-    substituters = [
-      "https://cache.nixos-cuda.org"
-    ];
-    trusted-public-keys = [
-      "cache.nixos-cuda.org:74DUi4Ye579gUqzH4ziL9IyiJBlDpMRn9MBN8oNan9M="
-    ];
+    programs.opencode = {
+      enable = true;
+      settings.provider."llama.cpp".models = {
+        "Qwen/Qwen3.6-35B-A3B-MTP" = {
+          name = "Qwen3.6-35B-A3B-MTP (local)";
+          limit = {
+            context = 262144;
+            output = 32768;
+          };
+        };
+      };
+    };
   };
 
   hardware.bluetooth.enable = true;
