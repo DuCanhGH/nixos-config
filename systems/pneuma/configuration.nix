@@ -7,6 +7,9 @@
   lib,
   ...
 }:
+let
+  llama-cpp = pkgs.llama-cpp.override { cudaSupport = true; };
+in
 {
   imports = [
     ../../modules/nixos
@@ -41,6 +44,8 @@
 
   networking.hostName = "pneuma"; # Define your hostname.
 
+  environment.systemPackages = [ llama-cpp ];
+
   services.aero = {
     wayland.enable = true;
     plymouth.delay = 5;
@@ -55,7 +60,7 @@
 
   services.llama-cpp = {
     enable = true;
-    package = pkgs.llama-cpp.override { cudaSupport = true; };
+    package = llama-cpp;
     settings.models-preset = (pkgs.formats.ini { }).generate "models-preset.ini" {
       "Qwen/Qwen3.5-9B" = {
         hf-repo = "unsloth/Qwen3.5-9B-MTP-GGUF";

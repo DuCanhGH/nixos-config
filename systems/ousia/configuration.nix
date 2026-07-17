@@ -9,37 +9,7 @@
   ...
 }:
 let
-  llama-cpp =
-    (pkgs.llama-cpp.override {
-      cudaSupport = true;
-      rocmSupport = false;
-      metalSupport = false;
-      blasSupport = true;
-    }).overrideAttrs
-      (oldAttrs: rec {
-        pname = "prism-llama-cpp";
-        version = "9591";
-        commit = "62061f9";
-        src = pkgs.fetchFromGitHub {
-          owner = "PrismML-Eng";
-          repo = "llama.cpp";
-          tag = "prism-b${version}-${commit}";
-          hash = "sha256-zLxB5UKnCTCw/okB+L8u1VtM1o2yVjVYTlTBgL/BsaM=";
-          leaveDotGit = true;
-          postFetch = ''
-            git -C "$out" rev-parse --short HEAD > $out/COMMIT
-            find "$out" -name .git -print0 | xargs -0 rm -rf
-          '';
-        };
-        npmDepsHash = "sha256-pjdbI6NcZRlJVd62xhgbLhWrwFYwgsIwjORqvo1+VD8=";
-        cmakeFlags = (oldAttrs.cmakeFlags or [ ]) ++ [
-          "-DGGML_NATIVE=ON"
-        ];
-        preConfigure = ''
-          export NIX_ENFORCE_NO_NATIVE=0
-          ${oldAttrs.preConfigure or ""}
-        '';
-      });
+  llama-cpp = pkgs.llama-cpp.override { cudaSupport = true; };
 in
 {
   imports = [
@@ -103,30 +73,6 @@ in
         ubatch-size = 512;
         flash-attn = "on";
         temp = 0.6;
-        top-p = 0.95;
-        top-k = 20;
-        min-p = 0.0;
-        presence-penalty = 0.0;
-        repeat-penalty = 1.0;
-      };
-      "prism-ml/Ternary-Bonsai-27B" = {
-        m = pkgs.homa.fetchFromHuggingFace {
-          repo = "prism-ml/Ternary-Bonsai-27B-gguf";
-          file = "Ternary-Bonsai-27B-Q2_0.gguf";
-          version = "20e435f518bd5b882795954aba81e80a91894321";
-          hash = "sha256-howRcUz4/kf17J7rK+CrGjNxEohvku4O3muFXE+jF1c=";
-        };
-        jinja = true;
-        ngl = 999;
-        c = 100000;
-        ctk = "q4_0";
-        ctv = "q4_0";
-        threads = 8;
-        threads-batch = 16;
-        batch-size = 2048;
-        ubatch-size = 512;
-        flash-attn = "on";
-        temp = 0.7;
         top-p = 0.95;
         top-k = 20;
         min-p = 0.0;
