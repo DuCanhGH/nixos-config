@@ -48,6 +48,7 @@
   nixpkgs.config.allowUnfree = true;
 
   nixpkgs.overlays = [
+    (import ./overlays/homa.nix { })
     (import ./overlays/repos.nix {
       inherit inputs;
     })
