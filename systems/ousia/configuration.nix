@@ -68,7 +68,6 @@ in
         fit-ctx = 262144;
         fit-target = 512;
         threads = 8;
-        threads-batch = 16;
         batch-size = 2048;
         ubatch-size = 512;
         flash-attn = "on";
@@ -90,13 +89,6 @@ in
           name = "Qwen3.6-35B-A3B-MTP (local)";
           limit = {
             context = 262144;
-            output = 32768;
-          };
-        };
-        "prism-ml/Ternary-Bonsai-27B" = {
-          name = "Ternary-Bonsai-27B (local)";
-          limit = {
-            context = 100000;
             output = 32768;
           };
         };
