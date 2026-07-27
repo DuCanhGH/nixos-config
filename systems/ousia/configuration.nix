@@ -10,13 +10,22 @@
 }:
 let
   llama-cpp = pkgs.llama-cpp.override { cudaSupport = true; };
+  qwenParams = {
+    flash-attn = "on";
+    temp = 0.6;
+    top-p = 0.95;
+    top-k = 20;
+    min-p = 0.0;
+    presence-penalty = 0.0;
+    repeat-penalty = 1.0;
+    reasoning-preserve = true;
+  };
 in
 {
   imports = [
     ../../modules/nixos
     ./hardware-configuration.nix
   ];
-
   boot = {
     loader.systemd-boot.enable = lib.mkForce false;
     loader.systemd-boot.consoleMode = lib.mkDefault "max";
@@ -46,7 +55,7 @@ in
     enable = true;
     package = llama-cpp;
     settings.models-preset = (pkgs.formats.ini { }).generate "models-preset.ini" {
-      "Qwen/Qwen3.6-35B-A3B-MTP" = {
+      "Qwen/Qwen3.6-35B-A3B-MTP" = qwenParams // {
         m = pkgs.homa.fetchFromHuggingFace {
           repo = "unsloth/Qwen3.6-35B-A3B-MTP-GGUF";
           file = "Qwen3.6-35B-A3B-UD-Q4_K_M.gguf";
@@ -59,24 +68,56 @@ in
           version = "5bc3e238d916f48a861bac2f8a1990a0e9b7e98d";
           hash = "sha256-2mPLR6dnY8cSOT+KAXBwGIowT6Ofiu6m7cYp7XuXXPo=";
         };
+        ag = true;
+        sm = "tensor";
+        ts = "12,10";
         jinja = true;
+        ngl = 999;
+        c = 262144;
+        np = 4;
+        n-cpu-moe = 30;
         spec-type = "draft-mtp";
         spec-draft-n-max = 2;
+        kvu = true;
         ctk = "q8_0";
         ctv = "q8_0";
-        fit = "on";
-        fit-ctx = 262144;
-        fit-target = 512;
         threads = 8;
-        batch-size = 2048;
+        batch-size = 512;
         ubatch-size = 512;
-        flash-attn = "on";
-        temp = 0.6;
-        top-p = 0.95;
-        top-k = 20;
-        min-p = 0.0;
-        presence-penalty = 0.0;
-        repeat-penalty = 1.0;
+        load-mode = "dio";
+        image-min-tokens = 1024;
+      };
+      "Qwen/Qwen3.6-27B-MTP" = qwenParams // {
+        m = pkgs.homa.fetchFromHuggingFace {
+          repo = "canhdu/Qwen3.6-27B-IQ3_M-GGUF";
+          file = "Qwen3.6-27B-IQ3_M.gguf";
+          version = "7e9d8fbd5b11ccaa41efdb6624b175235061f4d3";
+          hash = "sha256-YO5KGeG2izQJs4tkeuJUHfxkMM9KhKMyBmNZBB1RxME=";
+        };
+        mmproj = pkgs.homa.fetchFromHuggingFace {
+          repo = "unsloth/Qwen3.6-27B-MTP-GGUF";
+          file = "mmproj-BF16.gguf";
+          version = "5cb35eb3dcbf52dbce5f87dbc64df6aaffadcace";
+          hash = "sha256-BTUzR1Epgu5iMXudjIk3K8gV9LQENYDn7zrUEewaHNM=";
+        };
+        ag = true;
+        sm = "tensor";
+        ts = "12,8";
+        jinja = true;
+        ngl = 999;
+        c = 100096;
+        np = 4;
+        spec-type = "draft-mtp";
+        spec-draft-n-max = 2;
+        kvu = true;
+        ctk = "q4_0";
+        ctv = "q4_0";
+        threads = 8;
+        batch-size = 512;
+        ubatch-size = 512;
+        load-mode = "dio";
+        image-min-tokens = 1024;
+        no-mmproj-offload = true;
       };
     };
   };
@@ -89,6 +130,13 @@ in
           name = "Qwen3.6-35B-A3B-MTP (local)";
           limit = {
             context = 262144;
+            output = 32768;
+          };
+        };
+        "Qwen/Qwen3.6-27B-MTP" = {
+          name = "Qwen3.6-27B-MTP (local)";
+          limit = {
+            context = 100096;
             output = 32768;
           };
         };

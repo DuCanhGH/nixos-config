@@ -11,7 +11,7 @@
   config = lib.mkIf config.services.davinci.enable {
     environment.systemPackages = with pkgs; [
       davinci-resolve
-      (ffmpeg-full.override { withUnfree = true; })
+      ffmpeg-full
     ];
   };
 }
