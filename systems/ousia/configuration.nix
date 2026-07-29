@@ -54,6 +54,7 @@ in
   services.llama-cpp = {
     enable = true;
     package = llama-cpp;
+    settings.cors-origins = "localhost";
     settings.models-preset = (pkgs.formats.ini { }).generate "models-preset.ini" {
       "Qwen/Qwen3.6-35B-A3B-MTP" = qwenParams // {
         m = pkgs.homa.fetchFromHuggingFace {
@@ -132,12 +133,24 @@ in
             context = 262144;
             output = 32768;
           };
+          modalities = {
+            input = [
+              "text"
+              "image"
+            ];
+          };
         };
         "Qwen/Qwen3.6-27B-MTP" = {
           name = "Qwen3.6-27B-MTP (local)";
           limit = {
             context = 100096;
             output = 32768;
+          };
+          modalities = {
+            input = [
+              "text"
+              "image"
+            ];
           };
         };
       };
