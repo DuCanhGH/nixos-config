@@ -10,7 +10,7 @@
 }:
 let
   llama-cpp = pkgs.llama-cpp.override { cudaSupport = true; };
-  qwenParams = {
+  qwenCodingParams = {
     flash-attn = "on";
     temp = 0.6;
     top-p = 0.95;
@@ -56,7 +56,7 @@ in
     package = llama-cpp;
     settings.cors-origins = "localhost";
     settings.models-preset = (pkgs.formats.ini { }).generate "models-preset.ini" {
-      "Qwen/Qwen3.6-35B-A3B-MTP" = qwenParams // {
+      "Qwen/Qwen3.6-35B-A3B-MTP" = qwenCodingParams // {
         m = pkgs.homa.fetchFromHuggingFace {
           repo = "unsloth/Qwen3.6-35B-A3B-MTP-GGUF";
           file = "Qwen3.6-35B-A3B-UD-Q4_K_M.gguf";
@@ -70,13 +70,12 @@ in
           hash = "sha256-2mPLR6dnY8cSOT+KAXBwGIowT6Ofiu6m7cYp7XuXXPo=";
         };
         ag = true;
-        sm = "tensor";
-        ts = "12,10";
+        ts = "2.82,1";
         jinja = true;
         ngl = 999;
         c = 262144;
         np = 4;
-        n-cpu-moe = 30;
+        n-cpu-moe = 23;
         spec-type = "draft-mtp";
         spec-draft-n-max = 2;
         kvu = true;
@@ -85,10 +84,9 @@ in
         threads = 8;
         batch-size = 512;
         ubatch-size = 512;
-        load-mode = "dio";
         image-min-tokens = 1024;
       };
-      "Qwen/Qwen3.6-27B-MTP" = qwenParams // {
+      "Qwen/Qwen3.6-27B-MTP" = qwenCodingParams // {
         m = pkgs.homa.fetchFromHuggingFace {
           repo = "canhdu/Qwen3.6-27B-IQ3_M-GGUF";
           file = "Qwen3.6-27B-IQ3_M.gguf";
@@ -116,7 +114,6 @@ in
         threads = 8;
         batch-size = 512;
         ubatch-size = 512;
-        load-mode = "dio";
         image-min-tokens = 1024;
         no-mmproj-offload = true;
       };
