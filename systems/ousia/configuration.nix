@@ -51,6 +51,8 @@ in
 
   services.aero.video-wallpaper.enable = true;
 
+  services.amdgpu.enable = true;
+
   services.llama-cpp = {
     enable = true;
     package = llama-cpp;
@@ -70,12 +72,12 @@ in
           hash = "sha256-2mPLR6dnY8cSOT+KAXBwGIowT6Ofiu6m7cYp7XuXXPo=";
         };
         ag = true;
-        ts = "2.82,1";
+        ts = "2.83,1";
         jinja = true;
         ngl = 999;
         c = 262144;
         np = 4;
-        n-cpu-moe = 23;
+        n-cpu-moe = 20;
         spec-type = "draft-mtp";
         spec-draft-n-max = 2;
         kvu = true;
@@ -101,10 +103,10 @@ in
         };
         ag = true;
         sm = "tensor";
-        ts = "12,8";
+        ts = "1.7,1";
         jinja = true;
         ngl = 999;
-        c = 100096;
+        c = 131072;
         np = 4;
         spec-type = "draft-mtp";
         spec-draft-n-max = 2;
@@ -140,7 +142,7 @@ in
         "Qwen/Qwen3.6-27B-MTP" = {
           name = "Qwen3.6-27B-MTP (local)";
           limit = {
-            context = 100096;
+            context = 131072;
             output = 32768;
           };
           modalities = {
@@ -155,4 +157,9 @@ in
   };
 
   hardware.bluetooth.enable = true;
+
+  hardware.nvidia.prime = {
+    nvidiaBusId = "PCI:1@0:0:0";
+    amdgpuBusId = "PCI:13@0:0:0";
+  };
 }
