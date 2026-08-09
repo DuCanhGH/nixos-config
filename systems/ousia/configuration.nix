@@ -47,6 +47,12 @@ in
 
   environment.systemPackages = [ llama-cpp ];
 
+  systemd.services.llama-cpp = {
+    environment = {
+      GGML_CUDA_ENABLE_UNIFIED_MEMORY = "1";
+    };
+  };
+
   services.davinci.enable = true;
 
   services.aero.video-wallpaper.enable = true;
@@ -90,10 +96,10 @@ in
       };
       "Qwen/Qwen3.6-27B-MTP" = qwenCodingParams // {
         m = pkgs.homa.fetchFromHuggingFace {
-          repo = "canhdu/Qwen3.6-27B-IQ3_M-GGUF";
-          file = "Qwen3.6-27B-IQ3_M.gguf";
-          version = "7e9d8fbd5b11ccaa41efdb6624b175235061f4d3";
-          hash = "sha256-YO5KGeG2izQJs4tkeuJUHfxkMM9KhKMyBmNZBB1RxME=";
+          repo = "unsloth/Qwen3.6-27B-MTP-GGUF";
+          file = "Qwen3.6-27B-IQ4_XS.gguf";
+          version = "5cb35eb3dcbf52dbce5f87dbc64df6aaffadcace";
+          hash = "sha256-+rMzU9rXmD6cM7rm/NrnwSzf4Dt9e13CNmUcrVUXrSs=";
         };
         mmproj = pkgs.homa.fetchFromHuggingFace {
           repo = "unsloth/Qwen3.6-27B-MTP-GGUF";
@@ -103,12 +109,12 @@ in
         };
         ag = true;
         sm = "tensor";
-        ts = "1.7,1";
+        ts = "12,8";
         jinja = true;
         ngl = 999;
-        c = 131072;
+        c = 100096;
         np = 4;
-        spec-type = "draft-mtp";
+        spec-type = "draft-mtp,ngram-mod";
         spec-draft-n-max = 2;
         kvu = true;
         ctk = "q4_0";
@@ -121,6 +127,11 @@ in
       };
     };
   };
+
+  services.udev.extraHwdb = ''
+    evdev:input:b0003v25A7p2301e0110*
+      KEYBOARD_KEY_700e3=space
+  '';
 
   home-manager.users.ducanh = {
     programs.opencode = {
