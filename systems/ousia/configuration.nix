@@ -9,7 +9,21 @@
   ...
 }:
 let
-  llama-cpp = pkgs.llama-cpp.override { cudaSupport = true; };
+  llama-cpp = (pkgs.llama-cpp.override { cudaSupport = true; }).overrideAttrs (oldAttrs: rec {
+    version = "10355";
+    src = pkgs.fetchFromGitHub {
+      owner = "ggml-org";
+      repo = "llama.cpp";
+      tag = "b${version}";
+      hash = "sha256-GpvmnUM6gvUOaZ0IKT7w2D2FGm7VCT58ZmjBMWM7lj0=";
+      leaveDotGit = true;
+      postFetch = ''
+        git -C "$out" rev-parse --short HEAD > $out/COMMIT
+        find "$out" -name .git -print0 | xargs -0 rm -rf
+      '';
+    };
+    npmDepsHash = "sha256-2Q7XhaLAArmviOLdQsNbYTfdyDE5pW9lR26cRHEVl9k=";
+  });
   qwenCodingParams = {
     flash-attn = "on";
     temp = 0.6;
@@ -63,6 +77,7 @@ in
     enable = true;
     package = llama-cpp;
     settings.cors-origins = "localhost";
+    settings.models-max = 1;
     settings.models-preset = (pkgs.formats.ini { }).generate "models-preset.ini" {
       "Qwen/Qwen3.6-35B-A3B-MTP" = qwenCodingParams // {
         m = pkgs.homa.fetchFromHuggingFace {
@@ -125,6 +140,46 @@ in
         image-min-tokens = 1024;
         no-mmproj-offload = true;
       };
+      "Meta/Muse-Glimmer-30B" = {
+        m = pkgs.homa.fetchFromHuggingFace {
+          repo = "unsloth/Muse-Glimmer-30B-GGUF";
+          file = "Muse-Glimmer-30B-UD-Q4_K_XL.gguf";
+          version = "faa5b025c584459c13febfa5c59883516710ae39";
+          hash = "sha256-gr7OMEiHoxPs4IQAvAMPYGbHv/W5BrDNQDCOyKQJ/Tg=";
+        };
+        md = pkgs.homa.fetchFromHuggingFace {
+          repo = "unsloth/Muse-Glimmer-30B-GGUF";
+          file = "dflash-kquant.gguf";
+          version = "faa5b025c584459c13febfa5c59883516710ae39";
+          hash = "sha256-J9moBfopuUPPtq1IQzZ81Oqq8GvUUtjMPgCizRimd7w=";
+        };
+        mmproj = pkgs.homa.fetchFromHuggingFace {
+          repo = "unsloth/Muse-Glimmer-30B-GGUF";
+          file = "mmproj-kquant.gguf";
+          version = "faa5b025c584459c13febfa5c59883516710ae39";
+          hash = "sha256-9ItFIxb5shN1joZZREApuWGiSgf5mhq7Kp+IsG98AMY=";
+        };
+        ag = true;
+        sm = "layer";
+        ts = "12,8";
+        jinja = true;
+        ngl = 999;
+        c = 131072;
+        np = 4;
+        spec-type = "draft-dflash";
+        spec-draft-n-max = 15;
+        kvu = true;
+        ctk = "q8_0";
+        ctv = "q8_0";
+        threads = 8;
+        batch-size = 512;
+        ubatch-size = 512;
+        no-mmproj-offload = true;
+        temp = 1.0;
+        top-p = 0.95;
+        top-k = 64;
+        reasoning-preserve = true;
+      };
     };
   };
 
@@ -152,6 +207,19 @@ in
         };
         "Qwen/Qwen3.6-27B-MTP" = {
           name = "Qwen3.6-27B-MTP (local)";
+          limit = {
+            context = 100096;
+            output = 32768;
+          };
+          modalities = {
+            input = [
+              "text"
+              "image"
+            ];
+          };
+        };
+        "Meta/Muse-Glimmer-30B" = {
+          name = "Meta/Muse-Glimmer-30B (local)";
           limit = {
             context = 131072;
             output = 32768;
