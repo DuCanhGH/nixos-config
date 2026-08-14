@@ -10,12 +10,12 @@
 }:
 let
   llama-cpp = (pkgs.llama-cpp.override { cudaSupport = true; }).overrideAttrs (oldAttrs: rec {
-    version = "10355";
+    version = "10434";
     src = pkgs.fetchFromGitHub {
       owner = "ggml-org";
       repo = "llama.cpp";
       tag = "b${version}";
-      hash = "sha256-GpvmnUM6gvUOaZ0IKT7w2D2FGm7VCT58ZmjBMWM7lj0=";
+      hash = "sha256-Z/5tUiCtJaHMVFOO6a169LAsr21L9oN4FV80c6XstR8=";
       leaveDotGit = true;
       postFetch = ''
         git -C "$out" rev-parse --short HEAD > $out/COMMIT
@@ -61,6 +61,8 @@ in
 
   environment.systemPackages = [ llama-cpp ];
 
+  programs.ccache.packageNames = [ "llama-cpp" ];
+
   systemd.services.llama-cpp = {
     environment = {
       GGML_CUDA_ENABLE_UNIFIED_MEMORY = "1";
@@ -79,48 +81,18 @@ in
     settings.cors-origins = "localhost";
     settings.models-max = 1;
     settings.models-preset = (pkgs.formats.ini { }).generate "models-preset.ini" {
-      "Qwen/Qwen3.6-35B-A3B-MTP" = qwenCodingParams // {
+      "Qwen/Qwen3.8-27B" = qwenCodingParams // {
         m = pkgs.homa.fetchFromHuggingFace {
-          repo = "unsloth/Qwen3.6-35B-A3B-MTP-GGUF";
-          file = "Qwen3.6-35B-A3B-UD-Q4_K_M.gguf";
-          version = "5bc3e238d916f48a861bac2f8a1990a0e9b7e98d";
-          hash = "sha256-CyFSXpcmcO1Z4YEuFwsnwmNVOB8GVuzE4lYX7OfaxYs=";
+          repo = "unsloth/Qwen3.8-27B-GGUF";
+          file = "Qwen3.8-27B-IQ4_XS.gguf";
+          version = "4a03c640833598c0fb5ddd11e846135e906eb764";
+          hash = "sha256-n9QNcDb14JGOIKruvxFGj6/Qa7U9TZgO72u35OSs5mY=";
         };
         mmproj = pkgs.homa.fetchFromHuggingFace {
-          repo = "unsloth/Qwen3.6-35B-A3B-MTP-GGUF";
+          repo = "unsloth/Qwen3.8-27B-GGUF";
           file = "mmproj-BF16.gguf";
-          version = "5bc3e238d916f48a861bac2f8a1990a0e9b7e98d";
-          hash = "sha256-2mPLR6dnY8cSOT+KAXBwGIowT6Ofiu6m7cYp7XuXXPo=";
-        };
-        ag = true;
-        ts = "2.83,1";
-        jinja = true;
-        ngl = 999;
-        c = 262144;
-        np = 4;
-        n-cpu-moe = 20;
-        spec-type = "draft-mtp";
-        spec-draft-n-max = 2;
-        kvu = true;
-        ctk = "q8_0";
-        ctv = "q8_0";
-        threads = 8;
-        batch-size = 512;
-        ubatch-size = 512;
-        image-min-tokens = 1024;
-      };
-      "Qwen/Qwen3.6-27B-MTP" = qwenCodingParams // {
-        m = pkgs.homa.fetchFromHuggingFace {
-          repo = "unsloth/Qwen3.6-27B-MTP-GGUF";
-          file = "Qwen3.6-27B-IQ4_XS.gguf";
-          version = "5cb35eb3dcbf52dbce5f87dbc64df6aaffadcace";
-          hash = "sha256-+rMzU9rXmD6cM7rm/NrnwSzf4Dt9e13CNmUcrVUXrSs=";
-        };
-        mmproj = pkgs.homa.fetchFromHuggingFace {
-          repo = "unsloth/Qwen3.6-27B-MTP-GGUF";
-          file = "mmproj-BF16.gguf";
-          version = "5cb35eb3dcbf52dbce5f87dbc64df6aaffadcace";
-          hash = "sha256-BTUzR1Epgu5iMXudjIk3K8gV9LQENYDn7zrUEewaHNM=";
+          version = "4a03c640833598c0fb5ddd11e846135e906eb764";
+          hash = "sha256-g+5PTyBfpRQWF3jEHfHqFBRPqg9xNRCJO2PCOV9cLVM=";
         };
         ag = true;
         sm = "tensor";
@@ -192,21 +164,8 @@ in
     programs.opencode = {
       enable = true;
       settings.provider."llama.cpp".models = {
-        "Qwen/Qwen3.6-35B-A3B-MTP" = {
-          name = "Qwen3.6-35B-A3B-MTP (local)";
-          limit = {
-            context = 262144;
-            output = 32768;
-          };
-          modalities = {
-            input = [
-              "text"
-              "image"
-            ];
-          };
-        };
-        "Qwen/Qwen3.6-27B-MTP" = {
-          name = "Qwen3.6-27B-MTP (local)";
+        "Qwen/Qwen3.8-27B" = {
+          name = "Qwen3.8-27B (local)";
           limit = {
             context = 100096;
             output = 32768;

@@ -2,7 +2,7 @@
   waylandEnabled ? false,
   pkgs,
   lib,
-  stdenv,
+  ccacheStdenv,
   ...
 }:
 let
@@ -22,7 +22,7 @@ let
   mkBuildTarget = target: "${target}${if waylandEnabled then "" else "-x11"}";
   # Source: https://github.com/Rotlug/aerothemeplasma-nixos/blob/8452aa903e76f9c20a62024c6d6f2c4be6933c8d/default.nix#L23-L70
   mkAeroDerivation = lib.extendMkDerivation {
-    constructDrv = stdenv.mkDerivation;
+    constructDrv = ccacheStdenv.mkDerivation;
 
     extendDrvArgs =
       final:
