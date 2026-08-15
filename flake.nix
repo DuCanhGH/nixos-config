@@ -79,7 +79,7 @@
     }:
     let
       specialArgs = { inherit inputs; };
-      homeManagerOptions = {
+      home-manager-options = {
         home-manager.extraSpecialArgs = specialArgs;
         home-manager.sharedModules = [ plasma-manager.homeModules.plasma-manager ];
       };
@@ -101,7 +101,7 @@
           home-manager.nixosModules.home-manager
           lanzaboote.nixosModules.lanzaboote
           ./systems/pneuma/configuration.nix
-          homeManagerOptions
+          home-manager-options
         ];
       };
       nixosConfigurations.ousia = nixpkgs.lib.nixosSystem {
@@ -111,7 +111,7 @@
           home-manager.nixosModules.home-manager
           lanzaboote.nixosModules.lanzaboote
           ./systems/ousia/configuration.nix
-          homeManagerOptions
+          home-manager-options
         ];
       };
     };

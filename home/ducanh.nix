@@ -5,8 +5,8 @@
   ...
 }:
 let
-  agenixPublicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDX9GXpxfnALHa8pO7G/FPJp+rHACXzaG6HQ11lOk+2/ ngoducanh2912@gmail.com";
-  sshPublicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID5fRr8pqUXd9sVUgz4PBaiZN5h9tRHW0862zNYz1OiT 75556609+DuCanhGH@users.noreply.github.com";
+  agenix-public-key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDX9GXpxfnALHa8pO7G/FPJp+rHACXzaG6HQ11lOk+2/ ngoducanh2912@gmail.com";
+  ssh-public-key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID5fRr8pqUXd9sVUgz4PBaiZN5h9tRHW0862zNYz1OiT 75556609+DuCanhGH@users.noreply.github.com";
   neovim = pkgs.callPackage ../modules/neovim {
     inherit inputs;
   };
@@ -19,10 +19,10 @@ in
     username = "ducanh";
     file = {
       ".ssh/agenix.pub" = {
-        text = agenixPublicKey;
+        text = agenix-public-key;
       };
       ".ssh/id_ed25519.pub" = {
-        text = sshPublicKey;
+        text = ssh-public-key;
       };
     };
     packages = [ neovim ];

@@ -9,30 +9,92 @@
   ...
 }:
 let
-  llama-cpp = (pkgs.llama-cpp.override { cudaSupport = true; }).overrideAttrs (oldAttrs: rec {
-    version = "10434";
-    src = pkgs.fetchFromGitHub {
-      owner = "ggml-org";
-      repo = "llama.cpp";
-      tag = "b${version}";
-      hash = "sha256-Z/5tUiCtJaHMVFOO6a169LAsr21L9oN4FV80c6XstR8=";
-      leaveDotGit = true;
-      postFetch = ''
-        git -C "$out" rev-parse --short HEAD > $out/COMMIT
-        find "$out" -name .git -print0 | xargs -0 rm -rf
-      '';
-    };
-    npmDepsHash = "sha256-2Q7XhaLAArmviOLdQsNbYTfdyDE5pW9lR26cRHEVl9k=";
-  });
-  qwenCodingParams = {
+  llama-cpp =
+    (pkgs.llama-cpp.override {
+      cudaSupport = true;
+      blasSupport = true;
+    }).overrideAttrs
+      (oldAttrs: rec {
+        version = "10441";
+        src = pkgs.fetchFromGitHub {
+          owner = "ggml-org";
+          repo = "llama.cpp";
+          tag = "b${version}";
+          hash = "sha256-RYt+a0lFpWEo9WcETTDM335h6meFuIIw2XNfPJ114SE=";
+          leaveDotGit = true;
+          postFetch = ''
+            git -C "$out" rev-parse --short HEAD > $out/COMMIT
+            find "$out" -name .git -print0 | xargs -0 rm -rf
+          '';
+        };
+        npmDepsHash = "sha256-2Q7XhaLAArmviOLdQsNbYTfdyDE5pW9lR26cRHEVl9k=";
+        cmakeFlags = (oldAttrs.cmakeFlags or [ ]) ++ [
+          "-DGGML_NATIVE=ON"
+        ];
+        preConfigure = ''
+          export NIX_ENFORCE_NO_NATIVE=0
+          ${oldAttrs.preConfigure or ""}
+        '';
+      });
+  qwen-thinking-params = {
     flash-attn = "on";
-    temp = 0.6;
+    temp = 1.0;
     top-p = 0.95;
     top-k = 20;
     min-p = 0.0;
     presence-penalty = 0.0;
     repeat-penalty = 1.0;
     reasoning-preserve = true;
+  };
+  qwen-27b-params = qwen-thinking-params // {
+    mmproj = pkgs.homa.fetchFromHuggingFace {
+      repo = "unsloth/Qwen3.8-27B-GGUF";
+      file = "mmproj-BF16.gguf";
+      version = "4a03c640833598c0fb5ddd11e846135e906eb764";
+      hash = "sha256-g+5PTyBfpRQWF3jEHfHqFBRPqg9xNRCJO2PCOV9cLVM=";
+    };
+    ag = true;
+    sm = "tensor";
+    ts = "12,8";
+    jinja = true;
+    ngl = 999;
+    np = 4;
+    kvu = true;
+    spec-type = "draft-mtp,ngram-mod";
+    spec-draft-n-max = 2;
+    threads = 8;
+    batch-size = 2048;
+    ubatch-size = 512;
+    image-min-tokens = 1024;
+    no-mmproj-offload = true;
+  };
+  qwen-opencode-config = {
+    modalities = {
+      input = [
+        "text"
+        "audio"
+        "image"
+        "video"
+        "pdf"
+      ];
+    };
+    options = {
+      reasoningEffort = "xhigh";
+      textVerbosity = "low";
+      reasoningSummary = "auto";
+    };
+    variants = {
+      medium = {
+        reasoningEffort = "medium";
+        textVerbosity = "low";
+        reasoningSummary = "auto";
+      };
+      low = {
+        reasoningEffort = "low";
+        textVerbosity = "low";
+        reasoningSummary = "auto";
+      };
+    };
   };
 in
 {
@@ -81,36 +143,27 @@ in
     settings.cors-origins = "localhost";
     settings.models-max = 1;
     settings.models-preset = (pkgs.formats.ini { }).generate "models-preset.ini" {
-      "Qwen/Qwen3.8-27B" = qwenCodingParams // {
+      "Qwen/Qwen3.8-27B-UD-Q3_K_XL" = qwen-27b-params // {
+        m = pkgs.homa.fetchFromHuggingFace {
+          repo = "unsloth/Qwen3.8-27B-GGUF";
+          file = "Qwen3.8-27B-UD-Q3_K_XL.gguf";
+          version = "4a03c640833598c0fb5ddd11e846135e906eb764";
+          hash = "sha256-AM+S5mbGr2VmmWw4yJpEzNtkSeol7w8RKkUshTsqceI=";
+        };
+        c = 131072;
+        ctk = "q8_0";
+        ctv = "q8_0";
+      };
+      "Qwen/Qwen3.8-27B-IQ4_XS" = qwen-27b-params // {
         m = pkgs.homa.fetchFromHuggingFace {
           repo = "unsloth/Qwen3.8-27B-GGUF";
           file = "Qwen3.8-27B-IQ4_XS.gguf";
           version = "4a03c640833598c0fb5ddd11e846135e906eb764";
           hash = "sha256-n9QNcDb14JGOIKruvxFGj6/Qa7U9TZgO72u35OSs5mY=";
         };
-        mmproj = pkgs.homa.fetchFromHuggingFace {
-          repo = "unsloth/Qwen3.8-27B-GGUF";
-          file = "mmproj-BF16.gguf";
-          version = "4a03c640833598c0fb5ddd11e846135e906eb764";
-          hash = "sha256-g+5PTyBfpRQWF3jEHfHqFBRPqg9xNRCJO2PCOV9cLVM=";
-        };
-        ag = true;
-        sm = "tensor";
-        ts = "12,8";
-        jinja = true;
-        ngl = 999;
         c = 100096;
-        np = 4;
-        spec-type = "draft-mtp,ngram-mod";
-        spec-draft-n-max = 2;
-        kvu = true;
         ctk = "q4_0";
         ctv = "q4_0";
-        threads = 8;
-        batch-size = 512;
-        ubatch-size = 512;
-        image-min-tokens = 1024;
-        no-mmproj-offload = true;
       };
       "Meta/Muse-Glimmer-30B" = {
         m = pkgs.homa.fetchFromHuggingFace {
@@ -164,29 +217,33 @@ in
     programs.opencode = {
       enable = true;
       settings.provider."llama.cpp".models = {
-        "Qwen/Qwen3.8-27B" = {
-          name = "Qwen3.8-27B (local)";
+        "Qwen/Qwen3.8-27B-UD-Q3_K_XL" = qwen-opencode-config // {
+          name = "Qwen3.8-27B UD-Q3_K_XL (local)";
+          limit = {
+            context = 131072;
+            output = 65536;
+          };
+        };
+        "Qwen/Qwen3.8-27B-IQ4_XS" = qwen-opencode-config // {
+          name = "Qwen3.8-27B IQ4_XS (local)";
           limit = {
             context = 100096;
-            output = 32768;
-          };
-          modalities = {
-            input = [
-              "text"
-              "image"
-            ];
+            output = 65536;
           };
         };
         "Meta/Muse-Glimmer-30B" = {
           name = "Meta/Muse-Glimmer-30B (local)";
           limit = {
             context = 131072;
-            output = 32768;
+            output = 65536;
           };
           modalities = {
             input = [
               "text"
+              "audio"
               "image"
+              "video"
+              "pdf"
             ];
           };
         };

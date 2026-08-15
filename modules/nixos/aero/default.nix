@@ -10,7 +10,7 @@ let
   plasmashell = pkgs.callPackage ./kde/plasmashell.nix {
     inherit libplasma;
   };
-  commonCmakeFlags = ([
+  common-cmake-flags = ([
     "-DCMAKE_BUILD_TYPE=Release"
     "-DBUILD_KF6=ON"
     "-DPlasma_DIR=${libplasma.dev}/lib/cmake/Plasma"
@@ -59,7 +59,7 @@ let
       args
       // {
         inherit pname version src;
-        cmakeFlags = commonCmakeFlags ++ cmakeFlags;
+        cmakeFlags = common-cmake-flags ++ cmakeFlags;
         nativeBuildInputs = defaultNative ++ nativeBuildInputs;
         buildInputs = defaultBuild ++ buildInputs;
       };

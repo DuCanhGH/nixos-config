@@ -8,9 +8,9 @@ When `fetchFromHuggingFace` is used as such:
 
 ```nix
 pkgs.homa.fetchFromHuggingFace {
-  repo = "unsloth/Qwen3.6-35B-A3B-MTP-GGUF";
-  file = "Qwen3.6-35B-A3B-UD-Q4_K_M.gguf";
-  version = "5bc3e238d916f48a861bac2f8a1990a0e9b7e98d";
+  repo = "${owner}/${repo}";
+  file = "${file}";
+  version = "${version}";
   hash = "";
 }
 ```
@@ -18,7 +18,7 @@ pkgs.homa.fetchFromHuggingFace {
 run the following command to preload the model and get the hash:
 
 ```bash
-nix store prefetch-file https://huggingface.co/unsloth/Qwen3.6-35B-A3B-MTP-GGUF/resolve/5bc3e238d916f48a861bac2f8a1990a0e9b7e98d/Qwen3.6-35B-A3B-UD-Q4_K_M.gguf?download=true --name "unsloth-Qwen3.6-35B-A3B-MTP-GGUF-Qwen3.6-35B-A3B-UD-Q4_K_M.gguf-5bc3e238d916f48a861bac2f8a1990a0e9b7e98d"
+nix store prefetch-file https://huggingface.co/$OWNER/$REPO/resolve/$VERSION/$FILE?download=true --name "$OWNER-$REPO-$FILE-$VERSION"
 ```
 
 The name of the file follows the pattern `<owner>-<repo>-<file>-<version>`.
