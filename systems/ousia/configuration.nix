@@ -55,7 +55,7 @@ let
     };
     ag = true;
     sm = "tensor";
-    ts = "12,8";
+    ts = "1.66,1";
     jinja = true;
     ngl = 999;
     np = 4;
@@ -67,6 +67,12 @@ let
     ubatch-size = 512;
     image-min-tokens = 1024;
     no-mmproj-offload = true;
+  };
+  qwen-27b-iq4-xs = pkgs.homa.fetchFromHuggingFace {
+    repo = "unsloth/Qwen3.8-27B-GGUF";
+    file = "Qwen3.8-27B-IQ4_XS.gguf";
+    version = "4a03c640833598c0fb5ddd11e846135e906eb764";
+    hash = "sha256-n9QNcDb14JGOIKruvxFGj6/Qa7U9TZgO72u35OSs5mY=";
   };
   qwen-opencode-config = {
     modalities = {
@@ -143,27 +149,28 @@ in
     settings.cors-origins = "localhost";
     settings.models-max = 1;
     settings.models-preset = (pkgs.formats.ini { }).generate "models-preset.ini" {
-      "Qwen/Qwen3.8-27B-UD-Q3_K_XL" = qwen-27b-params // {
+      "Qwen/Qwen3.8-27B-IQ4_XS-IQ3_S_FFN" = qwen-27b-params // {
         m = pkgs.homa.fetchFromHuggingFace {
-          repo = "unsloth/Qwen3.8-27B-GGUF";
-          file = "Qwen3.8-27B-UD-Q3_K_XL.gguf";
-          version = "4a03c640833598c0fb5ddd11e846135e906eb764";
-          hash = "sha256-AM+S5mbGr2VmmWw4yJpEzNtkSeol7w8RKkUshTsqceI=";
+          repo = "canhdu/Qwen3.8-27B-IQ3_S-FFN-IQ4_XS";
+          file = "Qwen3.8-27B-IQ3_S-FFN-IQ4_XS.gguf";
+          version = "409e7b548b543fc17fb7c37733ca90614f1090d7";
+          hash = "sha256-FXR5sAg2YsfJz9h1TK4kq5zBq71N75HUl1hRLJDx5AY=";
         };
-        c = 131072;
+        c = 100096;
         ctk = "q8_0";
         ctv = "q8_0";
       };
-      "Qwen/Qwen3.8-27B-IQ4_XS" = qwen-27b-params // {
-        m = pkgs.homa.fetchFromHuggingFace {
-          repo = "unsloth/Qwen3.8-27B-GGUF";
-          file = "Qwen3.8-27B-IQ4_XS.gguf";
-          version = "4a03c640833598c0fb5ddd11e846135e906eb764";
-          hash = "sha256-n9QNcDb14JGOIKruvxFGj6/Qa7U9TZgO72u35OSs5mY=";
-        };
+      "Qwen/Qwen3.8-27B-IQ4_XS-Q4_KV" = qwen-27b-params // {
+        m = qwen-27b-iq4-xs;
         c = 100096;
         ctk = "q4_0";
         ctv = "q4_0";
+      };
+      "Qwen/Qwen3.8-27B-IQ4_XS-Q8_KV" = qwen-27b-params // {
+        m = qwen-27b-iq4-xs;
+        c = 50048;
+        ctk = "q8_0";
+        ctv = "q8_0";
       };
       "Meta/Muse-Glimmer-30B" = {
         m = pkgs.homa.fetchFromHuggingFace {
@@ -217,18 +224,25 @@ in
     programs.opencode = {
       enable = true;
       settings.provider."llama.cpp".models = {
-        "Qwen/Qwen3.8-27B-UD-Q3_K_XL" = qwen-opencode-config // {
-          name = "Qwen3.8-27B UD-Q3_K_XL (local)";
-          limit = {
-            context = 131072;
-            output = 65536;
-          };
-        };
-        "Qwen/Qwen3.8-27B-IQ4_XS" = qwen-opencode-config // {
-          name = "Qwen3.8-27B IQ4_XS (local)";
+        "Qwen/Qwen3.8-27B-IQ4_XS-IQ3_S_FFN" = qwen-opencode-config // {
+          name = "Qwen3.8-27B (local, IQ4_XS, IQ3_S FFN)";
           limit = {
             context = 100096;
             output = 65536;
+          };
+        };
+        "Qwen/Qwen3.8-27B-IQ4_XS-Q4_KV" = qwen-opencode-config // {
+          name = "Qwen3.8-27B (local, IQ4_XS, Q4 KV)";
+          limit = {
+            context = 100096;
+            output = 65536;
+          };
+        };
+        "Qwen/Qwen3.8-27B-IQ4_XS-Q8_KV" = qwen-opencode-config // {
+          name = "Qwen3.8-27B (local, IQ4_XS, Q8 KV)";
+          limit = {
+            context = 50048;
+            output = 32768;
           };
         };
         "Meta/Muse-Glimmer-30B" = {
