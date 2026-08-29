@@ -27,6 +27,7 @@ stdenvNoCC.mkDerivation {
     ./pv_conf.sh -s AuthuiStyle -v 7
     ./pv_conf.sh -s PasswordTitle -v "Linux Boot Manager"
     ./pv_conf.sh -s AnswerTitle -v "Linux Boot Manager"
+    ./pv_conf.sh -s RebootText -v "Shutting down..."
     ./pv_conf.sh -s UpdateTextMTL -v "Configuring Linux updates\n%i% complete\nDo not turn off your computer."
     ./pv_conf.sh -s StartingText -v "Starting Linux"
     ./pv_conf.sh -s ResumingText -v "Resuming Linux"

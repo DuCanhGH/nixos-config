@@ -36,6 +36,12 @@ let
           ${oldAttrs.preConfigure or ""}
         '';
       });
+  qwen-27b-ud-iq4_xs = pkgs.homa.fetchFromHuggingFace {
+    repo = "unsloth/Qwen3.8-27B-GGUF";
+    file = "Qwen3.8-27B-UD-IQ4_XS.gguf";
+    version = "4ca720788d1e01f1bff70c033e0d0028fd02e502";
+    hash = "sha256-QPrEBQ6UA5fb8TCHr9UPRzShGAW/nWXvjd10g0cOYZk=";
+  };
   qwen-thinking-params = {
     flash-attn = "on";
     temp = 1.0;
@@ -66,7 +72,6 @@ let
     batch-size = 2048;
     ubatch-size = 512;
     image-min-tokens = 1024;
-    no-mmproj-offload = true;
   };
   qwen-opencode-config = {
     modalities = {
@@ -147,17 +152,19 @@ in
     settings.models-max = 1;
     settings.models-preset = (pkgs.formats.ini { }).generate "models-preset.ini" {
       "Qwen/Qwen3.8-27B" = qwen-27b-params // {
-        m = pkgs.homa.fetchFromHuggingFace {
-          repo = "unsloth/Qwen3.8-27B-GGUF";
-          file = "Qwen3.8-27B-UD-IQ4_XS.gguf";
-          version = "4ca720788d1e01f1bff70c033e0d0028fd02e502";
-          hash = "sha256-QPrEBQ6UA5fb8TCHr9UPRzShGAW/nWXvjd10g0cOYZk=";
-        };
+        m = qwen-27b-ud-iq4_xs;
         c = 100096;
         ctk = "q8_0";
         ctv = "q8_0";
+        no-mmproj-offload = true;
       };
-      "Qwen/Qwen3.8-27B-IQ3_S_FFN" = qwen-27b-params // {
+      "Qwen/Qwen3.8-27B-Vision" = qwen-27b-params // {
+        m = qwen-27b-ud-iq4_xs;
+        c = 65536;
+        ctk = "q8_0";
+        ctv = "q8_0";
+      };
+      "Qwen/Qwen3.8-27B-FFN@IQ3_S" = qwen-27b-params // {
         m = pkgs.homa.fetchFromHuggingFace {
           repo = "canhdu/Qwen3.8-27B-IQ3_S-FFN-IQ4_XS";
           file = "Qwen3.8-27B-IQ3_S-FFN-IQ4_XS.gguf";
@@ -167,6 +174,7 @@ in
         c = 100096;
         ctk = "q8_0";
         ctv = "q8_0";
+        no-mmproj-offload = true;
       };
       "Meta/Muse-Glimmer-30B" = {
         m = pkgs.homa.fetchFromHuggingFace {
@@ -227,7 +235,14 @@ in
             output = 65536;
           };
         };
-        "Qwen/Qwen3.8-27B-IQ3_S_FFN" = qwen-opencode-config // {
+        "Qwen/Qwen3.8-27B-Vision" = qwen-opencode-config // {
+          name = "Qwen3.8-27B (local, IQ4_XS, offloaded vision)";
+          limit = {
+            context = 65536;
+            output = 32768;
+          };
+        };
+        "Qwen/Qwen3.8-27B-FFN@IQ3_S" = qwen-opencode-config // {
           name = "Qwen3.8-27B (local, IQ4_XS, IQ3_S FFN)";
           limit = {
             context = 100096;
