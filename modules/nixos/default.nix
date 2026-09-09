@@ -1,10 +1,10 @@
 {
   imports = [
     ./aero/services.nix
-    ./davinci.nix
     ./hardware.nix
     ./i18n.nix
     ./network.nix
+    ./programs
     ./services.nix
     ./system.nix
     ./users.nix

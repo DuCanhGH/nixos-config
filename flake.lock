@@ -3,11 +3,11 @@
     "aero-kwin": {
       "flake": false,
       "locked": {
-        "lastModified": 1782590319,
-        "narHash": "sha256-vLY/eYU5I7CBKp8Scz34YOCoMEjfn00FRtiJQzuMLfg=",
+        "lastModified": 1786219543,
+        "narHash": "sha256-w+C0bNbf23GIyDcAtjqfDsRXI1dTx2KqU7x+6/cG4rE=",
         "ref": "refs/heads/Plasma/6.7",
-        "rev": "994ecfb9c4d13bae28532556df0ab734e2c99ccb",
-        "revCount": 60,
+        "rev": "ba5b59a4b5270a71a17768e0e7a22dc1be926833",
+        "revCount": 61,
         "type": "git",
         "url": "ssh://git@github.com/rustussy/aeroshell-kwin-components"
       },
@@ -19,11 +19,11 @@
     "aero-libplasma": {
       "flake": false,
       "locked": {
-        "lastModified": 1781962040,
-        "narHash": "sha256-78pc7EJ37J2+lmcbKyE1ePwqJ7jbDSuvUcC0N9rmBWc=",
+        "lastModified": 1786130294,
+        "narHash": "sha256-ci/z9YaQxoYG70FUG9fCYi2zeepGMgHWO5AumdIE8Ck=",
         "ref": "refs/heads/Plasma/6.7",
-        "rev": "d1c5ad5a1122514996f98ac746681650a8978f8f",
-        "revCount": 18030,
+        "rev": "da45ff7247e42afec0fa84e32ca851bc8773378b",
+        "revCount": 18049,
         "type": "git",
         "url": "ssh://git@github.com/rustussy/aeroshell-libplasma"
       },
@@ -35,11 +35,11 @@
     "aero-smod": {
       "flake": false,
       "locked": {
-        "lastModified": 1782587876,
-        "narHash": "sha256-yozMlCvelwmCnluc3cdjamVzHqnQlQ/9gAGg90f2+d8=",
+        "lastModified": 1788645314,
+        "narHash": "sha256-oGEjcAblWh5UPRNVrdVo9ZoW3nbcgBZGf/KXWO5LdaA=",
         "ref": "refs/heads/Plasma/6.7",
-        "rev": "a972593cfbadc1fc41f3d8eb9ae3977f6171e8e0",
-        "revCount": 41,
+        "rev": "19b467650fa4e0cc2b1f2474993cf8f2e0d654a8",
+        "revCount": 59,
         "type": "git",
         "url": "ssh://git@github.com/rustussy/aeroshell-smod"
       },
@@ -67,11 +67,11 @@
     "aerothemeplasma": {
       "flake": false,
       "locked": {
-        "lastModified": 1783105595,
-        "narHash": "sha256-VLhVD2VYQ/qJGIZOwjX8wjMY4JQmaaxBdsZ3kCQ1DJM=",
+        "lastModified": 1788924586,
+        "narHash": "sha256-EQ7y6SdQ1USVPxxwqeleHfRZGR6H7+Pi5juC1h0T01Q=",
         "ref": "refs/heads/Plasma/6.7",
-        "rev": "81ccf93c6becf013aae879bc50c04d35775fc323",
-        "revCount": 730,
+        "rev": "3e1c54e39b4d10d7de67edb9c7ed247432bf1918",
+        "revCount": 746,
         "type": "git",
         "url": "ssh://git@github.com/rustussy/aerothemeplasma"
       },
@@ -222,11 +222,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1787797243,
-        "narHash": "sha256-8+Q7NOB7RPajRjA4pbCDLzqH+MTjnG9x6LUPLfL2joA=",
+        "lastModified": 1788921139,
+        "narHash": "sha256-2wRuvf9UDw1SYWtBcxNmxLeAtNU1i/hc1c0AKQHdvlM=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "99c9ec63390f1d8c14d95d9e8b17cc29cfbd4e11",
+        "rev": "a2dbe7c2c9333e8234ae8114c7f731784201d108",
         "type": "github"
       },
       "original": {
@@ -298,11 +298,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1787736819,
-        "narHash": "sha256-cV5xEJJK3BvhU8rEd4mC9UsmDi5qscv/kzGPhBRC5WA=",
+        "lastModified": 1788881743,
+        "narHash": "sha256-2V9GZGvPfrNzxFozhI9dcqV+c3QdA8YZrvAAzqEB+dI=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "9fbb54b33e91ee4ca368e35a78e0613c720600b3",
+        "rev": "d6524aaca2ff07876657ae2b323f24be4874944b",
         "type": "github"
       },
       "original": {
@@ -321,11 +321,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1787776375,
-        "narHash": "sha256-gxa6C1+Xfl0ys5h0X/ocusbwT3ABIdX38mrX3MRmPnM=",
+        "lastModified": 1788873411,
+        "narHash": "sha256-PEcPDc5QRRlzYYGQuGuh7OMMLZ1TC5hLHt3whFBRSS0=",
         "owner": "notashelf",
         "repo": "nvf",
-        "rev": "f019fe83c224eedb145982a9a26b764e7cb2fdd0",
+        "rev": "4771b6b78c203c090799ca6984d73c54e77228d6",
         "type": "github"
       },
       "original": {

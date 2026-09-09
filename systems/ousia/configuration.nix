@@ -15,12 +15,12 @@ let
       blasSupport = true;
     }).overrideAttrs
       (oldAttrs: rec {
-        version = "10631";
+        version = "10868";
         src = pkgs.fetchFromGitHub {
           owner = "ggml-org";
           repo = "llama.cpp";
           tag = "b${version}";
-          hash = "sha256-jkJvt2baD6z8WOHQf6V6ACG2CS63APwLO/4kXjqk3a4=";
+          hash = "sha256-lUVCG6QymqROZX/W0mqUTWBSZ3J7J2o7fGe4bkca1yo=";
           leaveDotGit = true;
           postFetch = ''
             git -C "$out" rev-parse --short HEAD > $out/COMMIT
@@ -133,13 +133,15 @@ in
 
   programs.ccache.packageNames = [ "llama-cpp" ];
 
+  programs.davinci.enable = true;
+
+  programs.rstudio.enable = true;
+
   systemd.services.llama-cpp = {
     environment = {
       GGML_CUDA_ENABLE_UNIFIED_MEMORY = "1";
     };
   };
-
-  services.davinci.enable = true;
 
   services.aero.video-wallpaper.enable = true;
 

@@ -1,5 +1,6 @@
 {
   pkgs,
+  lib,
   mkAeroDerivation,
   aero,
 }:
@@ -16,5 +17,9 @@ mkAeroDerivation {
     kwindowsystem
     kdecoration
     kcmutils
+  ];
+  cmakeFlags = [
+    (lib.cmakeBool "BUILD_EFFECT" false)
+    (lib.cmakeBool "BUILD_EFFECTX11" false)
   ];
 }

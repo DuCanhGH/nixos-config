@@ -19,7 +19,6 @@ let
     (lib.cmakeBool "KWIN_BUILD_WAYLAND" waylandEnabled)
     (lib.cmakeBool "INSTALL_X11_COMPONENTS" (!waylandEnabled))
   ]);
-  mkBuildTarget = target: "${target}${if waylandEnabled then "" else "-x11"}";
   # Source: https://github.com/Rotlug/aerothemeplasma-nixos/blob/8452aa903e76f9c20a62024c6d6f2c4be6933c8d/default.nix#L23-L70
   mkAeroDerivation = lib.extendMkDerivation {
     constructDrv = ccacheStdenv.mkDerivation;
@@ -68,15 +67,49 @@ let
   smod = pkgs.callPackage ./kde/smod.nix {
     inherit mkAeroDerivation aero;
   };
+  mkAeroEffect = lib.extendMkDerivation {
+    constructDrv = mkAeroDerivation;
+
+    extendDrvArgs =
+      final:
+      args@{
+        pname,
+        target ? pname,
+        directory ? target,
+        hasSessionSuffix ? true,
+        ninjaFlags ? [ ],
+        installTargets ? [ ],
+        buildInputs ? [ ],
+        ...
+      }:
+      args
+      // {
+        inherit pname;
+        src = pkgs.repos.aero-kwin;
+        buildInputs = [
+          smod
+          pkgs.wayland-protocols
+        ]
+        ++ buildInputs;
+        ninjaFlags = [
+          "${target}${if (waylandEnabled || !hasSessionSuffix) then "" else "-x11"}"
+        ]
+        ++ ninjaFlags;
+        installTargets = [
+          "effects_cpp/${if waylandEnabled then "wayland" else "x11"}/${directory}/install"
+        ]
+        ++ installTargets;
+      };
+  };
 in
 {
   inherit smod libplasma plasmashell;
   aerothemeplasma = aero;
   aeroglassblur = pkgs.callPackage ./effects/aeroglassblur.nix {
-    inherit mkAeroDerivation mkBuildTarget smod;
+    inherit mkAeroEffect;
   };
   aeroglide = pkgs.callPackage ./effects/aeroglide.nix {
-    inherit mkAeroDerivation mkBuildTarget smod;
+    inherit mkAeroEffect;
   };
   aerofonts = pkgs.callPackage ./misc/aerofonts.nix { };
   desktopcontainment = pkgs.callPackage ./plasma/desktopcontainment.nix {
@@ -115,13 +148,13 @@ in
     inherit mkAeroDerivation aero;
   };
   smodglow = pkgs.callPackage ./effects/smodglow.nix {
-    inherit mkAeroDerivation smod;
+    inherit mkAeroDerivation smod waylandEnabled;
   };
   smodsnap = pkgs.callPackage ./effects/smodsnap.nix {
-    inherit mkAeroDerivation smod;
+    inherit mkAeroEffect;
   };
   startupfeedback = pkgs.callPackage ./effects/startupfeedback.nix {
-    inherit mkAeroDerivation mkBuildTarget smod;
+    inherit mkAeroEffect;
   };
   systemtray = pkgs.callPackage ./plasma/systemtray.nix {
     inherit mkAeroDerivation aero;

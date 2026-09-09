@@ -1,7 +1,9 @@
 {
   pkgs,
+  lib,
   mkAeroDerivation,
   smod,
+  waylandEnabled,
 }:
 
 mkAeroDerivation {
@@ -9,5 +11,9 @@ mkAeroDerivation {
   buildInputs = [
     smod
   ];
-  src = "${pkgs.repos.aero-smod}/smodglow";
+  src = pkgs.repos.aero-smod;
+  cmakeFlags = [
+    (lib.cmakeBool "BUILD_EFFECT" (waylandEnabled))
+    (lib.cmakeBool "BUILD_EFFECTX11" (!waylandEnabled))
+  ];
 }

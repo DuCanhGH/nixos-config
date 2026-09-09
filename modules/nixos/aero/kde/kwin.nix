@@ -11,5 +11,4 @@ mkAeroDerivation {
       --replace-quiet "import org.kde.plasma.core" "import io.gitgud.wackyideas.plasma.core" \
       --replace-quiet "import org.kde.plasma.plasmoid" "import io.gitgud.wackyideas.plasma.plasmoid"
   '';
-  postInstall = "mkdir -p $out/share/smod && cp -r ${pkgs.repos.aero-smod}/decorations $out/share/smod";
 }
